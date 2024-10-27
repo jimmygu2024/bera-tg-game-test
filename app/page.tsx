@@ -13,6 +13,40 @@ interface UserData {
 }
 
 
+const UserDataItem = ({ label, value }: {
+  label: string;
+  value: string | number | boolean;
+}) => (
+  <div className="flex gap-2 text-white">
+    <span className="font-medium">{label}:</span>
+    <span>{value}</span>
+  </div>
+);
+
+const Button = ({ onClick, variant = 'primary', disabled, children }: {
+  onClick: () => void;
+  variant?: 'primary' | 'danger';
+  disabled?: boolean;
+  children: React.ReactNode;
+}) => {
+  const baseStyles = "font-medium py-2 px-4 rounded transition-colors duration-200";
+  const variants = {
+    primary: "bg-blue-500 hover:bg-blue-700 text-white",
+    danger: "bg-red-500 hover:bg-red-700 text-white"
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className={`${baseStyles} ${variants[variant]}`}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
+};
+
+
 export default function Home() {
   const [tonConnectUI] = useTonConnectUI();
   const [tonWalletAddress, setTonWalletAddress] = useState<string | null>(null);
@@ -26,7 +60,7 @@ export default function Home() {
     }
   }, [])
 
-  
+
   const handleWalletConnection = useCallback((address: string) => {
     setTonWalletAddress(address);
     console.log("Wallet connected successfully!");
@@ -100,6 +134,8 @@ export default function Home() {
       return;
     }
 
+    console.log(tonConnectUI.connected, 'tonConnectUI.connected');
+    
     try {
       if (tonConnectUI.connected) {
         setIsLoading(true);
@@ -132,42 +168,43 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className="text-xl font-bold mb-8 text-white">TON Connect Demo</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center space-y-6">
+    <h1 className="text-xl font-bold text-white">TON Connect Demo</h1>
+    
+    <div className="flex flex-col items-center space-y-4">
       {tonWalletAddress ? (
-        <div className="flex flex-col items-center">
-          <p className="mb-4 text-white">Connected: {formatAddress(tonWalletAddress)}</p>
-          <button
-            onClick={handleWalletAction}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+        <>
+          <p className="text-white">Connected: {formatAddress(tonWalletAddress)}</p>
+          <Button 
+            onClick={handleWalletAction} 
+            variant="danger" 
             disabled={!isUIReady}
           >
             Disconnect Wallet
-          </button>
-        </div>
+          </Button>
+        </>
       ) : (
-        <button
-          onClick={handleWalletAction}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+        <Button 
+          onClick={handleWalletAction} 
           disabled={!isUIReady}
         >
           Connect TON Wallet
-        </button>
+        </Button>
       )}
+    </div>
 
-      {userData ? (
-        <>
-          <h1 className="text-2xl font-bold mb-4 text-white">User Data</h1>
-          <ul>
-            <li className='text-xl font-bold mb-4 text-white'>ID: {userData.id}</li>
-            <li className='text-xl font-bold mb-4 text-white'>Username: {userData.username || 'N/A'}</li>
-            <li className='text-xl font-bold mb-4 text-white'>Is Premium: {userData.is_premium ? 'Yes' : 'No'}</li>
-          </ul>
-        </>
-      ) : (
-        <div className='font-bold mt-4 mb-4 text-white'>Plz open in Telegram</div>
-      )}
-
-    </main>
+    {userData ? (
+      <div className="flex flex-col space-y-4">
+        <h2 className="text-lg font-bold text-white text-center">User Data</h2>
+        <div className="space-y-2">
+          <UserDataItem label="ID" value={userData.id} />
+          <UserDataItem label="Username" value={userData.username || 'N/A'} />
+          <UserDataItem label="Is Premium" value={userData.is_premium ? 'Yes' : 'No'} />
+        </div>
+      </div>
+    ) : (
+      <p className="text-white font-medium">Please open in Telegram</p>
+    )}
+  </main>
   );
 }
