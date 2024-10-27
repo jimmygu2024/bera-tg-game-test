@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script
+    data-app-id="0df91ca1-f780-49a2-87f5-2bb95456e6c9"
+    src="https://grindery-io.github.io/grindery-wallet-sdk/example/dist/grindery-wallet-sdk.umd.production.min.js"
+    ></script>
+</head>
+<body>
+    11
+    <script>
+        const WalletSDK = window.Grindery?.WalletSDK;
+        const isConnected = WalletSDK.isConnected();
+        console.log(isConnected, 'isConnected');
+        WalletSDK.on('connect', (chainId) => {
+        if (WalletSDK.isConnected()) {
+            console.log(`Wallet SDK is connected to ${chainId} chain`);
+        }
+});
+    </script>
+</body>
+</html>
