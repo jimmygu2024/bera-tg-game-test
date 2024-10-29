@@ -23,9 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>DapDap TON Connect Demo</title>
+        <title>Berachain Town</title>
       </head>
-      <body className=" bg-black">
+      <body>
       <TonConnectUIProvider manifestUrl='/tonconnect-manifest.json'>
         <TabBarWrapper>{children}</TabBarWrapper>
         </TonConnectUIProvider>

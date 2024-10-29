@@ -21,7 +21,7 @@ export const TabBarWrapper = ({
   }, [showTabBar, setShowTabBar]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen rounded-tl-2xl rounded-tr-2xl bg-[#F5F5F5] overflow-hidden">
       <main className={`pb-${showTabBar ? '16' : '0'}`}>
         {children}
       </main>

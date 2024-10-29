@@ -26,10 +26,10 @@ body {
   }
   .text-outline {
     text-shadow: 
-        -2px -2px 0 #4B371F,  
-         2px -2px 0 #4B371F,
-        -2px  2px 0 #4B371F,
-         2px  2px 0 #4B371F; 
+        -1px -1px 0 #4B371F,  
+         1px -1px 0 #4B371F,
+        -1px  1px 0 #4B371F,
+         1px  1px 0 #4B371F; 
   }
 }
 
