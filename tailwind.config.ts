@@ -8,8 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        montserrat: ['Montserrat'],
+        cherryBomb: ['Cherry Bomb'],
+      },
       colors: {
-        primary: '#ebf479',
+        primary: '#4B371F',
+      },
+      backgroundColor: {
+        primary: '#F7F9EA', 
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

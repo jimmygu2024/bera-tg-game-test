@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import "./globals.css";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import { TabBarWrapper } from '@/components/Layout/TabBarWrapper';
 
 export default function RootLayout({
   children,
@@ -10,23 +11,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   useEffect(() => {
-    async function loadWalletSdk() {
-      if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+    async function loadPlugin() {
+      if (typeof window !== 'undefined') {
         const VConsole = await import('vconsole');
         new VConsole.default();
       }
     }
-    loadWalletSdk();
+    loadPlugin();
   }, []);
-
+  
   return (
     <html lang="en">
       <head>
         <title>DapDap TON Connect Demo</title>
       </head>
       <body className=" bg-black">
-      <TonConnectUIProvider manifestUrl="https://indigo-giant-barnacle-872.mypinata.cloud/ipfs/QmbQiEqpowNuQHPDSXZQcakoiWTb3YDZb76VQC8mRLKqW7">
-          {children}
+      <TonConnectUIProvider manifestUrl='/tonconnect-manifest.json'>
+        <TabBarWrapper>{children}</TabBarWrapper>
         </TonConnectUIProvider>
       </body>
     </html>

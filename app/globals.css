@@ -17,11 +17,33 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Montserrat';
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  .text-outline {
+    text-shadow: 
+        -2px -2px 0 #4B371F,  
+         2px -2px 0 #4B371F,
+        -2px  2px 0 #4B371F,
+         2px  2px 0 #4B371F; 
+  }
 }
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+}
+
+@font-face {
+  font-family: 'Cherry Bomb';
+  src: url('/fonts/CherryBombOne-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+}
+
