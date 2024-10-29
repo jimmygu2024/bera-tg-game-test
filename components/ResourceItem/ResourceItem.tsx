@@ -17,7 +17,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({ title, level, coins, total 
   return (
     <div className="flex items-center px-4 rounded-lg height-[2.625rem] justify-between">
       {/* Title */}
-      <div className="text-xl font-cherryBomb text-[#F7F9EA] text-outline">
+      <div className="text-xl font-cherryBomb text-[#F7F9EA] text-stroke-2">
         {title}
       </div>
       <div className="flex items-center gap-2">
