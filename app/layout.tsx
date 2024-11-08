@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import "./globals.css";
+import 'swiper/css';
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { TabBarWrapper } from '@/components/Layout/TabBarWrapper';
 
