@@ -2,6 +2,7 @@
 
 import HomeBg, { SceneList } from '@/sections/home/components/bg';
 import { useRef, useState } from 'react';
+import DressUpGame from './components/DressUpGame';
 
 const Home = () => {
 
@@ -17,7 +18,7 @@ const Home = () => {
         setTestCount(testCount + 1);
       }}
     >
-      <h1>content</h1>
+    <DressUpGame />
       <div className="">
         <button
           type="button"
