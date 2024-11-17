@@ -21,8 +21,13 @@ export const TabBarWrapper = ({
   }, [showTabBar, setShowTabBar]);
 
   return (
-    <div className="min-h-screen overflow-hidden">
-      <main className={`pb-${showTabBar ? '16' : '0'}`}>
+    <div className="h-full overflow-hidden">
+      <main
+        className={`h-full overflow-y-auto overflow-x-hidden`}
+        style={{
+          paddingBottom: showTabBar ? '5rem' : 0,
+        }}
+      >
         {children}
       </main>
       {showTabBar && <TabBar />}

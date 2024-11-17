@@ -1,10 +1,36 @@
+'use client';
+
+import HomeBg, { SceneList } from '@/sections/home/components/bg';
+import { useRef, useState } from 'react';
 
 const Home = () => {
-    return (
-        <div>
-            <h1>Home</h1>
-        </div>
-    );
+
+  const bgRef = useRef<any>();
+  const [testCount, setTestCount] = useState<any>(0);
+
+  return (
+    <HomeBg
+      ref={bgRef}
+      speed={1.2}
+      onSceneComplete={(params: any) => {
+        console.log('onSceneComplete... %o', params);
+        setTestCount(testCount + 1);
+      }}
+    >
+      <h1>content</h1>
+      <div className="">
+        <button
+          type="button"
+          className="h-[32px] border border-[#4B371F] rounded-[10px] text-[16px] px-[20px] text-black bg-[#C7FF6E] flex justify-center items-center"
+          onClick={() => {
+            bgRef.current?.handleNextScene(SceneList[testCount % 2]);
+          }}
+        >
+          Next Scene
+        </button>
+      </div>
+    </HomeBg>
+  );
 }
 
 export default Home;
