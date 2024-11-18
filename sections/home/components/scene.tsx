@@ -2,9 +2,10 @@ import { motion } from 'framer-motion';
 import ImgAnimate from '@/sections/home/components/img-animate';
 import { useMemo } from 'react';
 import Big from 'big.js';
+import { SceneItem } from '@/sections/home/components/types';
 
-const Scene = (props: any) => {
-  const { name, initial, animate, onAnimationComplete, duration, zIndex, speed } = props;
+const Scene = (props: Props) => {
+  const { scene, initial, animate, onAnimationComplete, duration, zIndex, speed } = props;
 
   let _speed = useMemo(() => {
     if (typeof speed !== 'number') return 1;
@@ -33,27 +34,30 @@ const Scene = (props: any) => {
       onAnimationComplete={onAnimationComplete}
     >
       <ImgAnimate
-        height="60vh"
-        bgSrc={`/svg/bg/${name}/top-bg.svg`}
-        src={`/svg/bg/${name}/top.svg`}
+        height={scene.height?.top || '60vh'}
+        bgSrc={`/svg/bg/${scene.path}/top-bg.svg`}
+        src={`/svg/bg/${scene.path}/top.svg`}
         duration={60 * _speed}
       />
       <div className="absolute left-0 bottom-0 z-[2]">
         <ImgAnimate
-          height={400}
-          src={`/svg/bg/${name}/mid.svg`}
+          height={scene.height?.mid || 400}
+          src={`/svg/bg/${scene.path}/mid.svg`}
           duration={40 * _speed}
-          className="absolute left-0 top-[-300px] z-[1]"
+          className="absolute left-0 z-[1]"
+          style={{
+            top: scene.y?.mid || '-300px'
+          }}
         />
         <ImgAnimate
-          height={250}
-          src={`/svg/bg/${name}/bot-bg.svg`}
+          height={scene.height?.botBg || 234}
+          src={`/svg/bg/${scene.path}/bot-bg.svg`}
           duration={20 * _speed}
           className=""
         />
         <ImgAnimate
-          height={120}
-          src={`/svg/bg/${name}/bot.svg`}
+          height={scene.height?.bot || 234}
+          src={`/svg/bg/${scene.path}/bot.svg`}
           duration={10 * _speed}
           className="absolute left-0 bottom-0 z-[2]"
         />
@@ -63,3 +67,13 @@ const Scene = (props: any) => {
 };
 
 export default Scene;
+
+interface Props {
+  scene: SceneItem;
+  initial: 'visible' | 'hidden';
+  animate: 'visible' | 'hidden';
+  duration: number;
+  zIndex: number;
+  speed?: number;
+  onAnimationComplete?(): void;
+}

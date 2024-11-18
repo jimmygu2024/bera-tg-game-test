@@ -3,24 +3,25 @@
 import Scene from '@/sections/home/components/scene';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { useThrottleFn } from 'ahooks';
+import { SceneItem, SceneList, SwitchSceneDuration } from '@/sections/home/components/types';
 
 const HomeBg = forwardRef<any, any>((props, ref) => {
   const { children, onSceneComplete, speed } = props;
 
-  const [currentScene, setCurrentScene] = useState<any>(SceneList[0]);
+  const [currentScene, setCurrentScene] = useState<SceneItem | undefined>(SceneList.Desert);
   const [currentSceneIndex, setCurrentSceneIndex] = useState<any>(1);
-  const [nextScene, setNextScene] = useState<any>('');
+  const [nextScene, setNextScene] = useState<SceneItem | undefined>();
   const [nextSceneIndex, setNextSceneIndex] = useState<any>(1);
   const [firstScene, setFirstScene] = useState(true);
 
-  const { run: handleNextScene } = useThrottleFn((name: string) => {
+  const { run: handleNextScene } = useThrottleFn((scene: SceneItem) => {
     if (currentScene) {
-      setNextScene(name);
+      setNextScene(scene);
       setCurrentSceneIndex(1);
       setNextSceneIndex(2);
       return;
     }
-    setCurrentScene(name);
+    setCurrentScene(scene);
     setCurrentSceneIndex(2);
     setNextSceneIndex(1);
   }, { wait: SwitchSceneDuration * 1000 });
@@ -42,14 +43,14 @@ const HomeBg = forwardRef<any, any>((props, ref) => {
         {
           currentScene && (
             <Scene
-              name={currentScene}
+              scene={currentScene}
               duration={firstScene ? 0 : SwitchSceneDuration}
               zIndex={currentSceneIndex}
               speed={speed}
               initial="hidden"
               animate="visible"
               onAnimationComplete={() => {
-                setNextScene('');
+                setNextScene(void 0);
                 setFirstScene(false);
                 onSceneComplete({ scene: currentScene, firstScene });
               }}
@@ -59,14 +60,14 @@ const HomeBg = forwardRef<any, any>((props, ref) => {
         {
           nextScene && (
             <Scene
-              name={nextScene}
+              scene={nextScene}
               duration={SwitchSceneDuration}
               zIndex={nextSceneIndex}
               speed={speed}
               initial="hidden"
               animate="visible"
               onAnimationComplete={() => {
-                setCurrentScene('');
+                setCurrentScene(void 0);
                 onSceneComplete({ scene: nextScene, firstScene });
               }}
             />
@@ -78,9 +79,3 @@ const HomeBg = forwardRef<any, any>((props, ref) => {
 });
 
 export default HomeBg;
-
-export const SwitchSceneDuration = 3;
-export const SceneList = [
-  'desert',
-  'grass',
-];

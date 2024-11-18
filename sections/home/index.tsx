@@ -1,10 +1,11 @@
 'use client';
 
-import HomeBg, { SceneList } from '@/sections/home/components/bg';
+import HomeBg from '@/sections/home/components/bg';
 import { useRef, useState, useEffect } from 'react';
 import DressUpGame from './components/DressUpGame';
 import Coin from '@/components/Coin';
 import ProgressBar from './components/ProgressBar';
+import { SceneList } from '@/sections/home/components/types';
 
 const Home = () => {
 
@@ -12,6 +13,7 @@ const Home = () => {
   const [testCount, setTestCount] = useState<any>(0);
   const [coins, setCoins] = useState<any[]>([]);
   const [collectedCoins, setCollectedCoins] = useState(0);
+  const [sceneIdx, setSceneIdx] = useState(1);
   const TARGET_COINS = 10;
 
   useEffect(() => {
@@ -75,7 +77,13 @@ const Home = () => {
           type="button"
           className="h-[32px] border border-[#4B371F] rounded-[10px] text-[16px] px-[20px] text-black bg-[#C7FF6E] flex justify-center items-center"
           onClick={() => {
-            bgRef.current?.handleNextScene(SceneList[testCount % 2]);
+            const sceneList = Object.values(SceneList);
+            bgRef.current?.handleNextScene(sceneList[sceneIdx]);
+            let _sceneIdx = sceneIdx + 1;
+            if (_sceneIdx > sceneList.length - 1) {
+              _sceneIdx = 0;
+            }
+            setSceneIdx(_sceneIdx);
           }}
         >
           Next Scene
