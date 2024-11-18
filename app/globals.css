@@ -48,3 +48,16 @@ body {
   font-stretch: 75% 125%;
 }
 
+@layer utilities {
+  @keyframes drive {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(80%);
+    }
+  }
+  .animate-drive {
+    animation: drive 5s linear infinite;
+  }
+}

@@ -18,7 +18,7 @@ const Home = () => {
         setTestCount(testCount + 1);
       }}
     >
-    <DressUpGame />
+      <DressUpGame />
       <div className="">
         <button
           type="button"
