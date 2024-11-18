@@ -1,7 +1,7 @@
 import LazyImage from '@/components/img';
-import Card from '@/app/earn/components/card';
-import Reward from '@/app/earn/components/reward';
-import Button from '@/app/earn/components/button';
+import Card from './card';
+import Reward from './reward';
+import Button from './button';
 
 const Task = (props: Props) => {
   const { style, icon, title, reward, finished, className } = props;
