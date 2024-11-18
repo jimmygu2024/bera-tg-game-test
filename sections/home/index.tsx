@@ -59,7 +59,7 @@ const Home = () => {
           onCollected={handleCollected}
         />
       ))}
-      <div className='absolute bottom-[8rem] left-[1/2] translate-x-[20%]'>
+      <div className='absolute bottom-[8rem] left-[1/2] translate-x-[10%]'>
         <DressUpGame />
       </div>
 

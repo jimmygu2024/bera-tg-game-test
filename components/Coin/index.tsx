@@ -7,14 +7,17 @@ const Coin = ({id, initialX, onCollected }: {id: any; initialX: number; onCollec
   return (
     <motion.div
       initial={{ x: initialX, y: 0, opacity: 1 }}
-      animate={{ y: 500 }} 
+      animate={{ y: '50dvh' }} 
       transition={{
         duration: 3,
         ease: "linear",
       }}
       onUpdate={(latest) => {
-        if (Number(latest.y) > 350) {
-          setOpacity(0.3);
+        if (typeof latest.y === 'string' && latest.y.endsWith('dvh')) {
+          const currentDvh = parseFloat(latest.y);
+          if (currentDvh > 45) {
+            setOpacity(0.3);
+          }
         }
       }}
       onAnimationComplete={() => {

@@ -17,7 +17,7 @@ const DressUpGame = () => {
 
   return (
     <>
-            <svg viewBox="0 0 373 300" style={{ width: '100%', height: '100%', maxWidth: 373 }}>
+            <svg viewBox="0 0 373 300" style={{ width: '23.312rem', height: '100%' }}>
               <g id="bear" transform="translate(50, 0)" fill="none">
                 <Bear colors={bearColors} />
               </g>
