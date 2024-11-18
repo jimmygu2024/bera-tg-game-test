@@ -18,7 +18,9 @@ const Home = () => {
         setTestCount(testCount + 1);
       }}
     >
-      <DressUpGame />
+      <div className='absolute bottom-[6rem] left-[1/2] translate-x-[20%]'>
+        <DressUpGame />
+      </div>
       <div className="">
         <button
           type="button"

@@ -45,13 +45,13 @@ const ImgAnimate = forwardRef<any, any>((props, ref) => {
             {
               bgSrc && (
                 <motion.div
-                  className="h-full bg-repeat-x bg-[auto_100%]"
+                  className="h-full bg-repeat-x bg-[auto_100%] will-change-transform"
                   initial={{ width, backgroundImage: `url("${bgSrc}")` }}
                 />
               )
             }
             <motion.div
-              className="h-full flex items-stretch absolute z-[1] left-0 top-0 bg-repeat-x"
+              className="h-full flex items-stretch absolute z-[1] left-0 top-0 bg-repeat-x will-change-transform"
               initial={{ width: width * 2, backgroundSize: `${width}px 100%`, backgroundImage: `url("${src}")` }}
               variants={{
                 startX: {
