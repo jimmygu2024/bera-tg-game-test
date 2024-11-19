@@ -1,41 +1,45 @@
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 
-import IconBearLevel1 from '@public/svg/dressup/bears/1.svg';
-import IconHatLevel1 from '@public/svg/dressup/hats/1.svg';
-import IconJacketLevel1 from '@public/svg/dressup/jackets/1.svg';
-import IconNecklaceLevel1 from '@public/svg/dressup/necklaces/1.svg';
-import IconCarLevel1 from '@public/svg/dressup/cars/1.svg';
-import Bear from './Bear';
+import IconHatLevel1 from "@public/svg/dressup/hats/1.svg";
+import IconJacketLevel1Standing from "@public/svg/dressup/jackets/1-standing.svg";
+import IconJacketLevel1Squatting from "@public/svg/dressup/jackets/1-squatting.svg";
+import IconNecklaceLevel1 from "@public/svg/dressup/necklaces/1.svg";
 
 
+import Bear from "./Bear";
+import Transportation from "./Transportation";
 
 const DressUpGame = () => {
-
-  const [bearColors, setBearColors] = useState({
-  });
-
+  const [bearColors, setBearColors] = useState({});
   return (
     <>
-            <svg viewBox="0 0 373 300" style={{ width: '23.312rem', height: '100%' }}>
-              <g id="bear" transform="translate(50, 0)" fill="none">
-                <Bear colors={bearColors} />
-              </g>
-              <g id='hat' transform="translate(50, 20)">
-                <IconHatLevel1 />
-              </g>
-              <g id='coat' transform='translate(60, 140)'>
-               <IconJacketLevel1 />
-              </g>
-              <g id='necklace' transform='translate(90, 150)'>
+      <svg
+        viewBox="0 0 373 300"
+        style={{ width: "23.312rem", height: "19.75rem" }}
+      >
+     
+        <g id="bear" transform="translate(50, 0)" fill="none">
+          <Bear colors={bearColors} level={1}/>
+        </g>
+        <g id="hat" transform="translate(48, 15)">
+          <IconHatLevel1 />
+        </g>
+        <g id="coat" transform="translate(85, 140)">
+            <IconJacketLevel1Squatting />
+        </g>
+        {/* <g id='necklace' transform='translate(90, 150)'>
                 <IconNecklaceLevel1 />
-              </g>
-              <g id="cars" transform="translate(0, 160)" fill="none">
-                <IconCarLevel1 />
-              </g>
-            </svg>
+              </g> */}
+
+        <Transportation />
+
+ 
+      </svg>
     </>
   );
 };
 
 export default DressUpGame;
+
+// <g id="coat" transform="translate(85, 140)" z={2}> 和 <g id="cars" transform="translate(0, 10)" fill="none" z={1}> 可以这样指定svg 层级吗？

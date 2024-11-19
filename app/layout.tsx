@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Berachain Town</title>
+        <title>Beraciaga_Test</title>
       </head>
       <body>
       <TonConnectUIProvider manifestUrl='/tonconnect-manifest.json'>
