@@ -1,9 +1,9 @@
 <svg width="139" height="71" viewBox="0 0 139 71" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M58.6758 29.4517C57.4259 36.1133 51.0123 40.5005 44.3507 39.2506C37.689 38.0007 33.3019 31.5872 34.5518 24.9255" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M92.0657 28.7555C94.4326 35.1067 100.706 38.6326 106.077 36.6309C111.448 34.6291 113.884 27.8578 111.517 21.5066" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<ellipse cx="46.8373" cy="18.2197" rx="12.6406" ry="6.89486" transform="rotate(9.38454 46.8373 18.2197)" fill="#FED2AB"/>
-<ellipse cx="97.572" cy="16.5186" rx="11" ry="6" transform="rotate(-18.3812 97.572 16.5186)" fill="#FED2AB"/>
-<ellipse cx="78.2422" cy="49.356" rx="24" ry="15" fill="#FED2AB"/>
+<ellipse cx="46.8373" cy="18.2197" rx="12.6406" ry="6.89486" transform="rotate(9.38454 46.8373 18.2197)" fill="currentColor"/>
+<ellipse cx="97.572" cy="16.5186" rx="11" ry="6" transform="rotate(-18.3812 97.572 16.5186)" fill="currentColor"/>
+<ellipse cx="78.2422" cy="49.356" rx="24" ry="15" fill="currentColor"/>
 <path d="M87.7413 38.3561C84.5413 37.9561 78.7417 38.0783 75.2417 38.856C70.7417 39.8559 78.7417 47.856 83.2417 46.856C87.7417 45.856 91.7413 38.8561 87.7413 38.3561Z" fill="black"/>
 <ellipse cx="82.2422" cy="40.356" rx="3" ry="1" fill="#D9D9D9"/>
 <path d="M83.138 46.356C85.1641 49.0159 85.6641 53.5159 82.6641 58.0159M71.6641 56.5159C75.9141 58.4325 86.0641 60.8159 92.6641 55.0159" stroke="black" stroke-width="2" stroke-linecap="round"/>

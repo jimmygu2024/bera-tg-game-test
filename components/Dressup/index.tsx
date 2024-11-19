@@ -18,23 +18,17 @@ const DressUpGame = () => {
         viewBox="0 0 373 300"
         style={{ width: "23.312rem", height: "19.75rem" }}
       >
-     
-        <g id="bear" transform="translate(50, 0)" fill="none">
-          <Bear colors={bearColors} level={1}/>
-        </g>
+        <Bear colors={bearColors} level={1}/>
         <g id="hat" transform="translate(48, 15)">
           <IconHatLevel1 />
         </g>
         <g id="coat" transform="translate(85, 140)">
             <IconJacketLevel1Squatting />
         </g>
-        {/* <g id='necklace' transform='translate(90, 150)'>
-                <IconNecklaceLevel1 />
-              </g> */}
-
-        <Transportation />
-
- 
+        <g id='necklace' transform='translate(90, 140)'>
+          <IconNecklaceLevel1 />
+        </g>
+        {/* <Transportation level={2}/> */}
       </svg>
     </>
   );

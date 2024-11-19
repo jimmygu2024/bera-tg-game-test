@@ -1,29 +1,32 @@
-import IconCarLevel2 from "@public/svg/dressup/cars/2.svg";
-import IconCarLevel3 from "@public/svg/dressup/cars/3.svg";
-import IconCarLevel4 from "@public/svg/dressup/cars/4.svg";
-import IconCarLevel5 from "@public/svg/dressup/cars/5.svg";
-import IconCarLevel6 from "@public/svg/dressup/cars/6.svg";
+import {TRANSPORTATION_MAPPING} from './config';
 
-const Transportation = () => {
-    return (
-        <>
-         {/* <g id="cars" transform="translate(6, 140)" fill="none">
-            <IconCarLevel6 />
-          </g> */}
-        <g id="motro" transform="translate(22, 164)" fill="none">
-          <IconCarLevel5 />
-          </g>
-        {/* <g id="ev-byc" transform="translate(40, 170)" fill="none">
-            <IconCarLevel4 />
-          </g> */}
-        {/* <g id="byc" transform="translate(60, 180)" fill="none">
-            <IconCarLevel3 />
-          </g> */}
-        {/* <g id="sketing-board" transform="translate(30, 250)" fill="none">
-            <IconCarLevel2 />
-        </g> */}
-        </>
-    )
+interface TransportationProps {
+  level: number;
+  className?: string;
 }
 
-export default Transportation
+const Transportation: React.FC<TransportationProps> = ({ level, className }) => {
+  
+  const VehicleComponent = TRANSPORTATION_MAPPING[level as keyof typeof TRANSPORTATION_MAPPING];
+  
+  if (!VehicleComponent) return null;
+
+  const getTransformPosition = (level: number) => {
+    const positions = {
+      1: 'translate(30, 250)',
+      2: 'translate(60, 180)',
+      3: 'translate(40, 170)',
+      4: 'translate(22, 164)',
+      5: 'translate(6, 140)', 
+    };
+    return positions[level as keyof typeof positions] || '';
+  };
+
+  return (
+    <g id="transportation" transform={getTransformPosition(level)} fill="none" className={className}>
+      <VehicleComponent />
+    </g>
+  );
+};
+
+export default Transportation;
