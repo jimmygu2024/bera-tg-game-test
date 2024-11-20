@@ -58,6 +58,7 @@ export const useGameState = (initialLevel: number = 0) => {
             return {
                 ...item,
                 level: Math.floor(Math.random() * 5) + 1,
+                isBuyStatus: Math.random() > 0.5
             };
         });
     })
@@ -69,9 +70,9 @@ export const useGameState = (initialLevel: number = 0) => {
         id: 1,
         name: "Bicycle",
         category: "cars",
-        level: 2,
+        level: Math.floor(Math.random() * 5) + 1,
         gameId: 2,
-        isBuyStatus: true
+        isBuyStatus: Math.random() > 0.5
       },
     ];
     setUserItems(mockItems);

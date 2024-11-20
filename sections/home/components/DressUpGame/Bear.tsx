@@ -23,11 +23,11 @@ const Bear: React.FC<BearProps> = ({
   };
 
   return (
-    <g id="bear" transform="translate(50, 0)" fill="none">
+    <g id="bear" fill="none">
       <svg 
-        width="180" 
-        height="283" 
-        viewBox="0 0 180 283" 
+        width="360" 
+        height="340" 
+        viewBox="0 0 360 340" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -38,15 +38,12 @@ const Bear: React.FC<BearProps> = ({
             }}
           />
         ) : (
-          <g transform="translate(0,138)">
             <IconSit 
               style={{ 
                 color: bearColors.primary,
               }}
             />
-          </g>
         )}
-
         <IconHead 
           style={{ 
             color: bearColors.primary,
@@ -54,7 +51,7 @@ const Bear: React.FC<BearProps> = ({
           } as React.CSSProperties}
         />
 
-        <g transform="translate(36,55)">
+        <g transform="translate(82,70)">
           <FaceComponent 
             style={{ 
               color: bearColors.secondary,

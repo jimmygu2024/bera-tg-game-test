@@ -3,7 +3,7 @@
 import HomeBg from '@/sections/home/components/bg';
 import { useRef, useState, useEffect } from 'react';
 import DressUpGame from './components/DressUpGame';
-import Coin from '@/components/Coin';
+import Coin from '@/sections/home/components/Coin';
 import ProgressBar from './components/ProgressBar';
 import { SceneList } from '@/sections/home/components/types';
 

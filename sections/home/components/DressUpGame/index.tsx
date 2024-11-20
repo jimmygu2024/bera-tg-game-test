@@ -1,6 +1,10 @@
 import { useGameState } from "./useGameState";
-import Bear from "@/components/Dressup/Bear";
-import Transportation from "@/components/Dressup/Transportation";
+import Bear from "@/sections/home/components/DressUpGame/Bear";
+import Hat from "@/sections/home/components/DressUpGame/Hat";
+import Jacket from "@/sections/home/components/DressUpGame/Jacket";
+
+import Transportation from "@/sections/home/components/DressUpGame/Transportation";
+
 
 const DressUpGame: React.FC = () => {
   const { userItems, bearState, randomizeBearAppearance } = useGameState();
@@ -13,14 +17,18 @@ const DressUpGame: React.FC = () => {
   return (
     <div className="relative">
       <svg
-        viewBox="0 0 373 300"
-        style={{ width: "23.312rem", height: "19.75rem" }}
+        viewBox="0 0 360 340"
+        style={{ width: "22.5rem", height: "21.25rem" }}
       >
         <Bear
           colors={bearState.colors}
           level={level}
           face={bearState.currentFace}
         />
+
+        <Hat level={level} />
+
+        <Jacket userItems={userItems} />
 
         {level > 0 && <Transportation level={level} />}
       </svg>
