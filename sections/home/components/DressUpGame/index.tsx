@@ -34,7 +34,7 @@ const DressUpGame: React.FC = () => {
       </svg>
       <button
           onClick={randomizeBearAppearance}
-          className="mt-4 px-4 py-2 bg-[#E49F63] text-white rounded fixed top-[-20dvh] right-0"
+          className="mt-4 px-4 py-2 bg-[#E49F63] text-white rounded fixed top-[-10dvh] right-0"
           >
           Random Bear
           </button>
