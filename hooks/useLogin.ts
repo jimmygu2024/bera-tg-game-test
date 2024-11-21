@@ -1,6 +1,5 @@
-// hooks/useLogin.ts
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useTelegram } from '@/hooks/useTelegram';
 import { post } from '@/utils/http';
 
@@ -17,15 +16,14 @@ interface UseLoginResult {
   error: string | null;
 }
 
-const useLogin = (initialInviterId?: string): UseLoginResult => {
+const useLogin = (): UseLoginResult => {
   const { WebApp, isInitialized, error: sdkError } = useTelegram();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   
-  const searchParams = useSearchParams();
-
-  const inviterId = initialInviterId || searchParams?.get('inviterId');
+  const params = useParams();
+  const inviterId = params?.inviterId as string;
 
 
   useEffect(() => {
