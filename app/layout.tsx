@@ -5,6 +5,7 @@ import "./globals.css";
 import 'swiper/css';
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { TabBarWrapper } from '@/components/Layout/TabBarWrapper';
+import useLogin from '@/hooks/useLogin';
 
 export default function RootLayout({
   children,
@@ -20,6 +21,8 @@ export default function RootLayout({
     }
     loadPlugin();
   }, []);
+
+  useLogin();
   
   return (
     <html lang="en">
