@@ -66,7 +66,7 @@ const get = async (url: string, query?: Record<string, any>) => {
 };
 
 const post = async (url: string, data?: object) => {
-  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
+  // const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const res = await fetch(getUrl(url), {
     method: 'POST',
     headers: {
