@@ -5,7 +5,7 @@ import "./globals.css";
 import 'swiper/css';
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { TabBarWrapper } from '@/components/Layout/TabBarWrapper';
-import useLogin from '@/hooks/useLogin';
+import TelegramProvider from '@/context/TelegramContext';
 
 export default function RootLayout({
   children,
@@ -22,8 +22,6 @@ export default function RootLayout({
     loadPlugin();
   }, []);
 
-  useLogin();
-  
   return (
     <html lang="en">
       <head>
@@ -31,7 +29,9 @@ export default function RootLayout({
       </head>
       <body>
       <TonConnectUIProvider manifestUrl='/tonconnect-manifest.json'>
-        <TabBarWrapper>{children}</TabBarWrapper>
+          <TelegramProvider>
+          <TabBarWrapper>{children}</TabBarWrapper>
+          </TelegramProvider>
         </TonConnectUIProvider>
       </body>
     </html>
