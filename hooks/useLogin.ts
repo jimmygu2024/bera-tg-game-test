@@ -17,14 +17,16 @@ interface UseLoginResult {
   error: string | null;
 }
 
-const useLogin = (): UseLoginResult => {
+const useLogin = (initialInviterId?: string): UseLoginResult => {
   const { WebApp, isInitialized, error: sdkError } = useTelegram();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   
   const searchParams = useSearchParams();
-  const inviterId = searchParams.get('inviterId');
+
+  const inviterId = initialInviterId || searchParams?.get('inviterId');
+
 
   useEffect(() => {
     if (!isInitialized || !WebApp) return;
