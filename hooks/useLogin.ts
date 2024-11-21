@@ -7,7 +7,7 @@ interface UserData {
   id: number;
   username?: string;
   is_premium?: boolean;
-  avatar?: string;
+  photo_url?: string;
 }
 
 interface UseLoginResult {
@@ -43,12 +43,12 @@ const useLogin = (): UseLoginResult => {
         const loginData = {
           tg_user_id: tgUser.id.toString(),
           tg_username: tgUser.username,
-          tg_avatar: tgUser.avatar,
+          tg_avatar: tgUser.photo_url,
           ...(inviterId && { inviter_tg_user_id: inviterId })
         };
 
         await post('/api/login', loginData);
-
+        console.log('/api/login ---- Login successful');
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
         setError(errorMessage);
