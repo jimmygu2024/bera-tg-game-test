@@ -20,9 +20,8 @@ const BoostIndex = () => {
     console.log(item.data.invoice_link, 'item.data.invoice_link')
     WebApp.openInvoice(
       item.data.invoice_link,
-      (status: any) => {
-        console.log(status, 'openInvoice ===> status')
-        if (status.paid) {
+      (status: string) => {
+        if (status === 'paid') {
           console.log('Invoice paid successfully');
         } else {
           console.log('Invoice was not paid');
@@ -33,7 +32,7 @@ const BoostIndex = () => {
 
   useEffect(() => {
     if (!WebApp && !isInitialized) return;
-    WebApp.onEvent('invoiceClosed', (status: any) => {
+    WebApp.onEvent('invoiceClosed', (status: string) => {
       console.log('onEvent >>>>> Payment status:', status);
       if (status === 'paid') {
         // 处理支付成功
