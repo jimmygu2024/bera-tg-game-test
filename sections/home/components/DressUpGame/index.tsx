@@ -18,6 +18,7 @@ const DressUpGame: React.FC = () => {
   const controls = useAnimation()
 
   useEffect(() => {
+    if (level < 1) return
     controls.start({
       scaleY: [1, 0.98, 1], 
       transition: {
