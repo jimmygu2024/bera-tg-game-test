@@ -21,6 +21,7 @@ export interface ModuleItem {
   type: ActionType;
   hasPopover?: boolean;
   needTransactionNums?: number;
+  data?: any;
 }
 
 export interface ModuleConfig {
@@ -44,7 +45,6 @@ const ModuleItem: React.FC<ModuleItem & { styles: ModuleStyles }> = ({
   const { onItemClick } = useModuleContext();
 
   const PopoverContent = () => {
-    const [before, after] = desc.split("$TRANSACTION_COUNT");
     return (
       <div className="border-[3px] p-[10px] border-[#C7FF6E] rounded-xl w-[166px] bg-black bg-opacity-50 flex flex-col justify-center items-center gap-2">
         <div className={`flex justify-center items-center ${styles.imagePopover}`}>
@@ -84,7 +84,7 @@ const ModuleItem: React.FC<ModuleItem & { styles: ModuleStyles }> = ({
     </div>
   );
 
-  if (!hasPopover) {
+  if (!hasPopover || rest?.data?.tg_item) {
     return <ImageContent />;
   }
 

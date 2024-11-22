@@ -36,6 +36,7 @@ export const useGameItems = (id?: string) => {
   const [moduleConfigs, setModuleConfigs] = useState<Record<ModuleType, ModuleConfig>>(ModuleConfigs);
   const [updater, setUpdater] = useState(0);
   useEffect(() => {
+    id = '5514282060'
     if (!id) return;
     const fetchGameItems = async () => {
       try {
@@ -62,14 +63,14 @@ export const useGameItems = (id?: string) => {
               // todo
               const { icon, popoverIcon } = generateImageUrls(
                 item.category,
-                item.level || 1,
+                item.price,
                 item.tg_item
               );
               
               return {
                 ...ModuleConfigs[moduleType].items[index],
-                // icon,
-                // popoverIcon,
+                icon,
+                popoverIcon,
                 data: {
                   ...item,
                 }

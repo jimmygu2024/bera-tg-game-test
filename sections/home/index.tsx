@@ -48,7 +48,7 @@ const Home = () => {
   return (
     <HomeBg
       ref={bgRef}
-      speed={1.2}
+      speed={10}
       onSceneComplete={(params: any) => {
         console.log('onSceneComplete... %o', params);
         setTestCount(testCount + 1);
