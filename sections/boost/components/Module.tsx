@@ -71,7 +71,8 @@ const ModuleItem: React.FC<ModuleItem & { styles: ModuleStyles }> = ({
           }
           className="w-full h-8 border-[2px] bg-[#FFF5A9] rounded-[30px] border-[#4B371F] font-cherryBomb text-[18px] font-[400] text-center text-stroke-2 text-white"
         >
-          {type.charAt(0).toUpperCase() + type.slice(1)}
+          {/* {type.charAt(0).toUpperCase() + type.slice(1)} */}
+          Buy
         </div>
       </div>
     );

@@ -30,21 +30,17 @@ const generateImageUrls = (category: string, level: number, isActive: boolean) =
 };
 
 
-export const useGameItems = () => {
+export const useGameItems = (id: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [moduleConfigs, setModuleConfigs] = useState<Record<ModuleType, ModuleConfig>>(ModuleConfigs);
 
-  // const { address }  = useAccount();
-
   useEffect(() => {
-    // if (!address) {
-    //   return ;
-    // }
+    if (!id) return;
     const fetchGameItems = async () => {
       try {
         setLoading(true);
-        const response = await get(`/api/game/items?game_category=bera&address=${'0x8C7f311f5174b636Bc1849e523810b1e9a4B7a1D'}`);
+        const response = await get(`/api/game/items?tg_user_id=${id}`);
         if (response.code !== 200 ) return
 
         const groupedByCategory = response.data.reduce((acc: Record<string, GameItem[]>, item: GameItem) => {
@@ -92,7 +88,7 @@ export const useGameItems = () => {
     };
 
     fetchGameItems();
-  }, []);
+  }, [id]);
 
   return {
     moduleConfigs,
