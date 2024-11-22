@@ -105,6 +105,9 @@ export function useQuest() {
       return;
     }
     setQuestVisited({ id: params.id, visited: true });
+    if (params.url) {
+      WebApp?.openLink?.(params.url);
+    }
   };
 
   useEffect(() => {
