@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation';
 import { useTelegram } from '@/hooks/useTelegram';
 import { post } from '@/utils/http';
 
-interface UserData {
+export interface UserData {
   id: number;
   username?: string;
   is_premium?: boolean;

@@ -6,6 +6,7 @@ import Button from './components/button';
 import LazyImage from '@/components/img';
 import Reward from './components/reward';
 import Task from './components/task';
+import { useQuest } from '@/hooks/useQuest';
 
 const DailyList = [
   { key: 1, title: 'Daily Check-in', icon: '', reward: 100 },
@@ -23,6 +24,7 @@ const TaskList = [
 ];
 
 const EarnView = () => {
+  useQuest();
 
   return (
     <div>
