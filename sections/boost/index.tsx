@@ -15,11 +15,12 @@ const BoostIndex = () => {
   const { moduleConfigs, loading} = useGameItems();
   
   const handleItemClick = (item: any) => {
-    console.log(WebApp, 'WebApp')
     if (!WebApp || !item?.data?.invoice_link) return;
+    console.log(item.data.invoice_link, 'item.data.invoice_link')
     WebApp.openInvoice(
       item.data.invoice_link,
       (status: any) => {
+        console.log(status, 'status')
         if (status.paid) {
           console.log('Invoice paid successfully');
         } else {
