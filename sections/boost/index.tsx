@@ -24,7 +24,7 @@ const BoostIndex = () => {
     }
   }, [isInitialized, WebApp]);
 
-  const { moduleConfigs, loading} = useGameItems(userId);
+  const { moduleConfigs, setUpdater} = useGameItems(userId);
 
 
   const handleItemClick = (item: any) => {
@@ -34,6 +34,7 @@ const BoostIndex = () => {
       item.data.invoice_link,
       (status: string) => {
         if (status === 'paid') {
+          setUpdater((prev) => prev + 1);
           console.log('Invoice paid successfully');
         } else {
           console.log('Invoice was not paid');
@@ -42,16 +43,15 @@ const BoostIndex = () => {
     );
   }
 
-  useEffect(() => {
-    if (!WebApp && !isInitialized) return;
-    WebApp.onEvent('invoiceClosed', (status: string) => {
-      console.log('onEvent >>>>> Payment status:', status);
-      if (status === 'paid') {
-        // 处理支付成功
-        console.log('支付成功');
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   if (!WebApp && !isInitialized) return;
+  //   WebApp.onEvent('invoiceClosed', (status: string) => {
+  //     console.log('onEvent >>>>> Payment status:', status);
+  //     if (status === 'paid') {
+  //       console.log('支付成功');
+  //     }
+  //   });
+  // }, []);
 
 
   return (

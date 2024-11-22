@@ -34,7 +34,7 @@ export const useGameItems = (id?: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [moduleConfigs, setModuleConfigs] = useState<Record<ModuleType, ModuleConfig>>(ModuleConfigs);
-
+  const [updater, setUpdater] = useState(0);
   useEffect(() => {
     if (!id) return;
     const fetchGameItems = async () => {
@@ -88,11 +88,12 @@ export const useGameItems = (id?: string) => {
     };
 
     fetchGameItems();
-  }, [id]);
+  }, [id, updater]);
 
   return {
     moduleConfigs,
     loading,
     error,
+    setUpdater
   };
 };
