@@ -2,31 +2,42 @@ import LazyImage from '@/components/img';
 import Card from './card';
 import Reward from './reward';
 import Button from './button';
+import { Quest } from '@/hooks/useQuest';
 
 const Task = (props: Props) => {
-  const { style, icon, title, reward, finished, className } = props;
+  const {
+    style,
+    name,
+    coins,
+    finished,
+    visited,
+    className,
+    disabled,
+    onClick,
+  } = props;
 
   return (
     <Card className={`w-full ${className}`} style={style}>
       <div className="flex items-center gap-[0.687500rem]">
         <LazyImage
-          src={icon as string}
+          src=""
           width="3.625rem"
           height="3.625rem"
+          containerClassName="shrink-0"
         />
-        <div className="flex flex-col">
-          <div className="">{title}</div>
+        <div className="flex flex-col flex-1 w-0">
+          <div className="">{name}</div>
           <Reward className="mt-[0.562500rem]">
-            +{reward}
+            +{coins}
           </Reward>
         </div>
-        <div className="ml-auto flex justify-end items-center">
+        <div className="ml-auto flex justify-end items-center shrink-0">
           {
             finished ? (
               <LazyImage src="/images/icon-done.svg" width="1.500000rem" height="1.500000rem" />
             ) : (
-              <Button>
-                Start
+              <Button className="whitespace-nowrap" disabled={disabled} onClick={onClick}>
+                {visited ? 'Verify' : 'Start'}
               </Button>
             )
           }
@@ -38,11 +49,9 @@ const Task = (props: Props) => {
 
 export default Task;
 
-interface Props {
+interface Props extends Quest {
   style?: React.CSSProperties;
   className?: string;
-  title: string;
-  reward: string | number;
-  finished?: boolean;
-  icon?: string;
+  disabled?: boolean;
+  onClick?(): void;
 }
