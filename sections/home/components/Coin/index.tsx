@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useCollisionDetection } from "@/sections/home/hooks/useCollisionDetection";
 
 const Coin = ({id, initialX, onCollected }: {id: any; initialX: number; onCollected: (id: number) => void }) => {
   const [opacity, setOpacity] = useState(1);
+  const coinRef = useRef<HTMLDivElement>(null);
+  // const isColliding = useCollisionDetection(coinRef);
+  
+  // useEffect(() => {
+  //   if (isColliding) {
+  //     onCollected(id);
+  //   }
+  // }, [isColliding, id, onCollected]);
 
   return (
     <motion.div
+      ref={coinRef}
       initial={{ x: initialX, y: 0, opacity: 1 }}
       animate={{ y: '50dvh' }} 
       transition={{

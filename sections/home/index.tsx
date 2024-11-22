@@ -7,6 +7,8 @@ import Coin from '@/sections/home/components/Coin';
 import ProgressBar from './components/ProgressBar';
 import { SceneList } from '@/sections/home/components/types';
 import { useRouter } from 'next/navigation'
+import { useAudio } from '@/hooks/useAudio';
+
 const Home = () => {
 
   const bgRef = useRef<any>();
@@ -16,6 +18,11 @@ const Home = () => {
   const [sceneIdx, setSceneIdx] = useState(1);
   const TARGET_COINS = 10;
   const router = useRouter();
+
+  const { play: playSound } = useAudio({
+    src: '/audios/coin.mp3',
+    volume: 0.5
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,9 +40,11 @@ const Home = () => {
   }, []);
 
   const handleCollected = (id: number) => {
-    console.log(`Coin with ID ${id} collected!`);
+    // console.log(`Coin with ID ${id} collected!`);
     setCoins((prevCoins) => prevCoins.filter((coin) => coin.id !== id));
     setCollectedCoins(prev => prev + 1);
+    playSound()
+
   };
 
   const progress = (collectedCoins / TARGET_COINS) * 100;
