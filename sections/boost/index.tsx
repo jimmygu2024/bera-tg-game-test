@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react';
 import ResourceItem from "@/components/ResourceItem/ResourceItem";
 
 import Popup from './popup';
@@ -11,7 +12,7 @@ import { useGameItems } from "./hooks/useGameItems";
 import { useTelegram } from '@/hooks/useTelegram';
 
 const BoostIndex = () => {
-  const { WebApp } = useTelegram();
+  const { WebApp, isInitialized } = useTelegram();
   const { moduleConfigs, loading} = useGameItems();
   
   const handleItemClick = (item: any) => {
@@ -20,7 +21,7 @@ const BoostIndex = () => {
     WebApp.openInvoice(
       item.data.invoice_link,
       (status: any) => {
-        console.log(status, 'status')
+        console.log(status, 'openInvoice ===> status')
         if (status.paid) {
           console.log('Invoice paid successfully');
         } else {
@@ -30,9 +31,17 @@ const BoostIndex = () => {
     );
   }
 
-  WebApp.onEvent('invoiceClosed', (status: any) => {
-    console.log(status, 'status')
-  })
+  useEffect(() => {
+    if (!WebApp && !isInitialized) return;
+    WebApp.onEvent('invoiceClosed', (status: any) => {
+      console.log('onEvent >>>>> Payment status:', status);
+      if (status === 'paid') {
+        // 处理支付成功
+        console.log('支付成功');
+      }
+    });
+  }, []);
+
 
   return (
     <div className="w-full min-h-screen overflow-hidden bg-[#96D6FF]">
