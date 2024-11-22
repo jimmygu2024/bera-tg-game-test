@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import ResourceItem from "@/components/ResourceItem/ResourceItem";
 
 import Popup from './popup';
@@ -13,8 +13,20 @@ import { useTelegram } from '@/hooks/useTelegram';
 
 const BoostIndex = () => {
   const { WebApp, isInitialized } = useTelegram();
-  const { moduleConfigs, loading} = useGameItems(WebApp.initDataUnsafe.user.id);
+  const [userId, setUserId] = useState<string | undefined>();
   
+  useEffect(() => {
+    if (isInitialized && WebApp) {
+      const userData = WebApp.initDataUnsafe?.user;
+      if (userData?.id) {
+        setUserId(userData.id.toString());
+      }
+    }
+  }, [isInitialized, WebApp]);
+
+  const { moduleConfigs, loading} = useGameItems(userId);
+
+
   const handleItemClick = (item: any) => {
     if (!WebApp || !item?.data?.invoice_link) return;
     console.log(item.data.invoice_link, 'item.data.invoice_link')

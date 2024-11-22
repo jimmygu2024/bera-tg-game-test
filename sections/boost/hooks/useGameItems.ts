@@ -30,7 +30,7 @@ const generateImageUrls = (category: string, level: number, isActive: boolean) =
 };
 
 
-export const useGameItems = (id: string) => {
+export const useGameItems = (id?: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [moduleConfigs, setModuleConfigs] = useState<Record<ModuleType, ModuleConfig>>(ModuleConfigs);
