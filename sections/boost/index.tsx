@@ -13,7 +13,7 @@ import { useTelegram } from '@/hooks/useTelegram';
 
 const BoostIndex = () => {
   const { WebApp, isInitialized } = useTelegram();
-  const { moduleConfigs, loading} = useGameItems();
+  const { moduleConfigs, loading} = useGameItems(WebApp.initDataUnsafe.user.id);
   
   const handleItemClick = (item: any) => {
     if (!WebApp || !item?.data?.invoice_link) return;
