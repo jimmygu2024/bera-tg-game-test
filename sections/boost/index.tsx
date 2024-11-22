@@ -30,6 +30,10 @@ const BoostIndex = () => {
     );
   }
 
+  WebApp.onEvent('invoiceClosed', (status: any) => {
+    console.log(status, 'status')
+  })
+
   return (
     <div className="w-full min-h-screen overflow-hidden bg-[#96D6FF]">
       <div className="w-full my-[20px]">
