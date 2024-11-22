@@ -6,7 +6,7 @@ import DressUpGame from './components/DressUpGame';
 import Coin from '@/sections/home/components/Coin';
 import ProgressBar from './components/ProgressBar';
 import { SceneList } from '@/sections/home/components/types';
-
+import { useRouter } from 'next/navigation'
 const Home = () => {
 
   const bgRef = useRef<any>();
@@ -15,6 +15,7 @@ const Home = () => {
   const [collectedCoins, setCollectedCoins] = useState(0);
   const [sceneIdx, setSceneIdx] = useState(1);
   const TARGET_COINS = 10;
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -72,7 +73,7 @@ const Home = () => {
         />
       </div>
 
-      <div className="">
+      <div className="flex gap-2 items-center">
         <button
           type="button"
           className="h-[32px] border border-[#4B371F] rounded-[10px] text-[16px] px-[20px] text-black bg-[#C7FF6E] flex justify-center items-center"
@@ -87,6 +88,13 @@ const Home = () => {
           }}
         >
           Next Scene
+        </button>
+        <button
+          onClick={() => router.push('/boost')}
+          type="button"
+          className="h-[32px] border border-[#4B371F] rounded-[10px] text-[16px] px-[20px] text-black bg-[#C7FF6E] flex justify-center items-center"
+        >
+          Shop Scene
         </button>
       </div>
     </HomeBg>

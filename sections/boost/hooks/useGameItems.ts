@@ -20,7 +20,7 @@ const categoryToModuleType: Record<string, ModuleType> = {
 };
 
 const generateImageUrls = (category: string, level: number, isActive: boolean) => {
-  const basePath = `/images/mobile/cave/${category}/${category}-${level}`;
+  const basePath = `/images/cave/${category}/${category}-${level}`;
   
   return {
     icon: `${basePath}${isActive ? '-active' : ''}.png`,
@@ -45,7 +45,7 @@ export const useGameItems = () => {
       try {
         setLoading(true);
         const response = await get(`/api/game/items?game_category=bera&address=${'0x8C7f311f5174b636Bc1849e523810b1e9a4B7a1D'}`);
-        if (response.code !== 0 ) return
+        if (response.code !== 200 ) return
 
         const groupedByCategory = response.data.reduce((acc: Record<string, GameItem[]>, item: GameItem) => {
           if (!acc[item.category]) {
@@ -63,22 +63,25 @@ export const useGameItems = () => {
           newConfigs[moduleType] = {
             ...ModuleConfigs[moduleType],
             items: items.map((item: any, index: any) => {
-              
+              // todo
               const { icon, popoverIcon } = generateImageUrls(
                 item.category,
-                item.level,
-                item.pc_item
+                item.level || 1,
+                item.tg_item
               );
               
               return {
                 ...ModuleConfigs[moduleType].items[index],
-                icon,
-                popoverIcon,
+                // icon,
+                // popoverIcon,
+                data: {
+                  ...item,
+                }
               };
             }),
           };
         });
-
+        console.log(newConfigs, 'newConfigs')
         setModuleConfigs(newConfigs);
         setError(null);
       } catch (err) {

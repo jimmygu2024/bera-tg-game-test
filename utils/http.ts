@@ -46,7 +46,6 @@ const get = async (url: string, query?: Record<string, any>) => {
   const options = {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${tokens.state?.accessToken?.access_token || ''}`,
       'Content-Type': 'application/json'
     }
   };

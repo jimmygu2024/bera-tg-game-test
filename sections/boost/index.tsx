@@ -8,28 +8,25 @@ import { ModuleConfigs } from './config';
 
 import IconFlash from "@/public/svg/flash.svg";
 import { useGameItems } from "./hooks/useGameItems";
-
-
-/**
- * font-family: Montserrat;
-font-size: 18px;
-font-weight: 700;
-line-height: 18px;
-text-align: center;
-
-tailwindcss => font-[700] text-[18px] text-center line-[18px]
- * 
- */
-
+import { useTelegram } from '@/hooks/useTelegram';
 
 const BoostIndex = () => {
-
-  const {  moduleConfigs, loading} = useGameItems();
-
-
-  console.log(moduleConfigs, 'moduleConfigs')
-  const handleItemClick = (item: ModuleItem) => {
-    console.log('Selected item:', item);
+  const { WebApp } = useTelegram();
+  const { moduleConfigs, loading} = useGameItems();
+  
+  const handleItemClick = (item: any) => {
+    console.log(WebApp, 'WebApp')
+    if (!WebApp || !item?.data?.invoice_link) return;
+    WebApp.openInvoice(
+      item.data.invoice_link,
+      (status: any) => {
+        if (status.paid) {
+          console.log('Invoice paid successfully');
+        } else {
+          console.log('Invoice was not paid');
+        }
+      }
+    );
   }
 
   return (
@@ -39,7 +36,7 @@ const BoostIndex = () => {
       </div>
       <div className="h-full relative pb-[80px]">
         <div className="absolute right-0 top-0"> 
-          <div className="px-[0.875rem] py-[0.625rem] border-[3px] border-[#709D27] bg-[#C7FF6E] rounded-3xl flex items-center gap-[3px]"><IconFlash /><span className="font-[700] text-[18px] text-center leading-[18px]">+300%</span></div>
+          <div className="px-[0.875rem] py-[0.625rem] border-[3px] border-[#709D27] bg-[#C7FF6E] rounded-3xl flex items-center gap-[3px]"><IconFlash /><span className="font-[700] text-[18px] text-center leading-[18px] text-black  ">+300%</span></div>
         </div>
         <div
         className=''
@@ -80,7 +77,10 @@ const BoostIndex = () => {
               }}
             />
             
-            <Module config={moduleConfigs.jackets} />
+            <Module config={{
+              ...moduleConfigs.jackets,
+              onItemClick: handleItemClick,
+            }} />
 
             <img
               src="/images/cave/backStripe.png"
@@ -100,7 +100,12 @@ const BoostIndex = () => {
                 width: "98.461vw",
               }}
             >
-              <Module config={moduleConfigs.necklaces} />
+              <Module config={
+                {
+                  ...moduleConfigs.necklaces,
+                  onItemClick: handleItemClick,
+                }
+                } />
             </div>
 
             {/* Key Modules */}
@@ -115,7 +120,10 @@ const BoostIndex = () => {
                 width: "98.461vw",
               }}
             >
-              <Module config={moduleConfigs.cars} />
+              <Module config={{
+                ...moduleConfigs.cars,
+                onItemClick: handleItemClick,
+              }} />
             </div>
           </div>
         </div>
