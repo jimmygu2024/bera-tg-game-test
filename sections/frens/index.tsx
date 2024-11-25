@@ -25,7 +25,7 @@ const FrensView = (props: any) => {
     const shareLink = new URL('https://t.me/share/url');
     appLink.searchParams.set('inviterId', userData?.id + '');
     shareLink.searchParams.set('url', appLink.toString());
-    shareLink.searchParams.set('text', encodeURIComponent('Look at this, it\'s so amazing'));
+    shareLink.searchParams.set('text', 'Look at this, it is so amazing');
     WebApp?.openTelegramLink?.(shareLink.toString());
   };
 
