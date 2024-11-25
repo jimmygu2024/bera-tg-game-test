@@ -28,8 +28,10 @@ const FrensView = (props: any) => {
     // shareLink.searchParams.set('text', 'Look at this, it is so amazing');
     // WebApp?.openTelegramLink?.(shareLink.toString());
 
-    const shareLink = new URL('https://t.me/BeraDapDap_bot');
-    shareLink.searchParams.set('startapp', `invite=${userData?.id}`);
+    const appLink = new URL('https://t.me/BeraDapDap_bot');
+    const shareLink = new URL('https://t.me/share/url');
+    appLink.searchParams.set('startapp', `inviterId=${userData?.id}`);
+    shareLink.searchParams.set('url', appLink.toString());
     WebApp?.openTelegramLink?.(shareLink.toString());
   };
 
