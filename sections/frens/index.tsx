@@ -21,17 +21,11 @@ const FrensView = (props: any) => {
   const userData: UserData = WebApp?.initDataUnsafe?.user || testData;
 
   const onShare = () => {
-    // const appLink = new URL('https://t.me/Try2ShareBot/try_to_share_web');
-    // const shareLink = new URL('https://t.me/share/url');
-    // appLink.searchParams.set('inviterId', userData?.id + '');
-    // shareLink.searchParams.set('url', appLink.toString());
-    // shareLink.searchParams.set('text', 'Look at this, it is so amazing');
-    // WebApp?.openTelegramLink?.(shareLink.toString());
-
     const appLink = new URL('https://t.me/BeraDapDap_bot');
     const shareLink = new URL('https://t.me/share/url');
     appLink.searchParams.set('startapp', `inviterId=${userData?.id}`);
     shareLink.searchParams.set('url', appLink.toString());
+    shareLink.searchParams.set('text', 'Look at this, it is so amazing');
     WebApp?.openTelegramLink?.(shareLink.toString());
   };
 
