@@ -2,16 +2,29 @@
 
 import LazyImage from '@/components/img';
 import { useTelegram } from '@/hooks/useTelegram';
+import type { UserData } from '@/hooks/useLogin';
+
+const testData = {
+  allows_write_to_pm: true,
+  first_name: 'gu',
+  id: 7150006688,
+  language_code: 'zh-hans',
+  last_name: 'jimmy',
+  photo_url: 'https://t.me/i/userpic/320/i2-BRTWcSQoXawvpUSVv78kuH2IMkVBXItH61uWUjHYGATen0Zf2m-qRI1i7HXIr.svg',
+  username: 'jimmyguu',
+};
 
 const FrensView = (props: any) => {
   const {} = props;
 
   const { WebApp, isInitialized } = useTelegram();
+  const userData: UserData = WebApp?.initDataUnsafe?.user || testData;
 
   const onShare = () => {
-    const appLink = process.env.NEXT_PUBLIC_PROJECT_ID as string;
+    const appLink = new URL('https://t.me/Try2ShareBot/try_to_share_web');
     const shareLink = new URL('https://t.me/share/url');
-    shareLink.searchParams.set('url', appLink);
+    appLink.searchParams.set('inviterId', userData?.id + '');
+    shareLink.searchParams.set('url', appLink.toString());
     shareLink.searchParams.set('text', encodeURIComponent('Look at this, it\'s so amazing'));
     WebApp?.openTelegramLink?.(shareLink.toString());
   };
