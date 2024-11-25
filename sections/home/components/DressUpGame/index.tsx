@@ -28,7 +28,7 @@ const DressUpGame: React.FC = () => {
         ease: "easeInOut",
       },
     })
-  }, [controls])
+  }, [controls, level])
   return (
     <div className="relative">
       <svg

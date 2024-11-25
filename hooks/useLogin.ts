@@ -40,6 +40,8 @@ const useLogin = (): UseLoginResult => {
 
         console.log(tgUser, 'handleLogin ===== tgUser')
 
+        console.log(WebApp.initDataUnsafe, 'handleLogin ===== WebApp.initDataUnsafe')
+
         const loginData = {
           tg_user_id: tgUser.id.toString(),
           tg_username: tgUser.username,
