@@ -28,6 +28,7 @@
     "near-api-js": "^0.44.2",
     "next": "14.2.5",
     "react": "^18",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18",
     "react-loading-skeleton": "^3.5.0",
     "swiper": "^11.1.14",
