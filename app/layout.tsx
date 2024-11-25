@@ -28,6 +28,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <title>Beraciaga_Test</title>
+        <meta property="og:title" content="Beraciaga - Meme Game" />
+        <meta property="og:description" content="Look at this, it is so amazing" />
+        <meta property="og:image" content="https://pbs.twimg.com/profile_images/1827080831803752448/olMbZ40f_200x200.jpg" />
+        <meta property="og:url" content="https://t.me/BeraDapDap_bot" />
       </head>
       <body>
         <TonConnectUIProvider manifestUrl='/tonconnect-manifest.json'>
