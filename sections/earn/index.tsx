@@ -8,6 +8,7 @@ import Reward from './components/reward';
 import Task from './components/task';
 import { useQuest } from '@/hooks/useQuest';
 import Skeleton from 'react-loading-skeleton';
+import ResourceItem from '@components/ResourceItem/ResourceItem';
 
 const EarnView = () => {
   const {
@@ -21,8 +22,12 @@ const EarnView = () => {
   } = useQuest();
 
   return (
-    <div>
-      <section className="mt-[1.25rem]">
+    <div className="relative w-full h-full overflow-y-auto bg-[#96D6FF]">
+      <div className="absolute z-[0] right-[2.5rem] top-[3.75rem] w-[7.38rem] h-[3.625rem] bg-[url('/images/icon-cloud.svg')] bg-no-repeat bg-cover bg-center" />
+      <div className="w-full pt-[0.8rem] pb-[1rem]">
+        <ResourceItem title="Frens" level={2} coins={13400} total={23450} />
+      </div>
+      <section className="relative z-[1]">
         <div className="text-[1.125rem] text-[#4B371F] font-[700] pl-[1rem]">
           Daily
         </div>
