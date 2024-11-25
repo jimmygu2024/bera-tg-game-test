@@ -71,7 +71,9 @@ const FrensView = (props: any) => {
   );
 
   const onShare = () => {
-    const appLink = new URL('https://t.me/BeraDapDap_bot/beraciaga');
+    if (!isInitialized) return;
+    if (!process.env.NEXT_PUBLIC_APP_LINK) return console.error('APP_LINK is not set');
+    const appLink = new URL(process.env.NEXT_PUBLIC_APP_LINK);
     const shareLink = new URL('https://t.me/share/url');
     appLink.searchParams.set('startapp', `inviterId=${userData?.id}`);
     shareLink.searchParams.set('url', appLink.toString());
