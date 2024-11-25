@@ -1,9 +1,20 @@
 'use client';
 
 import LazyImage from '@/components/img';
+import { useTelegram } from '@/hooks/useTelegram';
 
 const FrensView = (props: any) => {
   const {} = props;
+
+  const { WebApp, isInitialized } = useTelegram();
+
+  const onShare = () => {
+    const appLink = process.env.NEXT_PUBLIC_PROJECT_ID as string;
+    const shareLink = new URL('https://t.me/share/url');
+    shareLink.searchParams.set('url', appLink);
+    shareLink.searchParams.set('text', encodeURIComponent('Look at this, it\'s so amazing'));
+    WebApp?.openTelegramLink?.(shareLink.toString());
+  };
 
   return (
     <div className="px-[0.75rem] pt-[3.625rem]">
@@ -57,6 +68,7 @@ const FrensView = (props: any) => {
           <button
             type="button"
             className="flex-1 whitespace-nowrap text-[#4B371F] text-[1.25rem] font-[700] h-[3.75rem] rounded-[3.75rem] border-[2px] border-[#4B371F] bg-[#FFF5A9] flex justify-center items-center gap-[0.4375rem]"
+            onClick={onShare}
           >
             <span>Invite a fren</span>
             <LazyImage src="/images/icon-bera-coin.svg" width="1.25rem" height="1.25rem" />

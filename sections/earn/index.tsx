@@ -9,21 +9,6 @@ import Task from './components/task';
 import { useQuest } from '@/hooks/useQuest';
 import Skeleton from 'react-loading-skeleton';
 
-const DailyList = [
-  { key: 1, title: 'Daily Check-in', icon: '', reward: 100 },
-  { key: 2, title: 'GM in TG', icon: '', reward: 100 },
-  { key: 3, title: 'Share', icon: '', reward: 100 },
-  { key: 4, title: 'Like, comment, retweet', icon: '', reward: 100 },
-  { key: 5, title: 'Join Telegram group', icon: '', reward: 100 },
-];
-
-const TaskList = [
-  { key: 1, title: 'Follow Beraciaga', icon: '', reward: 100, finished: true },
-  { key: 2, title: 'Like, comment, retweet', icon: '', reward: 100 },
-  { key: 3, title: 'Join Telegram group', icon: '', reward: 100 },
-  { key: 4, title: 'Join Discord channel', icon: '', reward: 100 },
-];
-
 const EarnView = () => {
   const {
     loading,
