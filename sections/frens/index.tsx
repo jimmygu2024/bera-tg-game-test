@@ -76,13 +76,6 @@ const FrensView = (props: any) => {
     // shareLink.searchParams.set('url', appLink.toString());
     // shareLink.searchParams.set('text', 'Look at this, it is so amazing');
     // WebApp?.openTelegramLink?.(shareLink.toString());
-    const appLink = new URL('https://t.me/BeraDapDap_bot');
-    appLink.searchParams.set('startapp', `inviterId=${userData?.id}`);
-  
-    WebApp?.shareData?.({
-      text: 'test share!',
-      url: appLink.toString(),
-    });
   };
 
   useEffect(() => {
@@ -171,15 +164,16 @@ const FrensView = (props: any) => {
           }
         </div>
         <div className="flex justify-between items-center gap-[0.5625rem]">
-          <button
+          <a
             type="button"
             className="flex-1 whitespace-nowrap text-[#4B371F] text-[1.25rem] font-[700] h-[3.75rem] rounded-[3.75rem] border-[2px] border-[#4B371F] bg-[#FFF5A9] flex justify-center items-center gap-[0.4375rem]"
-            onClick={onShare}
+            // onClick={onShare}
+            href='https://t.me/share/url?url=https://t.me/BeraDapDap_bot&text=qqq'
           >
             <span>Invite a fren</span>
             <LazyImage src="/images/icon-bera-coin.svg" width="1.25rem" height="1.25rem" />
             <span>+{SingleEarn}</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>
