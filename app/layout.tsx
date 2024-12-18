@@ -8,6 +8,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { TabBarWrapper } from '@/components/Layout/TabBarWrapper';
 import TelegramProvider from '@/context/TelegramContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
+import OkxTonProvider from '@/context/OkxContext';
 
 export default function RootLayout({
   children,
@@ -37,9 +38,11 @@ export default function RootLayout({
         <TonConnectUIProvider manifestUrl='/tonconnect-manifest.json'>
           <TelegramProvider>
             <SkeletonTheme baseColor='#96D6FF' highlightColor='#FFF5A9'>
-              <TabBarWrapper>
-                {children}
-              </TabBarWrapper>
+              <OkxTonProvider>
+                <TabBarWrapper>
+                  {children}
+                </TabBarWrapper>
+              </OkxTonProvider>
             </SkeletonTheme>
           </TelegramProvider>
         </TonConnectUIProvider>
