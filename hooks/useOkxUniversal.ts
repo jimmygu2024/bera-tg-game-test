@@ -67,16 +67,19 @@ export function useOkxUniversal(): IOkxUniversalContext {
         }
       });
     } catch (err) {
-      console.log('connect failed: %o', err);
+      console.log('>>>>> connect failed: %o', err);
     }
+    console.log('>>>>> connect done: %o', _session);
     setSession(_session);
     if (_session) {
       setStoreSession(_session);
     } else {
+      console.log('>>>>> connect done but no session, storeSession is: %o', storeSession);
       if (storeSession) {
         _session = storeSession;
         setSession(_session);
       } else {
+        console.log('>>>>> auto disconnect without storeSession: %o', okxUniversalProvider);
         setSession(void 0);
         await okxUniversalProvider?.disconnect?.();
       }
