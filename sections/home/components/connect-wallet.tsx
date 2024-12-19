@@ -3,10 +3,15 @@
 import { useOkxTon } from '@/hooks/useOkxTon';
 import Drawer from '@components/Drawer';
 import { useState } from 'react';
+import { useTelegram } from '@/hooks/useTelegram';
+import { UserData } from '@/hooks/useLogin';
 
 const ConnectWallet = () => {
   const { account, wallet, connected, onConnect, onDisconnect } = useOkxTon();
+  const { WebApp } = useTelegram();
   const [visible, setVisible] = useState(false);
+
+  const tgUser = WebApp.initDataUnsafe.user as UserData;
 
   const handleConnect = () => {
     if (connected) {
@@ -40,7 +45,13 @@ const ConnectWallet = () => {
       >
         <div className="p-[20px_10px] h-full flex flex-col items-stretch">
           <div className="flex items-center gap-[10px]">
-            <div className="shrink-0 h-[28px] w-[28px] rounded-full border border-[#1F2229] bg-[conic-gradient(from_180deg_at_50%_50%,_#00D1FF_0deg,_#FF008A_360deg)]"></div>
+            {
+              tgUser.photo_url ? (
+                <img src={tgUser.photo_url} alt="" className="shrink-0 h-[28px] w-[28px] rounded-full" />
+              ) : (
+                <div className="shrink-0 h-[28px] w-[28px] rounded-full border border-[#1F2229] bg-[conic-gradient(from_180deg_at_50%_50%,_#00D1FF_0deg,_#FF008A_360deg)]"></div>
+              )
+            }
             <div className="break-all">
               {account?.address}
             </div>

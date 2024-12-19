@@ -15,12 +15,14 @@ export function useOkxTon(): IOkxTonContext {
 
   const onConnect = async () => {
     setConnecting(true);
+    const params = {
+      tonProof: WebApp.initDataUnsafe?.signature,
+      redirect: "tg://resolve",
+      openUniversalLink: true
+    };
+    console.log('connect params: %o', params);
     try {
-      await okxTonConnect?.connect?.({
-        tonProof: '',
-        redirect: "tg://resolve",
-        openUniversalLink: true
-      });
+      await okxTonConnect?.connect?.(params);
     } catch (error) {
       if (error instanceof OKXConnectError) {
         if (error.code === OKX_CONNECT_ERROR_CODES.USER_REJECTS_ERROR) {
