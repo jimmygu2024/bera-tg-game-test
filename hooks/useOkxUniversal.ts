@@ -47,20 +47,20 @@ export function useOkxUniversal(): IOkxUniversalContext {
               'eip155:34443',
             ]
           },
-          ton: {
-            chains: [
-              'ton:-239'
-            ],
-            params: {
-              'ton_addr': {
-                'name': 'ton_addr'
-              },
-              // 'ton_proof': {
-              //   'name': 'ton_proof',
-              //   'payload': 'Test'
-              // }
-            }
-          },
+          // ton: {
+          //   chains: [
+          //     'ton:-239'
+          //   ],
+          //   params: {
+          //     'ton_addr': {
+          //       'name': 'ton_addr'
+          //     },
+          //     // 'ton_proof': {
+          //     //   'name': 'ton_proof',
+          //     //   'payload': 'Test'
+          //     // }
+          //   }
+          // },
         },
         sessionConfig: {
           redirect: 'tg://resolve'
