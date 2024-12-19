@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 const ConnectWallet = () => {
   const { account, wallet, connected, onConnect, onDisconnect } = useOkxTon();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const handleConnect = () => {
     if (connected) {
@@ -16,6 +16,12 @@ const ConnectWallet = () => {
     onConnect?.();
   };
 
+  console.log('account address: %o', account?.address);
+  console.log('account chain: %o', account?.chain);
+  console.log('account walletStateInit: %o', account?.walletStateInit);
+  console.log('account publicKey: %o', account?.publicKey);
+  console.log('connectItems tonProof: %o', wallet?.connectItems?.tonProof);
+
   return (
     <>
       <button
@@ -23,7 +29,7 @@ const ConnectWallet = () => {
         className="h-[32px] border border-[#4B371F] rounded-[10px] text-[16px] px-[20px] text-black bg-[#C7FF6E] flex justify-center items-center whitespace-nowrap"
         onClick={handleConnect}
       >
-        {connected ? `${account?.address?.slice(0, 5)}...${account?.address?.slice(-4)}` : 'Connect'}
+        {connected ? `${account?.address?.slice(0, 7)}...${account?.address?.slice(-4)}` : 'Connect'}
       </button>
       <Drawer
         visible={visible}
@@ -34,8 +40,8 @@ const ConnectWallet = () => {
       >
         <div className="p-[20px_10px] h-full flex flex-col items-stretch">
           <div className="flex items-center gap-[10px]">
-            <div className="h-[28px] w-[28px] rounded-full border border-[#1F2229] bg-[conic-gradient(from_180deg_at_50%_50%,_#00D1FF_0deg,_#FF008A_360deg)]"></div>
-            <div className="">
+            <div className="shrink-0 h-[28px] w-[28px] rounded-full border border-[#1F2229] bg-[conic-gradient(from_180deg_at_50%_50%,_#00D1FF_0deg,_#FF008A_360deg)]"></div>
+            <div className="break-all">
               {account?.address}
             </div>
           </div>
@@ -53,8 +59,12 @@ const ConnectWallet = () => {
               <div className="">{wallet?.provider}</div>
             </div>
             <div className="flex items-center gap-[10px]">
-              <div className="font-bold">TonProof Name</div>
-              <div className="">{wallet?.connectItems?.tonProof?.name}</div>
+              <div className="font-bold">Chain</div>
+              <div className="">{account?.chain}</div>
+            </div>
+            <div className="flex items-center gap-[10px]">
+              <div className="font-bold">PublicKey</div>
+              <div className="">{account?.publicKey}</div>
             </div>
           </div>
           <button
