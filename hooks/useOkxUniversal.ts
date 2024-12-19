@@ -1,22 +1,23 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { OkxTonContext } from '@/context/OkxContext';
 import { useTelegram } from '@/hooks/useTelegram';
 import { OKXUniversalProvider, SessionTypes, OKXTonProvider } from '@okxconnect/universal-provider';
-import useOkxSessionStore from '@/stores/useOkxSession';
 
 export function useOkxUniversal(): IOkxUniversalContext {
-  const { okxUniversalProvider } = useContext(OkxTonContext);
+  const { okxUniversalProvider, loading: okxLoading } = useContext(OkxTonContext);
   const { WebApp } = useTelegram();
-  const setStoreSession = useOkxSessionStore((state) => state.setSession);
-  const storeSession = useOkxSessionStore((state) => state.session);
 
   const [connecting, setConnecting] = useState<boolean>(false);
-  const [session, setSession] = useState<SessionTypes.Struct | undefined>();
 
   const connected: boolean | undefined = okxUniversalProvider?.connected?.();
+  const okxSession: SessionTypes.Struct | undefined = okxUniversalProvider?.session;
 
   const onConnect = async () => {
     setConnecting(true);
+    if (!okxUniversalProvider) {
+      setConnecting(false);
+      return;
+    }
     let _session;
     try {
       _session = await okxUniversalProvider?.connect?.({
@@ -69,21 +70,6 @@ export function useOkxUniversal(): IOkxUniversalContext {
     } catch (err) {
       console.log('>>>>> connect failed: %o', err);
     }
-    console.log('>>>>> connect done: %o', _session);
-    setSession(_session);
-    if (_session) {
-      setStoreSession(_session);
-    } else {
-      console.log('>>>>> connect done but no session, storeSession is: %o', storeSession);
-      if (storeSession) {
-        _session = storeSession;
-        setSession(_session);
-      } else {
-        console.log('>>>>> auto disconnect without storeSession: %o', okxUniversalProvider);
-        setSession(void 0);
-        await okxUniversalProvider?.disconnect?.();
-      }
-    }
     setConnecting(false);
     return _session;
   };
@@ -94,9 +80,9 @@ export function useOkxUniversal(): IOkxUniversalContext {
 
   return {
     okxUniversalProvider,
-    session,
+    session: okxSession,
     connected,
-    connecting,
+    connecting: connecting || okxLoading,
     onConnect,
     onDisconnect,
   };
