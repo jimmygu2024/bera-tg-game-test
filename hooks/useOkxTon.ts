@@ -1,15 +1,22 @@
 import { OkxTonContext } from '@/context/OkxContext';
-import { useContext } from 'react';
-import { OKX_CONNECT_ERROR_CODES, OKXConnectError, OKXTonConnect } from '@okxconnect/tonsdk';
+import { useContext, useState } from 'react';
+import { OKX_CONNECT_ERROR_CODES, OKXConnectError, OKXTonConnect, Account, Wallet } from '@okxconnect/tonsdk';
+import { useTelegram } from '@/hooks/useTelegram';
 
 export function useOkxTon(): IOkxTonContext {
   const { okxTonConnect } = useContext(OkxTonContext);
+  const { WebApp } = useTelegram();
+
+  const [connecting, setConnecting] = useState<boolean>(false);
 
   const connected: boolean | undefined = okxTonConnect?.connected;
+  const account = okxTonConnect?.account;
+  const wallet = okxTonConnect?.wallet;
 
-  const onConnect = () => {
+  const onConnect = async () => {
+    setConnecting(true);
     try {
-      okxTonConnect?.connect?.({
+      await okxTonConnect?.connect?.({
         tonProof: '',
         redirect: "tg://resolve",
         openUniversalLink: true
@@ -17,16 +24,17 @@ export function useOkxTon(): IOkxTonContext {
     } catch (error) {
       if (error instanceof OKXConnectError) {
         if (error.code === OKX_CONNECT_ERROR_CODES.USER_REJECTS_ERROR) {
-          alert('User reject');
+          WebApp?.showAlert?.('User reject');
         } else if (error.code === OKX_CONNECT_ERROR_CODES.ALREADY_CONNECTED_ERROR) {
-          alert('Already connected');
+          WebApp?.showAlert?.('Already connected');
         } else {
-          alert('Unknown error happened');
+          WebApp?.showAlert?.('Unknown error happened');
         }
       } else {
-        alert('Unknown error happened');
+        WebApp?.showAlert?.('Unknown error happened');
       }
     }
+    setConnecting(false);
   };
 
   const onDisconnect = async () => {
@@ -36,14 +44,14 @@ export function useOkxTon(): IOkxTonContext {
       if (error instanceof OKXConnectError) {
         switch (error.code) {
           case OKX_CONNECT_ERROR_CODES.NOT_CONNECTED_ERROR:
-            alert('Not connected');
+            WebApp?.showAlert?.('Not connected');
             break;
           default:
-            alert('Unknown error happened');
+            WebApp?.showAlert?.('Unknown error happened');
             break;
         }
       } else {
-        alert('Unknown error happened');
+        WebApp?.showAlert?.('Unknown error happened');
       }
     }
   };
@@ -51,14 +59,20 @@ export function useOkxTon(): IOkxTonContext {
   return {
     okxTonConnect,
     connected,
+    connecting,
     onConnect,
     onDisconnect,
+    account,
+    wallet,
   };
 }
 
 export interface IOkxTonContext {
   okxTonConnect?: OKXTonConnect;
   connected?: boolean;
+  connecting?: boolean;
+  wallet?: Wallet | null | undefined;
+  account?: Account | null | undefined;
   onConnect?(): void;
   onDisconnect?(): Promise<void>;
 }
