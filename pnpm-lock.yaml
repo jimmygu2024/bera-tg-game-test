@@ -26,6 +26,9 @@ importers:
       '@okxconnect/ui':
         specifier: ^1.6.0
         version: 1.6.0
+      '@okxconnect/universal-provider':
+        specifier: ^1.6.0
+        version: 1.6.0
       '@svgr/webpack':
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.6.3)

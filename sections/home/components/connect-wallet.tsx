@@ -1,21 +1,20 @@
 'use client';
 
-import { useOkxTon } from '@/hooks/useOkxTon';
 import Drawer from '@components/Drawer';
 import { useState } from 'react';
 import { useTelegram } from '@/hooks/useTelegram';
 import { UserData } from '@/hooks/useLogin';
 import Skeleton from 'react-loading-skeleton';
+import { useOkxUniversal } from '@/hooks/useOkxUniversal';
 
 const ConnectWallet = () => {
   const {
-    account,
-    wallet,
+    session,
     connected,
     onConnect,
     onDisconnect,
     connecting
-  } = useOkxTon();
+  } = useOkxUniversal();
   const { WebApp } = useTelegram();
   const [visible, setVisible] = useState(false);
 
@@ -29,11 +28,7 @@ const ConnectWallet = () => {
     onConnect?.();
   };
 
-  console.log('account address: %o', account?.address);
-  console.log('account chain: %o', account?.chain);
-  console.log('account walletStateInit: %o', account?.walletStateInit);
-  console.log('account publicKey: %o', account?.publicKey);
-  console.log('connectItems tonProof: %o', wallet?.connectItems?.tonProof);
+  console.log('session: %o', session);
 
   return (
     <>
@@ -46,7 +41,7 @@ const ConnectWallet = () => {
             className="h-[32px] border border-[#4B371F] rounded-[16px] text-[16px] px-[20px] text-black bg-[#C7FF6E] flex justify-center items-center whitespace-nowrap"
             onClick={handleConnect}
           >
-            {connected ? `${account?.address?.slice(0, 7)}...${account?.address?.slice(-4)}` : 'Connect'}
+            {connected ? `connected` : 'Connect'}
           </button>
         )
       }
@@ -67,29 +62,29 @@ const ConnectWallet = () => {
               )
             }
             <div className="break-all">
-              {account?.address}
+
             </div>
           </div>
           <div className="flex flex-col items-stretch gap-[5px] mt-[15px]">
             <div className="flex items-center gap-[10px]">
               <div className="font-bold">Platform</div>
-              <div className="">{wallet?.device?.platform}</div>
+              <div className=""></div>
             </div>
             <div className="flex items-center gap-[10px]">
               <div className="font-bold">AppName</div>
-              <div className="">{wallet?.device?.appName}</div>
+              <div className=""></div>
             </div>
             <div className="flex items-center gap-[10px]">
               <div className="font-bold">Provider</div>
-              <div className="">{wallet?.provider}</div>
+              <div className=""></div>
             </div>
             <div className="flex items-center gap-[10px]">
               <div className="font-bold">Chain</div>
-              <div className="">{account?.chain}</div>
+              <div className=""></div>
             </div>
             <div className="flex items-center gap-[10px]">
               <div className="font-bold">PublicKey</div>
-              <div className="">{account?.publicKey}</div>
+              <div className=""></div>
             </div>
           </div>
           <button
