@@ -51,7 +51,7 @@ const ConnectWallet = () => {
         }}
         size="70dvh"
       >
-        <div className="p-[20px_10px] h-full overflow-y-auto flex flex-col items-stretch">
+        <div className="p-[20px_10px] h-full overflow-y-auto flex flex-col items-stretch text-black opacity-100">
           <div className="flex items-center gap-[10px]">
             {
               tgUser?.photo_url ? (
