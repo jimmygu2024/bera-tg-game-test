@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 const ConnectWallet = () => {
   const { account, wallet, connected, onConnect, onDisconnect } = useOkxTon();
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const handleConnect = () => {
     if (connected) {
