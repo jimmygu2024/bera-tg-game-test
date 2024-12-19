@@ -60,7 +60,10 @@ const ConnectWallet = () => {
           <button
             type="button"
             className="mt-auto w-full h-[60px] rounded-[30px] border-[2px] border-[#4B371F] bg-[#FFF5A9] text-[#4B371F] text-[20px] flex justify-center items-center"
-            onClick={onDisconnect}
+            onClick={() => {
+              onDisconnect?.();
+              setVisible(false);
+            }}
           >
             Disconnect
           </button>
