@@ -54,10 +54,10 @@ export function useOkxUniversal(): IOkxUniversalContext {
             'ton_addr': {
               'name': 'ton_addr'
             },
-            'ton_proof': {
-              'name': 'ton_proof',
-              'payload': 'Test'
-            }
+            // 'ton_proof': {
+            //   'name': 'ton_proof',
+            //   'payload': 'Test'
+            // }
           }
         },
       },
