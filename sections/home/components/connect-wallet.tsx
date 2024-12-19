@@ -50,7 +50,7 @@ const ConnectWallet = () => {
         onClose={() => {
           setVisible(false);
         }}
-        size="50dvh"
+        size="60dvh"
       >
         <div className="p-[20px_10px] h-full flex flex-col items-stretch">
           <div className="flex items-center gap-[10px]">
@@ -62,29 +62,41 @@ const ConnectWallet = () => {
               )
             }
             <div className="break-all">
-
+              {tgUser?.username}
             </div>
           </div>
           <div className="flex flex-col items-stretch gap-[5px] mt-[15px]">
+            {
+              session?.namespaces?.eip155?.accounts?.map((account) => (
+                <div className="flex items-center gap-[10px]">
+                  <div className="font-bold">ChainId: {account.split(':')[1]}</div>
+                  <div className="">{account.split(':')[2]}</div>
+                </div>
+              ))
+            }
+            {
+              session?.namespaces?.ton?.accounts?.map((account) => (
+                <div className="flex items-center gap-[10px]">
+                  <div className="font-bold">ChainId: {account.split(':')[1]}</div>
+                  <div className="">{account.split(':')[2]}:{account.split(':')[3]}</div>
+                </div>
+              ))
+            }
             <div className="flex items-center gap-[10px]">
               <div className="font-bold">Platform</div>
-              <div className=""></div>
+              <div className="">{session?.wallet?.platform}</div>
             </div>
             <div className="flex items-center gap-[10px]">
               <div className="font-bold">AppName</div>
-              <div className=""></div>
+              <div className="">{session?.wallet?.appName}</div>
             </div>
             <div className="flex items-center gap-[10px]">
-              <div className="font-bold">Provider</div>
-              <div className=""></div>
+              <div className="font-bold">App Version</div>
+              <div className="">{session?.wallet?.appVersion}</div>
             </div>
             <div className="flex items-center gap-[10px]">
-              <div className="font-bold">Chain</div>
-              <div className=""></div>
-            </div>
-            <div className="flex items-center gap-[10px]">
-              <div className="font-bold">PublicKey</div>
-              <div className=""></div>
+              <div className="font-bold">Wallet</div>
+              <div className="">{session?.wallet?.walletName}</div>
             </div>
           </div>
           <button
