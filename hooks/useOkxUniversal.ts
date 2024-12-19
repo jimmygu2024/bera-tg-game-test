@@ -70,15 +70,18 @@ export function useOkxUniversal(): IOkxUniversalContext {
       console.log('connect failed: %o', err);
     }
     setSession(_session);
-    setConnecting(false);
     if (_session) {
       setStoreSession(_session);
     } else {
       if (storeSession) {
         _session = storeSession;
         setSession(_session);
+      } else {
+        setSession(void 0);
+        await okxUniversalProvider?.disconnect?.();
       }
     }
+    setConnecting(false);
     return _session;
   };
 
