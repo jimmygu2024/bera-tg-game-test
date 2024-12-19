@@ -3,7 +3,6 @@
 import Drawer from '@components/Drawer';
 import { useState } from 'react';
 import { useTelegram } from '@/hooks/useTelegram';
-import { UserData } from '@/hooks/useLogin';
 import Skeleton from 'react-loading-skeleton';
 import { useOkxUniversal } from '@/hooks/useOkxUniversal';
 
@@ -18,7 +17,7 @@ const ConnectWallet = () => {
   const { WebApp } = useTelegram();
   const [visible, setVisible] = useState(false);
 
-  const tgUser = WebApp?.initDataUnsafe?.user as UserData;
+  const tgUser = WebApp?.initDataUnsafe?.user as any;
 
   const handleConnect = () => {
     if (connected) {
@@ -50,9 +49,9 @@ const ConnectWallet = () => {
         onClose={() => {
           setVisible(false);
         }}
-        size="60dvh"
+        size="70dvh"
       >
-        <div className="p-[20px_10px] h-full flex flex-col items-stretch">
+        <div className="p-[20px_10px] h-full overflow-y-auto flex flex-col items-stretch">
           <div className="flex items-center gap-[10px]">
             {
               tgUser?.photo_url ? (
@@ -62,23 +61,28 @@ const ConnectWallet = () => {
               )
             }
             <div className="break-all">
-              {tgUser?.username}
+              {tgUser?.first_name} {tgUser?.last_name}
             </div>
           </div>
           <div className="flex flex-col items-stretch gap-[5px] mt-[15px]">
             {
-              session?.namespaces?.eip155?.accounts?.map((account) => (
-                <div className="flex items-center gap-[10px]">
+              session?.namespaces?.eip155?.accounts?.map((account, idx) => (
+                <div className="flex items-center gap-[10px]" key={idx}>
                   <div className="font-bold">ChainId: {account.split(':')[1]}</div>
-                  <div className="">{account.split(':')[2]}</div>
+                  <div className="">
+                    {`${account.split(':')[2].slice(0, 7)}...${account.split(':')[2].slice(-4)}`}
+                  </div>
                 </div>
               ))
             }
             {
-              session?.namespaces?.ton?.accounts?.map((account) => (
-                <div className="flex items-center gap-[10px]">
+              session?.namespaces?.ton?.accounts?.map((account, idx) => (
+                <div className="flex items-center gap-[10px]" key={idx}>
                   <div className="font-bold">ChainId: {account.split(':')[1]}</div>
-                  <div className="">{account.split(':')[2]}:{account.split(':')[3]}</div>
+                  <div className="">{}</div>
+                  <div className="">
+                    {account.split(':')[2]}:{`${account.split(':')[3].slice(0, 7)}...${account.split(':')[3].slice(-4)}`}
+                  </div>
                 </div>
               ))
             }
@@ -101,7 +105,7 @@ const ConnectWallet = () => {
           </div>
           <button
             type="button"
-            className="mt-auto w-full h-[60px] rounded-[30px] border-[2px] border-[#4B371F] bg-[#FFF5A9] text-[#4B371F] text-[20px] flex justify-center items-center"
+            className="shrink-0 mt-auto w-full h-[60px] rounded-[30px] border-[2px] border-[#4B371F] bg-[#FFF5A9] text-[#4B371F] text-[20px] flex justify-center items-center"
             onClick={() => {
               onDisconnect?.();
               setVisible(false);
