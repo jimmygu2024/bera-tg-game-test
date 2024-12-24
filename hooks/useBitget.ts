@@ -27,7 +27,9 @@ export function useBitget(): IBitgetContext {
     }, 10000);
     try {
       const res = await bitgetProvider?.provider?.connect?.({
-        chainId: '1',
+        request: {
+          chainId: '1',
+        },
       });
       clearTimeout(timeout);
       console.log('>>>>> connect succeed: %o', res);
