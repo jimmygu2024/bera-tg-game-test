@@ -20,8 +20,16 @@ export function useBitget(): IBitgetContext {
       setConnecting(false);
       return;
     }
+    const timeout = setTimeout(() => {
+      clearTimeout(timeout);
+      setConnecting(false);
+      console.log('>>>>> connect timeout...');
+    }, 10000);
     try {
-      const res = await bitgetProvider?.provider?.connect?.({});
+      const res = await bitgetProvider?.provider?.connect?.({
+        chainId: '1',
+      });
+      clearTimeout(timeout);
       console.log('>>>>> connect succeed: %o', res);
     } catch (err) {
       console.log('>>>>> connect failed: %o', err);
