@@ -9,6 +9,7 @@ import { TabBarWrapper } from '@/components/Layout/TabBarWrapper';
 import TelegramProvider from '@/context/TelegramContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import OkxTonProvider from '@/context/OkxContext';
+import BitgetProvider from '@/context/BitgetContext';
 
 export default function RootLayout({
   children,
@@ -39,9 +40,11 @@ export default function RootLayout({
           <TelegramProvider>
             <SkeletonTheme baseColor='#96D6FF' highlightColor='#FFF5A9'>
               <OkxTonProvider>
-                <TabBarWrapper>
-                  {children}
-                </TabBarWrapper>
+                <BitgetProvider>
+                  <TabBarWrapper>
+                    {children}
+                  </TabBarWrapper>
+                </BitgetProvider>
               </OkxTonProvider>
             </SkeletonTheme>
           </TelegramProvider>

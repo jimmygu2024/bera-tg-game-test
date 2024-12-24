@@ -15,6 +15,7 @@ export function useBitget(): IBitgetContext {
   const [connecting, setConnecting] = useState<boolean>(false);
 
   const onConnect = async () => {
+    debugger
     setConnecting(true);
     if (!bitgetProvider) {
       setConnecting(false);

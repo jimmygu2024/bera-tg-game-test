@@ -6,6 +6,8 @@ import { useTelegram } from '@/hooks/useTelegram';
 import Skeleton from 'react-loading-skeleton';
 import { useOkxUniversal } from '@/hooks/useOkxUniversal';
 import { useBitget } from '@/hooks/useBitget';
+import { TonConnectButton } from '@tonconnect/ui-react';
+import { useTonConnect } from '@/hooks/useTonConnect';
 
 const ConnectWallet = () => {
   const {
@@ -20,21 +22,32 @@ const ConnectWallet = () => {
     onDisconnect: onBitgetDisconnet,
     connected: bitgetConnected,
     connecting: bitgetConnecting,
+    address: bitgetAddress,
   } = useBitget();
+  const {
+    open: onTonOpen,
+    close: onTonClose,
+    onDisconnect: onTonDisconnet,
+    connected: tonConnected,
+    account: tonAccount,
+    wallet: tonWallet,
+    userFriendlyAddress: tonUserFriendlyAddress,
+    rawAddress: tonRawAddress,
+  } = useTonConnect();
   const { WebApp } = useTelegram();
   const [visible, setVisible] = useState(false);
   const [walletVisible, setWalletVisible] = useState(false);
 
   const [connected, connecting] = useMemo(() => {
     const _result = [false, false];
-    if (okxConnected || bitgetConnected) {
+    if (okxConnected || bitgetConnected || tonConnected) {
       _result[0] = true;
     }
     if (okxConnecting || bitgetConnecting) {
       _result[1] = true;
     }
     return _result;
-  }, [okxConnecting, okxConnected, bitgetConnecting, bitgetConnected]);
+  }, [okxConnecting, okxConnected, bitgetConnecting, bitgetConnected, tonConnected]);
 
   const tgUser = WebApp?.initDataUnsafe?.user as any;
 
@@ -52,6 +65,9 @@ const ConnectWallet = () => {
     }
     if (bitgetConnected) {
       onBitgetDisconnet?.();
+    }
+    if (tonConnected) {
+      onTonDisconnet?.();
     }
     setVisible(false);
   };
@@ -97,6 +113,21 @@ const ConnectWallet = () => {
                 <OKXConnectedInfo okxSession={okxSession} />
               )
             }
+            {
+              bitgetConnected && (
+                <BitgetConnectedInfo address={bitgetAddress} />
+              )
+            }
+            {
+              tonConnected && (
+                <TonConnectedInfo
+                  account={tonAccount}
+                  wallet={tonWallet}
+                  userFriendlyAddress={tonUserFriendlyAddress}
+                  rawAddress={tonRawAddress}
+                />
+              )
+            }
           </div>
           <button
             type="button"
@@ -122,16 +153,26 @@ const ConnectWallet = () => {
             <WalletItem
               name="OKX"
               icon="/images/wallets/okx.svg"
-              onClick={onOKXConnect}
+              onClick={() => {
+                onOKXConnect?.();
+                setWalletVisible(false);
+              }}
             />
             <WalletItem
               name="Bitget"
               icon="/images/wallets/bitget.webp"
-              onClick={onBitgetConnect}
+              onClick={() => {
+                onBitgetConnect?.();
+                setWalletVisible(false);
+              }}
             />
             <WalletItem
               name="Ton Connect"
               icon="/images/wallets/ton.svg"
+              onClick={() => {
+                onTonOpen?.();
+                setWalletVisible(false);
+              }}
             />
           </div>
         </div>
@@ -196,6 +237,54 @@ function OKXConnectedInfo(props: any) {
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">Wallet</div>
         <div className="">{okxSession?.wallet?.walletName}</div>
+      </div>
+    </>
+  );
+}
+
+function BitgetConnectedInfo(props: any) {
+  const { address } = props;
+
+  return (
+    <>
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">Address</div>
+        <div className="">
+          {address}
+        </div>
+      </div>
+    </>
+  );
+}
+
+function TonConnectedInfo(props: any) {
+  const { account, wallet, userFriendlyAddress, rawAddress } = props;
+
+  return (
+    <>
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">userFriendlyAddress</div>
+        <div className="">
+          {userFriendlyAddress}
+        </div>
+      </div>
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">rawAddress</div>
+        <div className="">
+          {rawAddress}
+        </div>
+      </div>
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">wallet</div>
+        <div className="">
+          {wallet?.name}
+        </div>
+      </div>
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">Device</div>
+        <div className="">
+          {wallet?.device?.appName}
+        </div>
       </div>
     </>
   );
