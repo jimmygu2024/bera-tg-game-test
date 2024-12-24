@@ -6,8 +6,8 @@ import { IBitgetContext } from '@/hooks/useBitget';
 
 const metaData = {
   name: 'Beraciaga',
-  iconUrl: 'https://pbs.twimg.com/profile_images/1827080831803752448/olMbZ40f_200x200.jpg',
-  url: 'https://t.me/berachain_game_test_bot',
+  iconUrl: '/images/icon-bera-coin.svg',
+  url: 'https://bera-83kt.vercel.app/',
 };
 
 interface IBitgetWalletContext extends IBitgetContext {

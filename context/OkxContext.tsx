@@ -6,7 +6,7 @@ import { IOkxUniversalContext } from '@/hooks/useOkxUniversal';
 
 const metaData = {
   name: 'Beraciaga',
-  icon: 'https://pbs.twimg.com/profile_images/1827080831803752448/olMbZ40f_200x200.jpg',
+  icon: '/images/icon-bera-coin.svg',
 };
 
 interface IOkxWalletContext extends IOkxUniversalContext {
