@@ -9,8 +9,8 @@ export function useTonConnect(): ITonConnect {
   const wallet = useTonWallet();
   const [tonConnectUI] = useTonConnectUI();
 
-  const connected = tonConnectUI.connected;
-  const account = tonConnectUI.account
+  const connected = tonConnectUI?.connected;
+  const account = tonConnectUI?.account
 
   const onDisconnect = async () => {
     await tonConnectUI.disconnect();
@@ -37,6 +37,6 @@ export interface ITonConnect {
   wallet?: Wallet | (Wallet & WalletInfoWithOpenMethod) | null;
   tonConnectUI?: TonConnectUI;
   onDisconnect(): Promise<void>;
-  connected: boolean;
-  account: Account | null;
+  connected?: boolean;
+  account?: Account | null;
 }
