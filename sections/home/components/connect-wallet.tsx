@@ -1,21 +1,40 @@
 'use client';
 
 import Drawer from '@components/Drawer';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTelegram } from '@/hooks/useTelegram';
 import Skeleton from 'react-loading-skeleton';
 import { useOkxUniversal } from '@/hooks/useOkxUniversal';
+import { useBitget } from '@/hooks/useBitget';
 
 const ConnectWallet = () => {
   const {
-    session,
-    connected,
-    onConnect,
-    onDisconnect,
-    connecting
+    session: okxSession,
+    connected: okxConnected,
+    onConnect: onOKXConnect,
+    onDisconnect: onOKXDisconnect,
+    connecting: okxConnecting
   } = useOkxUniversal();
+  const {
+    onConnect: onBitgetConnect,
+    onDisconnect: onBitgetDisconnet,
+    connected: bitgetConnected,
+    connecting: bitgetConnecting,
+  } = useBitget();
   const { WebApp } = useTelegram();
   const [visible, setVisible] = useState(false);
+  const [walletVisible, setWalletVisible] = useState(false);
+
+  const [connected, connecting] = useMemo(() => {
+    const _result = [false, false];
+    if (okxConnected || bitgetConnected) {
+      _result[0] = true;
+    }
+    if (okxConnecting || bitgetConnecting) {
+      _result[1] = true;
+    }
+    return _result;
+  }, [okxConnecting, okxConnected, bitgetConnecting, bitgetConnected]);
 
   const tgUser = WebApp?.initDataUnsafe?.user as any;
 
@@ -24,10 +43,18 @@ const ConnectWallet = () => {
       setVisible(true);
       return;
     }
-    onConnect?.();
+    setWalletVisible(true);
   };
 
-  console.log('session: %o', session);
+  const handleDisconnect = () => {
+    if (okxConnected) {
+      onOKXDisconnect?.();
+    }
+    if (bitgetConnected) {
+      onBitgetDisconnet?.();
+    }
+    setVisible(false);
+  };
 
   return (
     <>
@@ -66,53 +93,47 @@ const ConnectWallet = () => {
           </div>
           <div className="flex flex-col items-stretch gap-[5px] mt-[15px]">
             {
-              session?.namespaces?.eip155?.accounts?.map((account, idx) => (
-                <div className="flex items-center gap-[10px]" key={idx}>
-                  <div className="font-bold">ChainId: {account.split(':')[1]}</div>
-                  <div className="">
-                    {`${account.split(':')[2].slice(0, 7)}...${account.split(':')[2].slice(-4)}`}
-                  </div>
-                </div>
-              ))
+              okxConnected && (
+                <OKXConnectedInfo okxSession={okxSession} />
+              )
             }
-            {
-              session?.namespaces?.ton?.accounts?.map((account, idx) => (
-                <div className="flex items-center gap-[10px]" key={idx}>
-                  <div className="font-bold">ChainId: {account.split(':')[1]}</div>
-                  <div className="">{}</div>
-                  <div className="">
-                    {account.split(':')[2]}:{`${account.split(':')[3].slice(0, 7)}...${account.split(':')[3].slice(-4)}`}
-                  </div>
-                </div>
-              ))
-            }
-            <div className="flex items-center gap-[10px]">
-              <div className="font-bold">Platform</div>
-              <div className="">{session?.wallet?.platform}</div>
-            </div>
-            <div className="flex items-center gap-[10px]">
-              <div className="font-bold">AppName</div>
-              <div className="">{session?.wallet?.appName}</div>
-            </div>
-            <div className="flex items-center gap-[10px]">
-              <div className="font-bold">App Version</div>
-              <div className="">{session?.wallet?.appVersion}</div>
-            </div>
-            <div className="flex items-center gap-[10px]">
-              <div className="font-bold">Wallet</div>
-              <div className="">{session?.wallet?.walletName}</div>
-            </div>
           </div>
           <button
             type="button"
             className="shrink-0 mt-auto w-full h-[60px] rounded-[30px] border-[2px] border-[#4B371F] bg-[#FFF5A9] text-[#4B371F] text-[20px] flex justify-center items-center"
-            onClick={() => {
-              onDisconnect?.();
-              setVisible(false);
-            }}
+            onClick={handleDisconnect}
           >
             Disconnect
           </button>
+        </div>
+      </Drawer>
+      <Drawer
+        visible={walletVisible}
+        onClose={() => {
+          setWalletVisible(false);
+        }}
+        size="30dvh"
+      >
+        <div className="p-[20px_10px] h-full overflow-y-auto text-black opacity-100">
+          <div className="font-bold text-[18px]">
+            Wallets
+          </div>
+          <div className="grid grid-cols-3 mt-[20px]">
+            <WalletItem
+              name="OKX"
+              icon="/images/wallets/okx.svg"
+              onClick={onOKXConnect}
+            />
+            <WalletItem
+              name="Bitget"
+              icon="/images/wallets/bitget.webp"
+              onClick={onBitgetConnect}
+            />
+            <WalletItem
+              name="Ton Connect"
+              icon="/images/wallets/ton.svg"
+            />
+          </div>
         </div>
       </Drawer>
     </>
@@ -120,3 +141,62 @@ const ConnectWallet = () => {
 };
 
 export default ConnectWallet;
+
+function WalletItem(props: any) {
+  const { icon, name, onClick } = props;
+
+  return (
+    <div className="w-full flex flex-col gap-[10px] items-center" onClick={onClick}>
+      <div className="w-[40px] h-[40px] rounded-[10px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url("${icon}")` }} />
+      <div className="text-[16px] font-[500]">
+        {name}
+      </div>
+    </div>
+  );
+}
+
+function OKXConnectedInfo(props: any) {
+  const { okxSession } = props;
+
+  return (
+    <>
+      {
+        okxSession?.namespaces?.eip155?.accounts?.map((account: any, idx: number) => (
+          <div className="flex items-center gap-[10px]" key={idx}>
+            <div className="font-bold">ChainId: {account.split(':')[1]}</div>
+            <div className="">
+              {`${account.split(':')[2].slice(0, 7)}...${account.split(':')[2].slice(-4)}`}
+            </div>
+          </div>
+        ))
+      }
+      {
+        okxSession?.namespaces?.ton?.accounts?.map((account: any, idx: number) => (
+          <div className="flex items-center gap-[10px]" key={idx}>
+            <div className="font-bold">ChainId: {account.split(':')[1]}</div>
+            <div className="">{}</div>
+            <div className="">
+              {account.split(':')[2]}:{`${account.split(':')[3].slice(0, 7)}...${account.split(':')[3].slice(-4)}`}
+            </div>
+          </div>
+        ))
+      }
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">Platform</div>
+        <div className="">{okxSession?.wallet?.platform}</div>
+      </div>
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">AppName</div>
+        <div className="">{okxSession?.wallet?.appName}</div>
+      </div>
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">App Version</div>
+        <div className="">{okxSession?.wallet?.appVersion}</div>
+      </div>
+      <div className="flex items-center gap-[10px]">
+        <div className="font-bold">Wallet</div>
+        <div className="">{okxSession?.wallet?.walletName}</div>
+      </div>
+    </>
+  );
+}

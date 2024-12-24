@@ -10,7 +10,7 @@ const metaData = {
 };
 
 interface IOkxWalletContext extends IOkxUniversalContext {
-  loading?: boolean;
+  okxLoading?: boolean;
 }
 
 export const OkxTonContext = createContext<IOkxWalletContext>({});
@@ -40,7 +40,7 @@ function OkxTonProvider(props: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <OkxTonContext.Provider value={{ okxTonProvider, okxUniversalProvider, loading }}>
+    <OkxTonContext.Provider value={{ okxTonProvider, okxUniversalProvider, okxLoading: loading }}>
       {children}
     </OkxTonContext.Provider>
   );

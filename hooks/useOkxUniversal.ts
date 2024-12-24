@@ -4,7 +4,7 @@ import { useTelegram } from '@/hooks/useTelegram';
 import { OKXUniversalProvider, SessionTypes, OKXTonProvider } from '@okxconnect/universal-provider';
 
 export function useOkxUniversal(): IOkxUniversalContext {
-  const { okxUniversalProvider, loading: okxLoading } = useContext(OkxTonContext);
+  const { okxUniversalProvider, okxLoading } = useContext(OkxTonContext);
   const { WebApp } = useTelegram();
 
   const [connecting, setConnecting] = useState<boolean>(false);
