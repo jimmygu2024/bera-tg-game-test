@@ -55,7 +55,7 @@ function BitgetProvider(props: { children: React.ReactNode }) {
             '169',
             '534352',
             '81457',
-            '34443',
+            '34443'
           ],
         },
       },
@@ -65,6 +65,7 @@ function BitgetProvider(props: { children: React.ReactNode }) {
     } catch (err: any) {
       console.log('restore Bitget Connection failed: %o', err);
     }
+    console.log('Bitget connector: %o', connector);
     setBitgetProvider(connector);
     setLoading(false);
 

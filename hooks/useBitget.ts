@@ -21,7 +21,8 @@ export function useBitget(): IBitgetContext {
       return;
     }
     try {
-      await bitgetProvider?.provider?.connect?.({});
+      const res = await bitgetProvider?.provider?.connect?.({});
+      console.log('>>>>> connect succeed: %o', res);
     } catch (err) {
       console.log('>>>>> connect failed: %o', err);
     }
