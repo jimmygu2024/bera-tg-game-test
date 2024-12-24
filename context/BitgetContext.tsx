@@ -6,8 +6,8 @@ import { IBitgetContext } from '@/hooks/useBitget';
 
 const metaData = {
   name: 'Beraciaga',
-  iconUrl: '/images/icon-bera-coin.svg',
-  url: 'https://bera-83kt.vercel.app/',
+  iconUrl: 'https://raw.githubusercontent.com/bitkeepwallet/download/main/logo/png/bitget_wallet_logo_0_gas_fee_64.jpeg',
+  url: 'https://web3.bitget.com',
 };
 
 interface IBitgetWalletContext extends IBitgetContext {
@@ -37,6 +37,8 @@ function BitgetProvider(props: { children: React.ReactNode }) {
     const connector = new OmniConnect({
       metadata: metaData,
       namespace: {
+        // DOCUMENT https://web3.bitget.com/zh-CN/docs/wallet/supported-chains.html
+        // DEMO https://omni-connect-demo.bwb.online/eth
         eip155: {
           chains: [
             '1',
@@ -45,17 +47,18 @@ function BitgetProvider(props: { children: React.ReactNode }) {
             '42161',
             '43114',
             '56',
-            '59144',
-            '1088',
+            // Not Supported
+            // '59144',
+            // '1088',
             '10',
             '137',
             '1101',
             '324',
             '100',
             '169',
-            '534352',
-            '81457',
-            '34443'
+            // '534352',
+            // '81457',
+            // '34443'
           ],
         },
       },

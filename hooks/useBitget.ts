@@ -24,7 +24,7 @@ export function useBitget(): IBitgetContext {
       clearTimeout(timeout);
       setConnecting(false);
       console.log('>>>>> connect timeout...');
-    }, 10000);
+    }, 15000);
     try {
       const res = await bitgetProvider?.provider?.connect?.({
         request: {

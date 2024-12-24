@@ -205,7 +205,7 @@ function OKXConnectedInfo(props: any) {
         okxSession?.namespaces?.eip155?.accounts?.map((account: any, idx: number) => (
           <div className="flex items-center gap-[10px]" key={idx}>
             <div className="font-bold">ChainId: {account.split(':')[1]}</div>
-            <div className="">
+            <div className="break-all">
               {`${account.split(':')[2].slice(0, 7)}...${account.split(':')[2].slice(-4)}`}
             </div>
           </div>
@@ -216,7 +216,7 @@ function OKXConnectedInfo(props: any) {
           <div className="flex items-center gap-[10px]" key={idx}>
             <div className="font-bold">ChainId: {account.split(':')[1]}</div>
             <div className="">{}</div>
-            <div className="">
+            <div className="break-all">
               {account.split(':')[2]}:{`${account.split(':')[3].slice(0, 7)}...${account.split(':')[3].slice(-4)}`}
             </div>
           </div>
@@ -224,19 +224,19 @@ function OKXConnectedInfo(props: any) {
       }
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">Platform</div>
-        <div className="">{okxSession?.wallet?.platform}</div>
+        <div className="break-all">{okxSession?.wallet?.platform}</div>
       </div>
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">AppName</div>
-        <div className="">{okxSession?.wallet?.appName}</div>
+        <div className="break-all">{okxSession?.wallet?.appName}</div>
       </div>
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">App Version</div>
-        <div className="">{okxSession?.wallet?.appVersion}</div>
+        <div className="break-all">{okxSession?.wallet?.appVersion}</div>
       </div>
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">Wallet</div>
-        <div className="">{okxSession?.wallet?.walletName}</div>
+        <div className="break-all">{okxSession?.wallet?.walletName}</div>
       </div>
     </>
   );
@@ -249,7 +249,7 @@ function BitgetConnectedInfo(props: any) {
     <>
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">Address</div>
-        <div className="">
+        <div className="break-all">
           {address}
         </div>
       </div>
@@ -264,25 +264,25 @@ function TonConnectedInfo(props: any) {
     <>
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">userFriendlyAddress</div>
-        <div className="">
+        <div className="break-all">
           {userFriendlyAddress}
         </div>
       </div>
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">rawAddress</div>
-        <div className="">
+        <div className="break-all">
           {rawAddress}
         </div>
       </div>
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">wallet</div>
-        <div className="">
+        <div className="break-all">
           {wallet?.name}
         </div>
       </div>
       <div className="flex items-center gap-[10px]">
         <div className="font-bold">Device</div>
-        <div className="">
+        <div className="break-all">
           {wallet?.device?.appName}
         </div>
       </div>
