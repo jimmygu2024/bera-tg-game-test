@@ -1,5 +1,5 @@
 'use client';
-
+import { OKXUniversalConnectUI } from "@okxconnect/ui";
 import HomeBg from '@/sections/home/components/bg';
 import { useRef, useState, useEffect } from 'react';
 import DressUpGame from './components/DressUpGame';
@@ -19,6 +19,7 @@ const Home = () => {
   const [sceneIdx, setSceneIdx] = useState(1);
   const TARGET_COINS = 10;
   const router = useRouter();
+  const [uniVersalUi, setUniversalUi] = useState<any>(null);
 
   const { play: playSound } = useAudio({
     src: '/audios/coin.mp3',
@@ -54,6 +55,29 @@ const Home = () => {
     console.log('Progress complete!');
     setCollectedCoins(0);
   };
+
+  const fetchData = async () => {
+    const universalUi = await OKXUniversalConnectUI.init({
+      dappMetaData: {
+        icon: "https://static.okx.com/cdn/assets/imgs/247/58E63FEA47A2B7D7.png",
+        name: "OKX Connect Demo"
+      },
+      actionsConfiguration: {
+        returnStrategy: 'tg://resolve',
+        modals:'all',
+        tmaReturnUrl:'back'
+      },
+      language: "en_US"
+    });
+    setUniversalUi(universalUi);
+  }
+
+  useEffect(() => {
+    const fetchDataAsync = async () => {
+      await fetchData();
+    };
+    fetchDataAsync();
+  }, []);
 
   return (
     <HomeBg
@@ -109,6 +133,9 @@ const Home = () => {
           </button>
         </div>
         <ConnectWallet />
+        <button onClick={() => {
+          uniVersalUi?.openModal();
+        }}>test</button>
       </div>
     </HomeBg>
   );
