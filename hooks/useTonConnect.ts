@@ -16,6 +16,8 @@ export function useTonConnect(): ITonConnect {
     await tonConnectUI.disconnect();
   }
 
+  console.log(tonConnectUI, '<<======tonConnectUI')
+
   return {
     open,
     close,
