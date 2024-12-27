@@ -27,6 +27,7 @@ const TelegramProvider: React.FC<{ children: React.ReactNode }> = ({
         WebAppModule.default.expand();
         setWebApp(WebAppModule.default);
         setIsInitialized(true);
+        console.log(WebAppModule.default, '---WebAppModule.default---')
       } catch (err) {
         setError("Failed to load Telegram WebApp SDK");
       }
