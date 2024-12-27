@@ -134,7 +134,20 @@ const Home = () => {
         </div>
         <ConnectWallet />
         <button onClick={() => {
-          uniVersalUi?.openModal();
+          uniVersalUi?.openModal({
+            namespaces: {
+              eip155: {
+                    // 请按需组合需要的链id传入，多条链就传入多个
+                    chains: ["eip155:1"],
+                    defaultChain: "1"
+                }
+            },
+            optionalNamespaces: {
+              eip155: {
+                chains: ["eip155:43114"]
+              }
+            }
+          });
         }}>test</button>
       </div>
     </HomeBg>
