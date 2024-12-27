@@ -1,10 +1,10 @@
 <svg width="139" height="70" viewBox="0 0 139 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-<ellipse cx="47.1938" cy="18.1733" rx="12.6406" ry="6.89486" transform="rotate(9.38454 47.1938 18.1733)" fill="#FED2AB"/>
-<ellipse cx="97.9285" cy="16.4722" rx="11" ry="6" transform="rotate(-18.3812 97.9285 16.4722)" fill="#FED2AB"/>
+<ellipse cx="47.1938" cy="18.1733" rx="12.6406" ry="6.89486" transform="rotate(9.38454 47.1938 18.1733)" fill="var(--eyebrow-color)"/>
+<ellipse cx="97.9285" cy="16.4722" rx="11" ry="6" transform="rotate(-18.3812 97.9285 16.4722)" fill="var(--eyebrow-color)"/>
 <path d="M54.8281 30.4346L31.0781 27.4346M93.5781 29.4346L113.578 24.3096" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="42.3184" cy="34.2119" r="4.875" fill="black"/>
 <circle cx="105.385" cy="31.5098" r="4.875" fill="black"/>
-<ellipse cx="78.5977" cy="49.3096" rx="24" ry="15" fill="#FED2AB"/>
+<ellipse cx="78.5977" cy="49.3096" rx="24" ry="15" fill="currentColor"/>
 <path d="M88.0968 38.3097C84.8968 37.9097 79.0972 38.0319 75.5972 38.8096C71.0972 39.8095 79.0972 47.8096 83.5972 46.8096C88.0972 45.8096 92.0968 38.8097 88.0968 38.3097Z" fill="black"/>
 <ellipse cx="82.5977" cy="40.3096" rx="3" ry="1" fill="#D9D9D9"/>
 <path d="M82.6602 44.1846C83.7435 45.6012 84.9371 49.7096 83.5371 51.3096" stroke="black" stroke-width="2" stroke-linecap="round"/>

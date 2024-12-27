@@ -97,8 +97,9 @@ export const JACKETS_MAPPING = {
 
   export interface BearColors {
     primary?: string;  // 身体
-    secondary?: string;  // 脸部
     tertiary?: string;  // 耳朵
+    secondary?: string;  // 脸部
+    eyebrow?: string;  // 眉毛
   }
   
   export interface BearProps {
@@ -111,5 +112,83 @@ export const JACKETS_MAPPING = {
   export const DEFAULT_COLORS = {
     primary: '#E49F63',
     secondary: '#FED2AB',
-    tertiary: '#E49F63',
+    tertiary: '#FABEBE',
+    eyebrow: '#FED2AB'
   } as const;
+
+
+
+export const bearColors: any = {
+	1: {
+		primary: '#E49F63', 
+		tertiary: '#FABEBE',
+		secondary: '#FED2AB',
+		eyebrow: '#FED2AB'
+	},
+	2: {
+		primary: '#C263E4', 
+		tertiary: '#FABEBE',
+		secondary: '#FABEBE',
+		eyebrow: '#DFA6F4'
+	},
+	3: {
+		primary: '#FFE683', 
+		tertiary: '#FF9461',
+		secondary: '#FF9461',
+		eyebrow: '#D6B83E'
+	},
+	4: {
+		primary: '#50C878', 
+		tertiary: '#FFFF89',
+		secondary: '#FFFF89',
+		eyebrow: '#B2EEC6'
+	},
+	5: {
+		primary: '#F2A1A8', 
+		tertiary: '#CD6870',
+		secondary: '#CD6870',
+		eyebrow: '#FDC9CE'
+	},
+	6: {
+		primary: '#777777', 
+		tertiary: '#F66C19',
+		secondary: '#F9732A',
+		eyebrow: '#A5A5B0'
+	},
+	7: {
+		primary: '#788AFD', 
+		tertiary: '#FFFFFF',
+		secondary: '#FFFFFF',
+		eyebrow: '#B2BDFF'
+	},
+	8: {
+		primary: '#944546', 
+		tertiary: '#FFC97C',
+		secondary: '#FFC97C',
+		eyebrow: '#D27678'
+	},
+	9: {
+		primary: '#ADD5D2', 
+		tertiary: '#F2E7B5',
+		secondary: '#F2E7B5',
+		eyebrow: '#D9ECEA'
+	},
+	10: {
+		primary: '#F7EBDA', 
+		tertiary: '#ED9D57',
+		secondary: '#ED9D58',
+		eyebrow: '#E3C59A'
+	},
+	11: {
+		primary: '#DBCCBF', 
+		tertiary: '#F09192',
+		secondary: '#F09193',
+		eyebrow: '#F9E4D2'
+	},
+	12: {
+		primary: '#B78662', 
+		tertiary: '#F0C791',
+		secondary: '#F0C791',
+		eyebrow: '#ECC09F'
+	}
+}

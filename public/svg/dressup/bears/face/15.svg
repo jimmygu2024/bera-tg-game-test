@@ -3,9 +3,9 @@
 <ellipse cx="46.7039" cy="34.214" rx="4.13265" ry="5.30871" transform="rotate(9.38454 46.7039 34.214)" fill="white"/>
 <ellipse cx="10.1385" cy="13.0236" rx="10.1385" ry="13.0236" transform="matrix(-0.986616 0.16306 0.16306 0.986616 109.115 16.2141)" fill="black"/>
 <ellipse cx="101.554" cy="31.314" rx="3.79148" ry="4.87045" transform="rotate(-8.16564 101.554 31.314)" fill="white"/>
-<ellipse cx="46.7055" cy="18.0779" rx="12.6406" ry="6.89486" transform="rotate(9.38454 46.7055 18.0779)" fill="#FED2AB"/>
-<ellipse cx="97.4402" cy="16.3768" rx="11" ry="6" transform="rotate(-18.3812 97.4402 16.3768)" fill="#FED2AB"/>
-<ellipse cx="78.083" cy="49.3096" rx="24" ry="15" fill="#FED2AB"/>
+<ellipse cx="46.7055" cy="18.0779" rx="12.6406" ry="6.89486" transform="rotate(9.38454 46.7055 18.0779)" fill="var(--eyebrow-color)"/>
+<ellipse cx="97.4402" cy="16.3768" rx="11" ry="6" transform="rotate(-18.3812 97.4402 16.3768)" fill="var(--eyebrow-color)"/>
+<ellipse cx="78.083" cy="49.3096" rx="24" ry="15" fill="currentColor"/>
 <path d="M87.9542 37.9399C84.7542 37.5399 78.9546 37.662 75.4546 38.4397C70.9546 39.4396 78.9546 47.4397 83.4546 46.4397C87.9546 45.4397 91.9542 38.4399 87.9542 37.9399Z" fill="black"/>
 <ellipse cx="82.4541" cy="39.9397" rx="3" ry="1" fill="#D9D9D9"/>
 <path d="M95.0039 47.8923C89.7256 54.0389 72.1033 53.4333 67.9427 51.3297C68.2345 54.809 75.6423 62.4296 83.6923 61.3296C93.7548 59.9546 95.128 50.0173 95.0039 47.8923Z" fill="white"/>

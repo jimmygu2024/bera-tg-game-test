@@ -2,7 +2,7 @@ import React from 'react';
 import IconSit from '@public/svg/dressup/bears/sit.svg';
 import IconStand from '@public/svg/dressup/bears/stand.svg';
 import IconHead from '@public/svg/dressup/bears/head.svg';
-import { BearProps, BEAR_FACES, DEFAULT_COLORS } from './config';
+import { BearProps, BEAR_FACES, DEFAULT_COLORS, bearColors } from './config';
 
 
 
@@ -16,11 +16,7 @@ const Bear: React.FC<BearProps> = ({
   const FaceComponent = BEAR_FACES[safeface as keyof typeof BEAR_FACES];
 
 
-  const bearColors = {
-    primary: colors.primary || DEFAULT_COLORS.primary,
-    secondary: colors.secondary || DEFAULT_COLORS.secondary,
-    tertiary: colors.tertiary || DEFAULT_COLORS.tertiary,
-  };
+  const bearColor = bearColors[level] || DEFAULT_COLORS;
 
   return (
     <g id="bear" fill="none">
@@ -34,27 +30,28 @@ const Bear: React.FC<BearProps> = ({
         {level <= 1 ? (
           <IconStand 
             style={{ 
-              color: bearColors.primary,
+              color: bearColor.primary,
             }}
           />
         ) : (
             <IconSit 
               style={{ 
-                color: bearColors.primary,
+                color: bearColor.primary,
               }}
             />
         )}
         <IconHead 
           style={{ 
-            color: bearColors.primary,
-            '--ear-color': bearColors.tertiary,
+            color: bearColor.primary,
+            '--ear-color': bearColor.tertiary,
           } as React.CSSProperties}
         />
 
         <g transform="translate(82,70)">
           <FaceComponent 
             style={{ 
-              color: bearColors.secondary,
+              color: bearColor.secondary,
+              '--eyebrow-color': bearColor.eyebrow,
             }}
           />
         </g>

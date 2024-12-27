@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
 import { useTelegram } from '@/hooks/useTelegram';
 import { post } from '@/utils/http';
 
@@ -22,10 +21,6 @@ const useLogin = (): UseLoginResult => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   
-  const params = useParams();
-  const inviterId = params?.inviterId as string;
-
-
   useEffect(() => {
     if (!isInitialized || !WebApp) return;
 
@@ -38,9 +33,9 @@ const useLogin = (): UseLoginResult => {
         const tgUser = WebApp.initDataUnsafe.user as UserData;
         setUserData(tgUser);
 
-        console.log(tgUser, 'handleLogin ===== tgUser')
-
         console.log(WebApp.initDataUnsafe, 'handleLogin ===== WebApp.initDataUnsafe')
+
+        const inviterId = WebApp.initDataUnsafe.start_param && WebApp.initDataUnsafe.start_param.split('inviterId=')?.[1];
 
         const loginData = {
           tg_user_id: tgUser.id.toString(),
@@ -61,7 +56,7 @@ const useLogin = (): UseLoginResult => {
     };
 
     handleLogin();
-  }, [WebApp, isInitialized, inviterId]);
+  }, [WebApp, isInitialized]);
 
   useEffect(() => {
     if (sdkError) {
