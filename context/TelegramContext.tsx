@@ -24,6 +24,7 @@ const TelegramProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const WebAppModule = await import("@twa-dev/sdk");
         WebAppModule.default.ready();
+        WebAppModule.default.expand();
         setWebApp(WebAppModule.default);
         setIsInitialized(true);
       } catch (err) {
