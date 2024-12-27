@@ -33,6 +33,7 @@ const ConnectWallet = () => {
     wallet: tonWallet,
     userFriendlyAddress: tonUserFriendlyAddress,
     rawAddress: tonRawAddress,
+    isReady: tonIsReady,
   } = useTonConnect();
   const { WebApp } = useTelegram();
   const [visible, setVisible] = useState(false);

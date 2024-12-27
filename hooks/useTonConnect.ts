@@ -42,12 +42,8 @@ export function useTonConnect(): ITonConnect {
     };
   }, [tonConnectUI]);
 
-  if (!isReady) {
-    console.log('TON Connect UI not ready');
-  }
-
-
   return {
+    isReady,
     open,
     close,
     userFriendlyAddress,
@@ -70,4 +66,5 @@ export interface ITonConnect {
   onDisconnect(): Promise<void>;
   connected?: boolean;
   account?: Account | null;
+  isReady: boolean;
 }
