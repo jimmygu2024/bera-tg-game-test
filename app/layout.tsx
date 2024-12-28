@@ -10,12 +10,15 @@ import TelegramProvider from '@/context/TelegramContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import OkxTonProvider from '@/context/OkxContext';
 import BitgetProvider from '@/context/BitgetContext';
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const path = usePathname();
+
   useEffect(() => {
     async function loadPlugin() {
       if (typeof window !== 'undefined') {
@@ -38,7 +41,7 @@ export default function RootLayout({
             <SkeletonTheme baseColor='#96D6FF' highlightColor='#FFF5A9'>
               <OkxTonProvider isTelegram>
                 <BitgetProvider>
-                  <TabBarWrapper>
+                  <TabBarWrapper showTabBar={!['/bind', '/imported-equipments'].includes(path)}>
                     {children}
                   </TabBarWrapper>
                 </BitgetProvider>
