@@ -25,7 +25,7 @@ export const TabBarWrapper = ({
       <main
         className={`h-full overflow-y-auto overflow-x-hidden`}
         style={{
-          paddingBottom: showTabBar ? '5rem' : 0,
+          paddingBottom: showTabBar ? '5.375rem' : 0,
         }}
       >
         {children}

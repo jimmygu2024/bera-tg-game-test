@@ -1,40 +1,8 @@
-'use client'
+'use client';
+
 import { useRouter, usePathname } from 'next/navigation';
-import { useLayoutStore } from '@/stores/useLayoutStore';
+import { TabItem, TABS, useLayoutStore } from '@/stores/useLayoutStore';
 import { useCallback, useEffect } from 'react';
-
-
-export type TabItem = {
-    id: string;
-    label: string;
-    path: string;
-  };
-  
-  export type LayoutConfig = {
-    showTabBar: boolean;
-  };
-
-const TabItem: React.FC<{
-  id: string
-  label: string;
-  isActive: boolean;
-  onClick: () => void;
-}> = ({ id, label, isActive, onClick }) => (
-  <button
-    onClick={onClick}
-    className={`flex flex-col items-center justify-center flex-1 py-2 space-y-1
-      ${isActive ? 'text-[#4B371F]' : 'text-[#9E8D79]'}`}
-  >
-    <img src={`/images/tabbar/${isActive ? id + '-active' : id}.png`} alt="" className='w-10 h-9' />
-    <span className="font-montserrat text-xs font-semibold text-center leading-13">{label}</span>
-  </button>
-);
-
-export const tabs: TabItem[] = [
-  { id: 'home', label: 'Home', path: '/' },
-  { id: 'earn', label: 'Earn', path: '/earn' },
-  { id: 'frens',label: 'Frens', path: '/frens' }
-];
 
 const TabBar: React.FC = () => {
   const router = useRouter();
@@ -42,30 +10,45 @@ const TabBar: React.FC = () => {
   const { activeTab, setActiveTab } = useLayoutStore();
 
   useEffect(() => {
-    const tab = tabs.find(tab => tab.path === pathname);
+    const tab = TABS.find(tab => tab.path === pathname);
     if (tab) {
       setActiveTab(tab.id);
     }
   }, [pathname, setActiveTab]);
 
   const handleTabClick = useCallback((tab: TabItem) => {
+    if (tab.isLock) return;
     setActiveTab(tab.id);
     router.push(tab.path);
   }, [router, setActiveTab]);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-primary rounded-t-xl">
-      <div className="flex items-center justify-around max-w-md mx-auto h-20">
-        {tabs.map((tab) => (
-          <TabItem
+    <div className="fixed left-0 bottom-0 w-full bg-[#FFD335] grid grid-cols-5">
+      {
+        TABS.map((tab) => (
+          <div
             key={tab.id}
-            id={tab.id}
-            label={tab.label}
-            isActive={activeTab === tab.id}
+            className="flex py-[1.4375rem] flex-col items-center justify-center cursor-pointer relative"
             onClick={() => handleTabClick(tab)}
-          />
-        ))}
-      </div>
+          >
+            <div
+              className="w-full h-[2.5rem] bg-contain bg-center bg-no-repeat relative"
+              style={{
+                backgroundImage: `url("${tab.isLock ? tab.inactiveIcon : tab.icon}")`
+              }}
+            >
+              <div className={`left-0 ${activeTab === tab.id ? 'text-[#FFF]' : 'text-[#8A8A8A]'} w-full font-Montserrat text-[1rem] text-center font-[900] leading-[100%] text-stroke-2 absolute bottom-0`}>
+                {tab.label}
+              </div>
+              {
+                tab.isLock && (
+                  <img className="w-[1.3rem] h-[1.6rem] absolute right-[0.5rem] top-[-0.3rem]" src="/images/tabbar/icon-lock.svg" alt="" />
+                )
+              }
+            </div>
+          </div>
+        ))
+      }
     </div>
   );
 };
