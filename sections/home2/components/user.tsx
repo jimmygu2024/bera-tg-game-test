@@ -7,7 +7,7 @@ const User = () => {
           <img src="/images/beraciaga/avator.svg" alt="avator" />
         </div>
       </div>
-      <div className="relative -left-[10px] bg-[rgba(38, 38, 38, 0.30)] border-2 border-[rgba(51, 50, 48, 0.38)] rounded-[12px] py-[8px] pr-[12px] pl-[18px] text-[#F7F9EA] font-montserrat text-[12px] font-semibold leading-[100%]">
+      <div className="relative -left-[10px] bg-[rgba(38,_38,_38,_0.30)] border-2 border-[rgba(51,_50,_48,_0.38)] rounded-[12px] py-[8px] pr-[12px] pl-[18px] text-[#F7F9EA] font-montserrat text-[12px] font-semibold leading-[100%]">
         @Mency123
       </div>
     </div>
