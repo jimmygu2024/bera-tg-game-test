@@ -61,14 +61,16 @@ export function useOkxUniversal(): IOkxUniversalContext {
 
   const [connecting, setConnecting] = useState<boolean>(false);
 
+  const okxUniversalConnected = okxUniversalProvider?.connected?.();
+  const okxUniversalUIConnected = okxUniversalUIProvider?.connected?.();
+  const okxUniversalSession = okxUniversalProvider?.session;
+  const okxUniversalUISession = okxUniversalUIProvider?.session;
   const [okxSession, connected] = useMemo<[SessionTypes.Struct | undefined, boolean | undefined]>(() => {
-    console.log('isOkxTelegram: %o', isOkxTelegram);
     if (isOkxTelegram) {
-      console.log('connected: %o', okxUniversalUIProvider?.connected?.());
-      return [okxUniversalUIProvider?.session, okxUniversalUIProvider?.connected?.()];
+      return [okxUniversalUISession, okxUniversalUIConnected];
     }
-    return [okxUniversalProvider?.session, okxUniversalProvider?.connected?.()];
-  }, [okxUniversalProvider, okxUniversalUIProvider, isOkxTelegram]);
+    return [okxUniversalSession, okxUniversalConnected];
+  }, [okxUniversalConnected, okxUniversalUIConnected, okxUniversalSession, okxUniversalUISession, isOkxTelegram]);
 
   const onConnect = async () => {
     setConnecting(true);
