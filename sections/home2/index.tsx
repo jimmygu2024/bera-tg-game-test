@@ -1,4 +1,5 @@
-import { memo } from "react"
+import { memo } from "react";
+
 export default memo(function BeraciagaFrens() {
 
   return (
@@ -78,4 +79,4 @@ export default memo(function BeraciagaFrens() {
 
     </div>
   )
-})
+});
