@@ -6,7 +6,7 @@ const User = () => {
 
   const tgUser = WebApp?.initDataUnsafe?.user as any;
 
-  const userName = `${tgUser?.first_name || 'BeraCiaga'} ${tgUser?.last_name || ''}`;
+  const userName = `${tgUser?.last_name || 'BeraCiaga'} ${tgUser?.first_name || ''}`;
 
   return (
     <div className="flex items-center">
