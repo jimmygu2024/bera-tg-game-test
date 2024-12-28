@@ -20,3 +20,11 @@ export function formatHealthFactor(hf: any) {
     console.log("CATCH_formatHealthFactor:", error);
   }
 }
+
+export function formatLongText(text?: string, front: number = 4, ending: number = 2) {
+  if (!text) return text;
+  if (text.length <= front + ending) {
+    return text;
+  }
+  return `${text.slice(0, front)}...${text.slice(-ending)}`;
+}
