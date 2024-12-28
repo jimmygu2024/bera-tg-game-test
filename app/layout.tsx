@@ -36,7 +36,7 @@ export default function RootLayout({
         <TonConnectUIProvider manifestUrl='https://bera-dapdap.vercel.app/tonconnect-manifest.json'>
           <TelegramProvider>
             <SkeletonTheme baseColor='#96D6FF' highlightColor='#FFF5A9'>
-              <OkxTonProvider>
+              <OkxTonProvider isTelegram>
                 <BitgetProvider>
                   <TabBarWrapper>
                     {children}
