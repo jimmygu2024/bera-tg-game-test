@@ -32,14 +32,11 @@ const TabBar: React.FC = () => {
             onClick={() => handleTabClick(tab)}
           >
             <div
-              className="w-full h-[2.5rem] bg-contain bg-center bg-no-repeat relative"
+              className="w-full h-[3rem] bg-contain bg-center bg-no-repeat relative"
               style={{
                 backgroundImage: `url("${tab.isLock ? tab.inactiveIcon : tab.icon}")`
               }}
             >
-              <div className={`left-0 ${activeTab === tab.id ? 'text-[#FFF]' : 'text-[#8A8A8A]'} w-full font-Montserrat text-[1rem] text-center font-[900] leading-[100%] text-stroke-2 absolute bottom-0`}>
-                {tab.label}
-              </div>
               {
                 tab.isLock && (
                   <img className="w-[1.3rem] h-[1.6rem] absolute right-[0.5rem] top-[-0.3rem]" src="/images/tabbar/icon-lock.svg" alt="" />

@@ -24,7 +24,7 @@ export function useCoins() {
   const handleCollected = (id: number) => {
     setCoins((prevCoins) => prevCoins.filter((coin) => coin.id !== id));
     setCollectedCoins(prev => prev + 1);
-    playSound()
+    playSound();
   };
 
   const progress = (collectedCoins / TARGET_COINS) * 100;
