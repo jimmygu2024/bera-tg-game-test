@@ -19,6 +19,7 @@ const BindView = () => {
   const {
     connected: okxConnected,
     onConnect: onOKXConnect,
+    session: okxSession,
   } = useOkxUniversal();
 
   useEffect(() => {
@@ -32,11 +33,12 @@ const BindView = () => {
   }, []);
 
   useEffect(() => {
+    console.log('okxSession', okxSession);
     console.log('okxConnected', okxConnected);
     const handleBindStatus = async () => {
       if (okxConnected) {
         handleLogin('okx_invite');
-        const bindStatus = await bind();
+        const bindStatus = await bind('das');
         console.log('bindStatus', bindStatus);
         if (bindStatus) {
             router.push('/imported-equipments');

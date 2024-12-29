@@ -8,7 +8,6 @@ export const useBind = () => {
   const [bindLoading, setBindLoading] = useState(false);
   const telegram = useTelegram();
   const { setBind } = useBindStore();
-  const bindAddress = useBindStore((state) => state.bindAddress);
 
   const fetchBindStatus = async () => {
     setLoading(true);
@@ -27,12 +26,12 @@ export const useBind = () => {
     }
   };
 
-  const bind = async () => {
+  const bind = async (address: string) => {
     setBindLoading(true);
     try {
       await post('/api/user/bind', {
         tg_user_id: telegram.WebApp?.initDataUnsafe?.user?.id.toString(),
-        address: bindAddress,
+        address,
       });
       return true;
     } catch (err) {
