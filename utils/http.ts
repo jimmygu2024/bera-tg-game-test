@@ -57,7 +57,6 @@ const get = async (url: string, query?: Record<string, any>) => {
   }
 
   query = removeEmptyKeys(query);
-  console.log(query, 'query')
   const queryStr = objectToQueryString(query);
   const res = await fetch(`${getUrl(url)}?${queryStr}`, options);
   const result = (await res.json()) as any;

@@ -53,7 +53,7 @@ const BindView = () => {
   return (
     <div className="bg-black h-screen relative w-full">
       <div className="p-[18px]">
-        <h1 className="text-white w-full mt-[56px] font-montserrat font-[900] text-[52px] leading-[52px]">
+        <h1 className="text-white w-full mt-[56px] font-montserrat font-[900] text-[52px] leading-[52px] text-center">
           BERACIAGA
         </h1>
         <img

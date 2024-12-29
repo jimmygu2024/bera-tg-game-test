@@ -23,9 +23,9 @@ const ImportedEquipmentsView = () => {
 
     const fetchGameData = async () => {
         try {
-            const response = await get(`/api/game/items?tg_user_id=${tgUser?.id}`);
-            
-            const groupedItems = groupBy(response.data, 'category');
+            const data = await get(`/api/game/items?tg_user_id=${tgUser?.id}`);
+            console.log(data, '---data---')
+            const groupedItems = groupBy(data, 'category');
             
             const processedItems = map(groupedItems, (items) => {
                 const pcItems = filter(items, { pc_item: true });
@@ -51,13 +51,13 @@ const ImportedEquipmentsView = () => {
     return (
         <div className="bg-black min-h-screen w-full flex flex-col items-center">
             <div className="absolute top-0 w-full h-[376px]">
-                <div className="bg-[url(/images/imported-bg.png)] bg-contain bg-no-repeat w-full h-full" />
+                <div className="bg-[url(/images/imported-bg.png)] bg-cover bg-no-repeat w-full h-full" />
             </div>
             <div className="absolute top-0 w-full h-96 bg-gradient-to-b from-black/0 to-black" />
             <div className="relative w-full h-[376px] flex flex-col items-center">
                 <div className="flex-shrink-0 w-48 h-12 flex items-center justify-center gap-2.5 mt-6 rounded-full p-2 backdrop-blur 
                                 bg-gradient-to-b from-white/20 to-transparent border border-white/20">
-                    <img src={tgUser?.photo_url ? tgUser?.photo_url : '/images/beraciaga/avator.svg'} className="w-8 h-8" alt="" />
+                    <img src={tgUser?.photo_url ? tgUser?.photo_url : '/images/beraciaga/avator.svg'} className="w-8 h-8 rounded-full" alt="" />
                     <div className="font-montserrat text-[20px] font-bold text-white">{formatLongText(bindAddress, 4, 4)}</div>
                 </div>
                 <div className="flex-shrink-0 mt-4 font-montserrat italic text-[#6376FF] text-[36px] bg-[url(/images/bg-im.png)] bg-contain bg-no-repeat w-[82px] h-[82px] rounded-full flex items-center justify-center">
