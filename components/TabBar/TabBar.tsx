@@ -4,7 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { TabItem, TABS, useLayoutStore } from '@/stores/useLayoutStore';
 import { useCallback, useEffect } from 'react';
 
-const TabBar: React.FC = () => {
+const TabBar: React.FC<any> = (props) => {
   const router = useRouter();
   const pathname = usePathname();
   const { activeTab, setActiveTab } = useLayoutStore();
@@ -20,6 +20,7 @@ const TabBar: React.FC = () => {
     if (tab.isLock) return;
     setActiveTab(tab.id);
     router.push(tab.path);
+    props?.onTabClick?.(tab);
   }, [router, setActiveTab]);
 
   return (

@@ -1,13 +1,12 @@
 import Modal from "@/components/modal";
 import { memo } from "react";
-export default memo(function Congrats() {
+export default memo(function Congrats(props: any) {
+  const { visible, onClose } = props;
 
   return (
     <Modal
-      open={true}
-      onClose={() => {
-
-      }}
+      open={visible}
+      onClose={onClose}
     >
       <div className="flex flex-col gap-[6px] items-center w-[332px]">
 

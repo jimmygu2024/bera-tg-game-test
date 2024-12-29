@@ -22,6 +22,10 @@ type LayoutState = {
   setShowTabBar: (show: boolean) => void;
   activeTab: number;
   setActiveTab: (tab: number) => void;
+  inviteModalVisible: boolean;
+  setInviteModalVisible: (visible: boolean) => void;
+  congratsModalVisible: boolean;
+  setCongratsModalVisible: (visible: boolean) => void;
 };
 
 export const useLayoutStore = create<LayoutState>((set) => ({
@@ -29,4 +33,8 @@ export const useLayoutStore = create<LayoutState>((set) => ({
   setShowTabBar: (show) => set({ showTabBar: show }),
   activeTab: TABS[3].id,
   setActiveTab: (tab) => set({ activeTab: tab }),
+  inviteModalVisible: false,
+  congratsModalVisible: false,
+  setInviteModalVisible: (inviteModalVisible) => set({ inviteModalVisible }),
+  setCongratsModalVisible: (congratsModalVisible) => set({ congratsModalVisible }),
 }));
