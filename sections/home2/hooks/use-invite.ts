@@ -3,21 +3,10 @@ import { useTelegram } from '@/hooks/useTelegram';
 import { get } from '@/utils/http';
 import useToast from '@/hooks/use-toast';
 
-// FIXME
-const testData = {
-  allows_write_to_pm: true,
-  first_name: 'gu',
-  id: 7150006688,
-  language_code: 'zh-hans',
-  last_name: 'jimmy',
-  photo_url: 'https://t.me/i/userpic/320/i2-BRTWcSQoXawvpUSVv78kuH2IMkVBXItH61uWUjHYGATen0Zf2m-qRI1i7HXIr.svg',
-  username: 'jimmyguu',
-};
-
 export function useInvite() {
   const toast = useToast();
   const { WebApp } = useTelegram();
-  const userInfo = WebApp?.initDataUnsafe?.user ?? testData;
+  const userInfo = WebApp?.initDataUnsafe?.user;
 
   const [total, setTotal] = useState<any>(0);
   const [loading, setLoading] = useState<any>(false);
