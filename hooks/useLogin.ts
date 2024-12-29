@@ -15,7 +15,13 @@ interface UseLoginResult {
   error: string | null;
 }
 
-const useLogin = (): UseLoginResult => {
+interface IProps {
+  invite_source?: string;
+}
+
+const useLogin = ({
+  invite_source = '',
+}: IProps): UseLoginResult => {
   const { WebApp, isInitialized, error: sdkError } = useTelegram();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -31,21 +37,25 @@ const useLogin = (): UseLoginResult => {
         }
 
         const tgUser = WebApp.initDataUnsafe.user as UserData;
+
         setUserData(tgUser);
 
-        console.log(WebApp.initDataUnsafe, 'handleLogin ===== WebApp.initDataUnsafe')
+        console.log(WebApp, 'handleLogin ===== WebApp')
 
         const inviterId = WebApp.initDataUnsafe.start_param && WebApp.initDataUnsafe.start_param.split('inviterId=')?.[1];
 
         const loginData = {
-          tg_user_id: tgUser.id.toString(),
           tg_username: tgUser.username,
           tg_avatar: tgUser.photo_url,
+          init_data: WebApp.init_data,
+          ...(invite_source && { invite_source }),
           ...(inviterId && { inviter_tg_user_id: inviterId })
         };
 
         await post('/api/login', loginData);
+
         console.log('/api/login ---- Login successful');
+
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
         setError(errorMessage);
