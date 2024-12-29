@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useTelegram } from '@/hooks/useTelegram';
 import { get } from '@/utils/http';
 import useToast from '@/hooks/use-toast';
+import { isAndroid } from 'react-device-detect';
 
 export function useInvite() {
   const toast = useToast();
@@ -42,6 +43,9 @@ export function useInvite() {
   const handleShare = () => {
     if (!shareLink) return;
     WebApp?.openTelegramLink?.(shareLink);
+    if (isAndroid) {
+      WebApp?.close();
+    }
   };
 
   const handleCopy = () => {
