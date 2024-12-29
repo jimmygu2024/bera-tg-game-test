@@ -22,6 +22,8 @@ const BindView = () => {
     session: okxSession,
   } = useOkxUniversal();
 
+  const getAccount = (account: string) => `${account.split(':')[2].slice(0, 7)}...${account.split(':')[2].slice(-4)}`
+
   useEffect(() => {
     const checkBind = async () => {
       const address = await fetchBindStatus();
@@ -33,12 +35,10 @@ const BindView = () => {
   }, []);
 
   useEffect(() => {
-    console.log('okxSession', okxSession);
-    console.log('okxConnected', okxConnected);
     const handleBindStatus = async () => {
-      if (okxConnected) {
+      if (okxConnected && okxSession?.namespaces?.eip155?.accounts[0]) {
         handleLogin('okx_invite');
-        const bindStatus = await bind('das');
+        const bindStatus = await bind(getAccount(okxSession?.namespaces?.eip155?.accounts[0]));
         console.log('bindStatus', bindStatus);
         if (bindStatus) {
             router.push('/imported-equipments');
