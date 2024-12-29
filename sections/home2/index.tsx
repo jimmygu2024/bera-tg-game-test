@@ -10,7 +10,7 @@ export default memo(function Home() {
   const searchParams = useSearchParams();
   const invite_source = searchParams.get('invite_source') || '';
 
-  const _ = useLogin({
+  useLogin({
     invite_source: invite_source,
   })
 

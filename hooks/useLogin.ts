@@ -38,8 +38,6 @@ const useLogin = ({
 
         const tgUser = WebApp.initDataUnsafe.user as UserData;
 
-        setUserData(tgUser);
-
         console.log(WebApp, 'handleLogin ===== WebApp')
 
         const inviterId = WebApp.initDataUnsafe.start_param && WebApp.initDataUnsafe.start_param.split('inviterId=')?.[1];
@@ -53,6 +51,8 @@ const useLogin = ({
         };
 
         await post('/api/login', loginData);
+        
+        setUserData(tgUser);
 
         console.log('/api/login ---- Login successful');
 

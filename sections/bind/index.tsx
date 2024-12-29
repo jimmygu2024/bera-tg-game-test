@@ -9,17 +9,26 @@ import { get } from "@/utils/http";
 import { useTelegram } from "@/hooks/useTelegram";
 import useBindStore from "@/stores/useBindStore";
 import { useBind } from "@/hooks/useBind";
+import useLogin from "@/hooks/useLogin";
+import { useSearchParams } from "next/navigation";
 
 const BindView = () => {
   const router = useRouter();
   const { loading, fetchBindStatus, bind } = useBind();
-  
+  const searchParams = useSearchParams();
+  const invite_source = searchParams.get('invite_source') || '';
+
+  const { userData } = useLogin({
+    invite_source: invite_source,
+  })
+
   const {
     connected: okxConnected,
     onConnect: onOKXConnect,
   } = useOkxUniversal();
 
   useEffect(() => {
+    if (!userData) return;
     const checkBind = async () => {
       const address = await fetchBindStatus();
       if (address) {
@@ -27,7 +36,7 @@ const BindView = () => {
       }
     };
     checkBind();
-  }, []);
+  }, [userData]);
 
   useEffect(() => {
     console.log('okxConnected', okxConnected);
