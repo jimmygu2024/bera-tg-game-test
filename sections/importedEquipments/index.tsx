@@ -5,8 +5,12 @@ import { formatLongText } from "@/utils/utils";
 import { useState, useEffect } from "react";
 import { groupBy, map, filter, maxBy } from 'lodash-es';
 import { get } from "@/utils/http";
+import { useRouter } from "next/navigation";
 
 const ImportedEquipmentsView = () => {
+
+    const router = useRouter();
+
     const [items, setItems] = useState<any[]>([]);
     const { bindAddress } = useBindStore();
 
@@ -122,7 +126,7 @@ const ImportedEquipmentsView = () => {
                     </div>
                 </div>
                 <div className="w-full px-5 mt-6">
-                    <button className="w-full flex-shrink-0 bg-[#FFD335] rounded-2xl h-[52px] leading-[52px] text-black text-center font-montserrat font-[700]">Beraciaga Now</button>
+                    <button className="w-full flex-shrink-0 bg-[#FFD335] rounded-2xl h-[52px] leading-[52px] text-black text-center font-montserrat font-[700]" onClick={() => router.push('/')}>Beraciaga Now</button>
                 </div>
             </div>
         </div>
