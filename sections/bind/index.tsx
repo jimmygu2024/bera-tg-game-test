@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 const BindView = () => {
   const router = useRouter();
   const { loading, fetchBindStatus, bind } = useBind();
-
+  const { handleLogin } = useLogin();
   const {
     connected: okxConnected,
     onConnect: onOKXConnect,
@@ -35,7 +35,7 @@ const BindView = () => {
     console.log('okxConnected', okxConnected);
     const handleBindStatus = async () => {
       if (okxConnected) {
-        await userLogin('okx_invite');
+        handleLogin('okx_invite');
         const bindStatus = await bind();
         console.log('bindStatus', bindStatus);
         if (bindStatus) {

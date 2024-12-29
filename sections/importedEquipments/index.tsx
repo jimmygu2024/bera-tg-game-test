@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { groupBy, map, filter, maxBy } from 'lodash-es';
 import { get } from "@/utils/http";
 import { useRouter } from "next/navigation";
+import { useLayoutStore } from "@/stores/useLayoutStore";
 
 const ImportedEquipmentsView = () => {
 
@@ -15,6 +16,9 @@ const ImportedEquipmentsView = () => {
     const { bindAddress } = useBindStore();
 
     const { WebApp } = useTelegram();
+
+    const { setCongratsModalVisible }= useLayoutStore()
+    
     const tgUser = WebApp?.initDataUnsafe?.user as any;
 
     const fetchGameData = async () => {
@@ -39,6 +43,8 @@ const ImportedEquipmentsView = () => {
             fetchGameData();
         }
     }, [tgUser]);
+
+
 
     console.log(items, '---items---')
 
@@ -126,7 +132,10 @@ const ImportedEquipmentsView = () => {
                     </div>
                 </div>
                 <div className="w-full px-5 mt-6">
-                    <button className="w-full flex-shrink-0 bg-[#FFD335] rounded-2xl h-[52px] leading-[52px] text-black text-center font-montserrat font-[700]" onClick={() => router.push('/')}>Beraciaga Now</button>
+                    <button className="w-full flex-shrink-0 bg-[#FFD335] rounded-2xl h-[52px] leading-[52px] text-black text-center font-montserrat font-[700]" onClick={() => {
+                        setCongratsModalVisible(true);
+                        router.push('/');
+                    }}>Beraciaga Now</button>
                 </div>
             </div>
         </div>

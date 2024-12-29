@@ -37,7 +37,7 @@ const useLogin = (): UseLoginResult => {
       const loginData = {
         tg_username: tgUser.username,
         tg_avatar: tgUser.photo_url,
-        init_data: WebApp.init_data,
+        init_data: WebApp.initData,
         ...(invite_source && { invite_source }),
         ...(inviterId && { inviter_tg_user_id: inviterId })
       };
