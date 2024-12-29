@@ -12,7 +12,7 @@ export const useBind = () => {
   const fetchBindStatus = async () => {
     setLoading(true);
     try {
-      const res = await get('/api/bind', {
+      const res = await get('/api/user/bind', {
         tg_user_id: telegram.WebApp?.initDataUnsafe?.user?.id,
       });
       if (res.data.address) {
@@ -28,8 +28,8 @@ export const useBind = () => {
   const bind = async () => {
     setBindLoading(true);
     try {
-      await post('/api/bind', {
-        init_data: telegram.WebApp?.init_data,
+      await post('/api/user/bind', {
+        tg_user_id: telegram.WebApp?.initDataUnsafe?.user?.id,
       });
       return true;
     } catch (err) {

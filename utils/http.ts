@@ -26,7 +26,7 @@ export const objectToQueryString = (obj: Record<string, any>): string => {
 
 const AUTH_TOKENS = `_user`;
 
-const BASE_URL = 'https://test-api-game.beratown.app';
+const BASE_URL = 'https://dev-api-game.beratown.app';
 
 const getUrl = (url: string) => {
   return url.startsWith('http') ? url : `${BASE_URL}${url}`;
@@ -57,6 +57,7 @@ const get = async (url: string, query?: Record<string, any>) => {
   }
 
   query = removeEmptyKeys(query);
+  console.log(query, 'query')
   const queryStr = objectToQueryString(query);
   const res = await fetch(`${getUrl(url)}?${queryStr}`, options);
   const result = (await res.json()) as any;
