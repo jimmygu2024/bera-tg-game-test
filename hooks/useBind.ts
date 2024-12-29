@@ -7,7 +7,7 @@ export const useBind = () => {
   const [loading, setLoading] = useState(false);
   const [bindLoading, setBindLoading] = useState(false);
   const telegram = useTelegram();
-  const { setBind } = useBindStore();
+  const { setBind, bindAddress } = useBindStore();
 
   const fetchBindStatus = async () => {
     setLoading(true);
@@ -33,6 +33,7 @@ export const useBind = () => {
         tg_user_id: telegram.WebApp?.initDataUnsafe?.user?.id.toString(),
         address,
       });
+      setBind(address);
       return true;
     } catch (err) {
       return false;
@@ -46,5 +47,6 @@ export const useBind = () => {
     fetchBindStatus,
     bindLoading,
     bind,
+    bindAddress
   };
 };

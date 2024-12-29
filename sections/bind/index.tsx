@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 
 const BindView = () => {
   const router = useRouter();
-  const { loading, fetchBindStatus, bind } = useBind();
+  const { loading, fetchBindStatus, bind, bindAddress } = useBind();
   const { handleLogin } = useLogin();
   const {
     connected: okxConnected,
@@ -22,8 +22,8 @@ const BindView = () => {
     session: okxSession,
   } = useOkxUniversal();
 
-  const getAccount = (account: string) => `${account.split(':')[2].slice(0, 7)}...${account.split(':')[2].slice(-4)}`
-
+  const getAccount = (account: string) => `${account.split(':')[2]}`
+  
   useEffect(() => {
     const checkBind = async () => {
       const address = await fetchBindStatus();
