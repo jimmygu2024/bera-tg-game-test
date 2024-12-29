@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
-import chains from '@/configs/chains';
+// import chains from '@/configs/chains';
 
-import Loading from '../circle-loading';
+import Loading from '../Loading';
 
 const StyledToast = styled.div`
   border-radius: 16px;
@@ -59,12 +59,12 @@ export default function Toast({
   chainId,
   closeToast
 }: any) {
-  const txLink = useMemo(() => {
-    if (!tx || !chainId) return '';
-    const currentChain = chains[chainId];
-    if (!currentChain) return '';
-    return `${currentChain.blockExplorers.default.url}/tx/${tx}`;
-  }, [tx, chainId]);
+  // const txLink = useMemo(() => {
+  //   if (!tx || !chainId) return '';
+  //   const currentChain = chains[chainId];
+  //   if (!currentChain) return '';
+  //   return `${currentChain.blockExplorers.default.url}/tx/${tx}`;
+  // }, [tx, chainId]);
   return (
     <StyledToast>
       <IconWrapper>
@@ -108,7 +108,7 @@ export default function Toast({
         <StyledDesc>
           <StyledTitle>{title}</StyledTitle>
           {text && <StyledSecondaryText>{text}</StyledSecondaryText>}
-          {tx && chainId && (
+          {/* {tx && chainId && (
             <StyledSecondaryText
               style={{ textDecoration: 'underline', cursor: 'pointer' }}
               onClick={() => {
@@ -117,7 +117,7 @@ export default function Toast({
             >
               View Transaction
             </StyledSecondaryText>
-          )}
+          )} */}
         </StyledDesc>
         <StyledCloseWrapper onClick={closeToast} className='cursor-pointer'>
           <svg
