@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useCollisionDetection } from "@/sections/home/hooks/useCollisionDetection";
 
-const Coin = ({id, initialX, onCollected }: {id: any; initialX: number; onCollected: (id: number) => void }) => {
+const Coin = ({id, initialX, onCollected, amount }: {id: any; initialX: number; onCollected: (id: number) => void; amount?: string }) => {
   const [opacity, setOpacity] = useState(1);
   const coinRef = useRef<HTMLDivElement>(null);
   // const isColliding = useCollisionDetection(coinRef);
@@ -49,7 +49,7 @@ const Coin = ({id, initialX, onCollected }: {id: any; initialX: number; onCollec
           opacity,
         }}
       >
-        +100
+        +{amount || '0'}
       </motion.div>
       <motion.div
         style={{
