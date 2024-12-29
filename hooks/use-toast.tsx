@@ -7,25 +7,25 @@ const ToastAutoCloseDuration = 3000;
 export default function useToast() {
   const success = (params: any) => {
     return toast(<Toast type="success" duration={ToastAutoCloseDuration} {...params} />, {
-      position: 'top-right',
+      position: 'top-center',
       autoClose: ToastAutoCloseDuration,
     });
   };
   const fail = (params: any) => {
     return toast(<Toast type="error" duration={ToastAutoCloseDuration} {...params} />, {
-      position: 'top-right',
+      position: 'top-center',
       autoClose: ToastAutoCloseDuration,
     });
   };
   const info = (params: any) => {
     return toast(<Toast type="info" duration={ToastAutoCloseDuration} {...params} />, {
-      position: 'top-right',
+      position: 'top-center',
       autoClose: ToastAutoCloseDuration,
     });
   };
   const loading = (params: any) => {
     return toast(<Toast type="pending" duration={ToastAutoCloseDuration} {...params} />, {
-      position: 'top-right',
+      position: 'top-center',
       autoClose: ToastAutoCloseDuration,
     });
   };

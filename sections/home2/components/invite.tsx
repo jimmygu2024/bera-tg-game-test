@@ -11,19 +11,11 @@ export default memo(function Invite(props: any) {
     >
       <Content {...props} />
     </Modal>
-  )
+  );
 });
 
 function Content(props: any) {
-  const { total, getTotal } = useInvite();
-
-  const handleCopy = () => {
-    try {
-      navigator.clipboard.writeText('');
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const { total, getTotal, handleShare, handleCopy } = useInvite();
 
   useEffect(() => {
     getTotal();
@@ -42,19 +34,27 @@ function Content(props: any) {
           <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">{total} Invited</span>
         </div>
         <div className="flex items-center gap-[8px]">
-          <div className="w-[142px] h-[42px] rounded-[10px] border border-[#FFCF23] bg-black/30 flex items-center justify-center gap-[8px]">
-            <div className="w-[15px]" onClick={handleCopy}>
+          <button
+            type="button"
+            className="w-[142px] h-[42px] rounded-[10px] border border-[#FFCF23] bg-black/30 flex items-center justify-center gap-[8px]"
+            onClick={handleCopy}
+          >
+            <div className="w-[15px]">
               <img src="/images/beraciaga/copy.svg" alt="copy" />
             </div>
             <span className="text-[#FFCF23] font-montserrat text-[16px] font-semibold">Copy link</span>
-          </div>
+          </button>
 
-          <div className="w-[142px] h-[42px] rounded-[10px] border border-[#000] bg-[#FFD335] flex items-center justify-center gap-[6px]">
+          <button
+            type="button"
+            className="w-[142px] h-[42px] rounded-[10px] border border-[#000] bg-[#FFD335] flex items-center justify-center gap-[6px]"
+            onClick={handleShare}
+          >
             <div className="w-[15px]">
               <img src="/images/beraciaga/invite.svg" alt="invite" />
             </div>
             <span className="text-black font-montserrat text-[16px] font-semibold">Invite</span>
-          </div>
+          </button>
         </div>
       </div>
     </div>
