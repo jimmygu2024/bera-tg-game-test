@@ -1,7 +1,8 @@
-import Speed from '@/sections/home2/components/speed';
-import Reward from '@/sections/home2/components/reward';
 import DropCoins from '@/sections/home2/components/drop-coins';
-
+import Reward from '@/sections/home2/components/reward';
+import Speed from '@/sections/home2/components/speed';
+import Congrats from './congrats';
+import Invite from './invite';
 const Content = () => {
 
   return (
@@ -25,6 +26,9 @@ const Content = () => {
           <Reward />
         </div>
       </div>
+
+      {/* <Congrats /> */}
+      <Invite />
     </div>
   );
 };
