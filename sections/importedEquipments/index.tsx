@@ -2,21 +2,41 @@ import { useTelegram } from "@/hooks/useTelegram";
 import IconFlash from "@/public/svg/flash.svg";
 import useBindStore from '@/stores/useBindStore';
 import { formatLongText } from "@/utils/utils";
+import { useState, useEffect } from "react";
+import { groupBy, map, filter, maxBy } from 'lodash-es';
+import { get } from "@/utils/http";
 
 const ImportedEquipmentsView = () => {
-
+    const [items, setItems] = useState<any[]>([]);
     const { bindAddress } = useBindStore();
 
     const { WebApp } = useTelegram();
     const tgUser = WebApp?.initDataUnsafe?.user as any;
 
-
     const fetchGameData = async () => {
-        // fetch game data
-        // /game/items
-        
-    }
+        try {
+            const response = await get(`/api/game/items?tg_user_id=${tgUser?.id}`);
+            
+            const groupedItems = groupBy(response.data, 'category');
+            
+            const processedItems = map(groupedItems, (items) => {
+                const pcItems = filter(items, { pc_item: true });
+                return pcItems.length > 0 ? maxBy(pcItems, 'level') : null;
+            }).filter(Boolean);
 
+            setItems(processedItems);
+        } catch (error) {
+            console.error('Failed to fetch game data:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (tgUser?.id) {
+            fetchGameData();
+        }
+    }, [tgUser]);
+
+    console.log(items, '---items---')
 
     return (
         <div className="bg-black min-h-screen w-full flex flex-col items-center">
@@ -110,18 +130,3 @@ const ImportedEquipmentsView = () => {
 }
 
 export default ImportedEquipmentsView
-
-
-// 
-/***
- * 
- *将下面的css => tailwindcss 代码
-color: #6376FF;
-text-align: center;
-
-font-family: Montserrat;
-font-size: 36px;
-font-style: italic;
-===> text-   
- * 
- */

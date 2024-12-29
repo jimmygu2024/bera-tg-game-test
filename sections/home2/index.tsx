@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import Header from '@/sections/home2/components/header';
 import Content from '@/sections/home2/components/content';
 import useLogin from "@/hooks/useLogin";
@@ -7,11 +7,15 @@ import { useSearchParams } from "next/navigation";
 
 
 export default memo(function Home() {
-  const searchParams = useSearchParams();
-  const invite_source = searchParams.get('invite_source') || '';
+    const [inviteSource, setInviteSource] = useState('');
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const source = params.get('invite_source') || '';
+    setInviteSource(source);
+  }, []);
 
   useLogin({
-    invite_source: invite_source,
+    invite_source: inviteSource,
   })
 
   return (
