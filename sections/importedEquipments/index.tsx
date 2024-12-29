@@ -23,10 +23,9 @@ const ImportedEquipmentsView = () => {
 
     const fetchGameData = async () => {
         try {
-            const data = await get(`/api/game/items?tg_user_id=${tgUser?.id}`);
-            console.log(data, '---data---')
-            const groupedItems = groupBy(data, 'category');
-            
+            const response = await get(`/api/game/items?tg_user_id=${tgUser?.id}`);
+            const groupedItems = groupBy(response.data, 'category');
+            console.log(groupedItems, '---groupedItems---')
             const processedItems = map(groupedItems, (items) => {
                 const pcItems = filter(items, { pc_item: true });
                 return pcItems.length > 0 ? maxBy(pcItems, 'level') : null;
