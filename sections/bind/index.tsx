@@ -10,16 +10,21 @@ import { useTelegram } from "@/hooks/useTelegram";
 import useBindStore from "@/stores/useBindStore";
 import { useBind } from "@/hooks/useBind";
 import useLogin from "@/hooks/useLogin";
-import { useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const BindView = () => {
   const router = useRouter();
   const { loading, fetchBindStatus, bind } = useBind();
-  const searchParams = useSearchParams();
-  const invite_source = searchParams.get('invite_source') || '';
+  const [inviteSource, setInviteSource] = useState('');
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const source = params.get('invite_source') || '';
+    setInviteSource(source);
+  }, []);
 
   const { userData } = useLogin({
-    invite_source: invite_source,
+    invite_source: inviteSource,
   })
 
   const {
