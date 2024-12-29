@@ -15,17 +15,6 @@ import { usePathname } from "next/navigation";
 const BindView = () => {
   const router = useRouter();
   const { loading, fetchBindStatus, bind } = useBind();
-  const [inviteSource, setInviteSource] = useState('');
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const source = params.get('invite_source') || '';
-    setInviteSource(source);
-  }, []);
-
-  const { userData } = useLogin({
-    invite_source: inviteSource,
-  })
 
   const {
     connected: okxConnected,
@@ -33,20 +22,20 @@ const BindView = () => {
   } = useOkxUniversal();
 
   useEffect(() => {
-    if (!userData) return;
     const checkBind = async () => {
       const address = await fetchBindStatus();
       if (address) {
-        router.push('/?invitedSource=okx_invite');
+        router.push('/');
       }
     };
     checkBind();
-  }, [userData]);
+  }, []);
 
   useEffect(() => {
     console.log('okxConnected', okxConnected);
     const handleBindStatus = async () => {
       if (okxConnected) {
+        await userLogin('okx_invite');
         const bindStatus = await bind();
         console.log('bindStatus', bindStatus);
         if (bindStatus) {

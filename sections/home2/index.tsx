@@ -7,16 +7,6 @@ import { useSearchParams } from "next/navigation";
 
 
 export default memo(function Home() {
-    const [inviteSource, setInviteSource] = useState('');
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const source = params.get('invite_source') || '';
-    setInviteSource(source);
-  }, []);
-
-  useLogin({
-    invite_source: inviteSource,
-  })
 
   return (
     <div className="h-full flex flex-col items-stretch bg-[#FFD335] rounded-[10px] rounded-b-[0]">
