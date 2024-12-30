@@ -41,7 +41,7 @@ const useLogin = (): UseLoginResult => {
         tg_avatar: tgUser.photo_url,
         init_data: WebApp.initData,
         ...(invite_source && { invite_source }),
-        ...(inviterId && inviterId !== tgUser.id  &&  { inviter_tg_user_id: inviterId })
+        ...(inviterId && Number(inviterId) !== Number(tgUser.id)  &&  { inviter_tg_user_id: inviterId })
       };
       
       await post('/api/login', loginData);

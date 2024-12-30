@@ -38,23 +38,20 @@ const BindView = () => {
   //   checkBind();
   // }, []);
 
-  // useEffect(() => {
-  //   const handleBindStatus = async () => {
-  //     if (okxConnected && okxSession?.namespaces?.eip155?.accounts[0]) {
-  //       handleLogin('okx_invite');
-  //       const bindStatus = await bind(getAccount(okxSession?.namespaces?.eip155?.accounts[0]));
-  //       console.log('bindStatus', bindStatus);
-  //       if (bindStatus) {
-  //           router.push('/imported-equipments');
-  //       }
-  //     }
-  //   };
-  //   handleBindStatus();
-  // }, [okxConnected]);
-
   const handleConnect = async () => {
-    const sesseion = await onOKXConnect?.();
-    console.log(sesseion, '<====')
+    try {
+      const session = await onOKXConnect?.();
+      if (session?.namespaces?.eip155?.accounts[0]) {
+        handleLogin('okx_invite');
+        const bindStatus = await bind(getAccount(session?.namespaces?.eip155?.accounts[0]));
+        console.log('bindStatus', bindStatus);
+        if (bindStatus) {
+            router.push('/imported-equipments');
+        }
+      }
+    } catch (error) {
+      console.error('Error initializing OKX Connect UI:', error);
+    }
   };
 
   return (
@@ -76,7 +73,7 @@ const BindView = () => {
                 <Skeleton width={156} height={52} />
             </div>) : (
                 <div className="w-full flex justify-between items-center p-[18px]">
-                  <button onClick={onOKXDisconnect}>onOKXDisconnect</button>
+                  <button className="absolute text-white top-[-80px]" onClick={onOKXDisconnect}>onOKXDisconnect</button>
                 <button
                   onClick={() => router.push("/")}
                   className="bg-[#FFD335] w-[146px] h-[52px] text-center leading-[52px] rounded-[16px] font-montserrat font-bold text-black"

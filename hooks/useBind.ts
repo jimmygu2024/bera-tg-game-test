@@ -32,6 +32,7 @@ export const useBind = () => {
       await post('/api/user/bind', {
         tg_user_id: telegram.WebApp?.initDataUnsafe?.user?.id.toString(),
         address,
+        source: 'okx_invite',
       });
       setBind(address);
       return true;
