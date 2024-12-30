@@ -41,7 +41,7 @@ const useLogin = (): UseLoginResult => {
         tg_avatar: tgUser.photo_url,
         init_data: WebApp.initData,
         ...(invite_source && { invite_source }),
-        ...(inviterId && { inviter_tg_user_id: inviterId })
+        ...(inviterId && inviterId !== tgUser.id  &&  { inviter_tg_user_id: inviterId })
       };
       
       await post('/api/login', loginData);
@@ -52,7 +52,7 @@ const useLogin = (): UseLoginResult => {
         await router.replace('/bind');
       }
 
-      console.log('/api/login ---- Login successful');
+      console.log('/api/login ---- Login successful', loginData);
 
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';

@@ -26,17 +26,17 @@ const BindView = () => {
 
   const getAccount = (account: string) => `${account.split(':')[2]}`
   
-  useEffect(() => {
-    const checkBind = async () => {
-      if (hasCheckedBind) return;
-      const address = await fetchBindStatus();
-      setHasCheckedBind(true);
-      if (address) {
-        router.replace('/');
-      }
-    };
-    checkBind();
-  }, []);
+  // useEffect(() => {
+  //   const checkBind = async () => {
+  //     if (hasCheckedBind) return;
+  //     const address = await fetchBindStatus();
+  //     setHasCheckedBind(true);
+  //     if (address) {
+  //       router.replace('/');
+  //     }
+  //   };
+  //   checkBind();
+  // }, []);
 
   // useEffect(() => {
   //   const handleBindStatus = async () => {
