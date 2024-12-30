@@ -32,7 +32,7 @@ const BindView = () => {
       const address = await fetchBindStatus();
       setHasCheckedBind(true);
       if (address) {
-        router.replace('/');
+        router.replace('/home');
       }
     };
     checkBind();
