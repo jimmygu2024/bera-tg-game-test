@@ -57,11 +57,15 @@ const ImportedEquipmentsView = () => {
     const calculateTotalBonus = (items: any[]) => {
         let totalPercent = items.reduce((acc, item) => acc + item?.bonus_percentage, 0);
 
-        if (items.length === 4) {
+        if (totalPercent === 0) {
+            return 0;
+        }
+
+        if (items.length === 4 && items.every(item => item.pc_item)) {
             totalPercent += 10;
         }
 
-        return (totalPercent /  100).toFixed(2) ;
+        return (totalPercent /  100).toFixed(2);
     };
 
     const totalBonus = calculateTotalBonus(items);
@@ -115,7 +119,7 @@ const ImportedEquipmentsView = () => {
                         ))
                     }
                 </div>
-                <div className="w-full px-5 mt-6 bg-black pb-6">
+                <div className="w-full px-5 pt-6 bg-black pb-6">
                     <button className="w-full flex-shrink-0 bg-[#FFD335] rounded-2xl h-[52px] leading-[52px] text-black text-center font-montserrat font-[700]" onClick={() => {
                         setCongratsModalVisible(true);
                         router.push('/home');

@@ -76,11 +76,11 @@ const BindView = () => {
                 <Skeleton width={156} height={52} />
                 <Skeleton width={156} height={52} />
             </div>) : (
-                <div className="w-full flex justify-between items-center p-[18px]">
-                  {/* <button className="absolute text-white top-[-80px]" onClick={onOKXDisconnect}>onOKXDisconnect</button> */}
+                <div className="w-full flex justify-between items-center p-[18px] gap-[0.8125rem]">
+                  <button className="absolute text-white top-[-80px]" onClick={onOKXDisconnect}>onOKXDisconnect</button>
                 <button
                   onClick={() => router.push("/home")}
-                  className="bg-[#FFD335] w-[146px] h-[52px] text-center leading-[52px] rounded-[16px] font-montserrat font-bold text-black"
+                  className="bg-[#FFD335] w-[146px] h-[52px] text-center rounded-[16px] font-montserrat font-bold text-black leading-[1]"
                 >
                   Sign in
                 </button>
@@ -89,8 +89,8 @@ const BindView = () => {
                   className="bg-[#FFD335] p-[10px] flex items-center gap-[9px] relative rounded-[16px] text-black "
                 >
                   <IconOKX className="w-[30px] h-[30px]" />
-                  <span className="font-montserrat font-bold flex-1">Sign in with OKX wallet</span>
-                  <div className="absolute top-[-24px] left-1/2 -translate-x-1/2 border border-[#000000] bg-[#FF79A4] w-[94%] flex gap-2 items-center justify-center rounded-[55px]">
+                  <span className="font-montserrat font-bold flex-1 leading-[1] text-left">Sign in with OKX wallet</span>
+                  <div onClick={e => e.stopPropagation()} className="absolute top-[-24px] left-1/2 -translate-x-1/2 border border-[#000000] bg-[#FF79A4] w-[94%] flex gap-2 items-center justify-center rounded-[55px]">
                     <Popover
                       placement={PopoverPlacement.Top}
                       contentClassName={`w-[200px] backdrop-blur-[10px]`}
