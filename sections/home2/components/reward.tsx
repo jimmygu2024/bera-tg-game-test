@@ -1,6 +1,10 @@
-const Reward = () => {
+import { useContext } from 'react';
+import { HomeContext } from '@/sections/home2';
 
-  return (
+const Reward = () => {
+  const { userInfo } = useContext(HomeContext);
+
+  return userInfo?.bind_source === 'okx_invite' && (
     <div className="mt-[8px] mx-[auto] w-[200px] h-[25px] rounded-[55px] border border-black bg-[#FF79A4] pl-[4px] pr-[2px] flex items-center  justify-between">
       <div className="flex items-center gap-[2px]">
         <div className="w-[18px]">

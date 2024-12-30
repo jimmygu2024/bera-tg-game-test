@@ -14,7 +14,7 @@ interface UseLoginResult {
   userData: UserData | null;
   isLoading: boolean;
   error: string | null;
-  handleLogin: (args?: string) => void;
+  handleLogin: (args?: string) => Promise<void>;
 }
 
 const useLogin = (): UseLoginResult => {

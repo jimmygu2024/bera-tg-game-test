@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAudio } from '@/hooks/useAudio';
 import Big from 'big.js';
+import { useUserStore } from '@/stores/useUserStore';
 
 const createNewCoin = (latestAmount: Big.Big) => {
   return {
@@ -35,6 +36,12 @@ const calcLatestCoins = () => {
 
 export function useCoins() {
   const coinTimer = useRef<any>();
+  const {
+    equipmentList,
+    userEquipmentList,
+    levels,
+    userInfo,
+  } = useUserStore();
 
   const [coins, setCoins] = useState<any[]>([]);
   const [collectedCoins, setCollectedCoins] = useState(0);
