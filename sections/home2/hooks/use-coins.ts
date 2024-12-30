@@ -3,21 +3,18 @@ import { useAudio } from '@/hooks/useAudio';
 import Big from 'big.js';
 import { useUserStore } from '@/stores/useUserStore';
 
-const createNewCoin = (latestAmount: Big.Big) => {
+// seconds
+const coins_duration = 2;
+
+const createNewCoin = (latestAmount: Big.Big, coinsPerSecond: Big.Big) => {
   return {
     id: Math.random(),
     latestAmount,
+    amount: Big(coinsPerSecond).times(coins_duration),
     x: Math.random() * 300,
     y: 0,
   };
 };
-
-// 2024-12-30 00:00:00
-// const creat_timestamp = 1735488000000;
-// 0x=1000 1x=Double 2x=Triple ...
-// const coins_per_hour = 1000;
-// seconds
-const coins_duration = 3;
 
 const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: number; add_speed?: number; }) => {
   const { coins_per_hour, creat_timestamp,  add_speed } = props;
@@ -25,17 +22,20 @@ const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: numbe
   const coinsPerHour = Big(coins_per_hour).times(Big(1).plus(add_speed || 0));
 
   const currentTimestamp = new Date().getTime();
-  const coinCountPerDuration = Big(coinsPerHour).div(Big(60).times(60).div(coins_duration));
+  const coinCountPerSecond = Big(coinsPerHour).div(Big(60).times(60));
   const diffHours = Big(Big(currentTimestamp).minus(creat_timestamp)).div(Big(1000).times(60).times(60)).toFixed(0, Big.roundDown);
   const lastSeconds = Big(Big(currentTimestamp).minus(creat_timestamp)).mod(Big(1000).times(60).times(60)).div(1000).toFixed(0, Big.roundDown);
-  const lastCoins = Big(lastSeconds).times(coinCountPerDuration);
+  const lastCoins = Big(lastSeconds).times(coinCountPerSecond);
 
   // console.log('-----> diffHours: %o', diffHours);
   // console.log('-----> lastSeconds: %o', lastSeconds);
   // console.log('-----> coinCountPerDuration: %o', coinCountPerDuration.toString());
   // console.log('-----> lastCoins: %o', lastCoins.toString());
 
-  return Big(lastCoins).plus(Big(diffHours).times(coinsPerHour));
+  return {
+    value: Big(lastCoins).plus(Big(diffHours).times(coinsPerHour)),
+    coinsPerSecond: coinCountPerSecond,
+  };
 };
 
 export function useCoins() {
@@ -79,9 +79,9 @@ export function useCoins() {
     if (!userInfo || !userInfo.creat_timestamp || !userInfo.level || userEquipmentListLoading || userInfoLoading || levelsLoading) return;
 
     const creatTimestamp = userInfo?.creat_timestamp;
-    const coinsPerHour = levels?.[userInfo?.level]?.coins_per_hour;
+    const coinsPerHour = levels?.find((l) => l.level === userInfo?.level)?.coins_per_hour ?? 0;
 
-    const _latestCoins = calcLatestCoins({
+    const { value: _latestCoins } = calcLatestCoins({
       coins_per_hour: coinsPerHour,
       creat_timestamp: creatTimestamp,
     });
@@ -89,14 +89,14 @@ export function useCoins() {
     setCurrentCoins(_latestCoins);
 
     const createInterval = () => {
-      const _latestCoins = calcLatestCoins({
+      const { value: _latestCoins, coinsPerSecond } = calcLatestCoins({
         coins_per_hour: coinsPerHour,
         creat_timestamp: creatTimestamp,
       });
       setLatestCoins(() => _latestCoins);
       setCoins((prevCoins: any) => [
         ...prevCoins,
-        createNewCoin(_latestCoins),
+        createNewCoin(_latestCoins, coinsPerSecond),
       ]);
     };
 

@@ -34,7 +34,7 @@ const Speed = () => {
       </div>
       <div className="shrink-0 flex items-center justify-center rounded-full w-[38px] h-[38px] bg-[url('/images/beraciaga/multiple_bg.svg')] bg-no-repeat bg-center bg-contain">
         <div
-          className="text-[#6376FF] font-montserrat text-[20px] italic font-bold"
+          className="text-[#6376FF] font-montserrat text-[14px] italic font-bold"
           style={{ textShadow: '#E1FF0A 1px 1px' }}
         >
           {speed}x

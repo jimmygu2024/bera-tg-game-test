@@ -1,6 +1,6 @@
 import { get } from '@/utils/http';
 import { useTelegram } from '@/hooks/useTelegram';
-import { Equipment, useUserStore } from '@/stores/useUserStore';
+import { Equipment, Level, useUserStore } from '@/stores/useUserStore';
 import Big from 'big.js';
 import { useEffect } from 'react';
 
@@ -82,7 +82,8 @@ export function useUser() {
         setLevelsLoading(false);
         return;
       }
-      setLevels(res.data || []);
+      const _list: Level[] = res.data || [];
+      setLevels(_list);
     } catch (err) {
       console.log(err);
     }
