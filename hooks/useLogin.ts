@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTelegram } from '@/hooks/useTelegram';
 import { post } from '@/utils/http';
 import { useRouter, usePathname } from 'next/navigation';
+import useLoginStore from '@/stores/useLoginStore';
 
 export interface UserData {
   id: number;
@@ -25,6 +26,7 @@ const useLogin = (): UseLoginResult => {
   const [hasProcessedInvite, setHasProcessedInvite] = useState<boolean>(false);
   const router = useRouter();
   const pathname = usePathname();
+  const setLoginData = useLoginStore(state => state.setLoginData);
 
   const handleLogin = async (invite_source = '') => {
     try {
@@ -46,6 +48,7 @@ const useLogin = (): UseLoginResult => {
       
       await post('/api/login', loginData);
       setUserData(loginData);
+      setLoginData(loginData); // 更新store
 
       // if (inviterId && pathname === '/bind' && !hasProcessedInvite) {
       //   setHasProcessedInvite(true);

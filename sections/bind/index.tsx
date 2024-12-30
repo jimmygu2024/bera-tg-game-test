@@ -11,12 +11,13 @@ import useBindStore from "@/stores/useBindStore";
 import { useBind } from "@/hooks/useBind";
 import useLogin from "@/hooks/useLogin";
 import { usePathname } from "next/navigation";
+import useLoginStore from '@/stores/useLoginStore';
 
 const BindView = () => {
   const router = useRouter();
   const [hasCheckedBind, setHasCheckedBind] = useState(false);
   const { loading, fetchBindStatus, bind, bindAddress } = useBind();
-  const { isLoading: isLoginLoading } = useLogin();
+  const isLoggedIn = useLoginStore(state => state.isLoggedIn);
   const {
     connected: okxConnected,
     onConnect: onOKXConnect,
@@ -27,8 +28,9 @@ const BindView = () => {
   const getAccount = (account: string) => `${account.split(':')[2]}`
   
   useEffect(() => {
+    console.log('bindAddress', bindAddress)
     const checkBind = async () => {
-      if (isLoginLoading || hasCheckedBind) return;
+      if (!isLoggedIn || hasCheckedBind) return;
       
       const address = await fetchBindStatus();
       setHasCheckedBind(true);
@@ -37,7 +39,7 @@ const BindView = () => {
       }
     };
     checkBind();
-  }, [isLoginLoading, hasCheckedBind, router, fetchBindStatus]);
+  }, [isLoggedIn]);
 
   const handleConnect = async () => {
     try {
@@ -83,8 +85,8 @@ const BindView = () => {
                   onClick={handleConnect}
                   className="bg-[#FFD335] p-[10px] flex items-center gap-[9px] relative rounded-[16px] text-black "
                 >
-                  <IconOKX />
-                  <span className="font-montserrat font-bold">Sign in by OKX</span>
+                  <IconOKX className="w-[30px] h-[30px]" />
+                  <span className="font-montserrat font-bold flex-1">Sign in with OKX wallet</span>
                   <div className="absolute top-[-24px] left-1/2 -translate-x-1/2 border border-[#000000] bg-[#FF79A4] w-[94%] flex gap-2 items-center justify-center rounded-[55px]">
                     <Popover
                       placement={PopoverPlacement.Top}
@@ -92,9 +94,8 @@ const BindView = () => {
                       content={
                         <div className="relative">
                           <div className="rounded-lg bg-[#423F4C] bg-opacity-80 p-3 font-montserrat text-sm text-left text-white">
-                            Import your exsit account in BeraTown by OKX wallet, your
-                            equipments in Bera cave will speed up mining. Meanwhile,
-                            you will get extra 1,000,000 points and $9.99 store coupon
+                          Connect with OKX wallet to earn extra points and coupons! At the same time, boost your mining speed if your wallet has obtained Beratown's cave items!
+                          Meanwhile, you will get extra 1,000,000 points and $9.99 store coupon
                             <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-[#423F4C] opacity-80"></div>
                           </div>
                         </div>
