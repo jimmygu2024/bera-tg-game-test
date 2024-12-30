@@ -20,6 +20,8 @@ export const useBind = () => {
         setBind(res.data.address);
         return res.data.address;
       }
+    } catch(err) {
+      console.log(err, '--fetchBindStatus-err---');
       return null;
     } finally {
       setLoading(false);
