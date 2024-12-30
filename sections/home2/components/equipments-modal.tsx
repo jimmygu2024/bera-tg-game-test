@@ -19,9 +19,11 @@ export default memo(function EquipmentsModal(props: any) {
 
 function Content(props: any) {
   const { WebApp } = useTelegram();
+  const user = WebApp?.initDataUnsafe?.user;
 
   const handleClick = () => {
-    WebApp?.openLink('https://beratown.dapdap.net/cave');
+    // test
+    WebApp?.openLink('https://dev.bera.dapdap.net/cave?tg_user_id=' + user?.id);
   };
 
   return (
