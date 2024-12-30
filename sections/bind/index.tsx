@@ -28,14 +28,13 @@ const BindView = () => {
   const getAccount = (account: string) => `${account.split(':')[2]}`
   
   useEffect(() => {
-    console.log('bindAddress', bindAddress)
+    console.log('bindAddress-isLoggedIn-hasCheckedBind', bindAddress, isLoggedIn, hasCheckedBind)
     const checkBind = async () => {
       if (!isLoggedIn || hasCheckedBind) return;
-      
       const address = await fetchBindStatus();
       setHasCheckedBind(true);
       if (address) {
-        router.replace('/home');
+        router.replace('/imported-equipments');
       }
     };
     checkBind();
