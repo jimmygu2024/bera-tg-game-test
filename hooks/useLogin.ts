@@ -47,7 +47,6 @@ const useLogin = (): UseLoginResult => {
       await post('/api/login', loginData);
       setUserData(loginData);
 
-      // 只有在首页且没处理过邀请时才跳转到 bind 页面
       if (inviterId && pathname === '/' && !hasProcessedInvite) {
         setHasProcessedInvite(true);
         await router.replace('/bind');
