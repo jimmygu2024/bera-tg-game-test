@@ -35,7 +35,6 @@ const ImportedEquipmentsView = () => {
                 }
                 return {
                     category,
-                    name: category,
                     bonus_percentage: 0,
                     pc_item: false
                 };
