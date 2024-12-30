@@ -36,7 +36,8 @@ const ImportedEquipmentsView = () => {
                 return {
                     category,
                     bonus_percentage: 0,
-                    pc_item: false
+                    pc_item: false,
+                    name: category.charAt(0).toUpperCase() + category.slice(1)
                 };
             });
 
@@ -103,7 +104,12 @@ const ImportedEquipmentsView = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className={`px-[6px] py-[5px] border-[3px] border-[#709D27] bg-[#C7FF6E] rounded-3xl flex items-center gap-[2px] ${!item.pc_item ? 'opacity-50' : ''}`}><IconFlash /><span className="font-montserrat font-[700] text-[12px] text-center leading-[12px] text-black">+{item.bonus_percentage}%</span></div>
+                                <div className={`px-[6px] py-[5px] border-[3px] border-[#709D27] bg-[#C7FF6E] rounded-3xl flex items-center gap-[2px] ${!item.pc_item ? 'opacity-50' : ''}`}>
+                                    <IconFlash />
+                                    <span className="font-montserrat font-[700] text-[12px] text-center leading-[12px] text-black">
+                                        {!item.pc_item ? 'up to +300%' : `+${item.bonus_percentage}%`}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         ))
