@@ -77,9 +77,18 @@ const BindView = () => {
                 <Skeleton width={156} height={52} />
             </div>) : (
                 <div className="w-full flex justify-between items-center p-[18px] gap-[0.8125rem]">
-                  <button className="absolute text-white top-[-80px]" onClick={onOKXDisconnect}>onOKXDisconnect</button>
-                <button
-                  onClick={() => router.push("/home")}
+                  {
+                    okxConnected && (
+                      <button
+                        className="absolute text-white top-[-80px]"
+                        onClick={onOKXDisconnect}
+                      >
+                        onOKXDisconnect
+                      </button>
+                    )
+                  }
+                  <button
+                    onClick={() => router.push("/home")}
                   className="bg-[#FFD335] w-[146px] h-[52px] text-center rounded-[16px] font-montserrat font-bold text-black leading-[1]"
                 >
                   Sign in
