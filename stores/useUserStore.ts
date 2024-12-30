@@ -7,8 +7,10 @@ type UserState = {
   setEquipmentListLoading: (loading: boolean) => void;
 
   userEquipmentList: Equipment[];
+  userEquipmentSingleList: Equipment[];
   userEquipmentListLoading: boolean;
   setUserEquipmentList: (list: Equipment[]) => void;
+  setUserEquipmentSingleList: (list: Equipment[]) => void;
   setUserEquipmentListLoading: (loading: boolean) => void;
 
   levels: Level[];
@@ -16,10 +18,13 @@ type UserState = {
   setLevels: (list: Level[]) => void;
   setLevelsLoading: (loading: boolean) => void;
 
-  userInfo?: UserInfo;
+  userInfo?: Partial<UserInfo>;
   userInfoLoading: boolean;
-  setUserInfo: (user?: UserInfo) => void;
+  setUserInfo: (user?: Partial<UserInfo>) => void;
   setUserInfoLoading: (loading: boolean) => void;
+
+  addSpeed: number;
+  setAddSpeed: (speed: number) => void;
 };
 
 export const useUserStore = create<UserState>((set) => ({
@@ -29,8 +34,10 @@ export const useUserStore = create<UserState>((set) => ({
   setEquipmentListLoading: (loading) => set({ equipmentListLoading: loading }),
 
   userEquipmentList: [],
+  userEquipmentSingleList: [],
   userEquipmentListLoading: false,
   setUserEquipmentList: (list) => set({ userEquipmentList: list }),
+  setUserEquipmentSingleList: (list) => set({ userEquipmentSingleList: list }),
   setUserEquipmentListLoading: (loading) => set({ userEquipmentListLoading: loading }),
 
   levels: [],
@@ -38,18 +45,26 @@ export const useUserStore = create<UserState>((set) => ({
   setLevels: (list) => set({ levels: list }),
   setLevelsLoading: (loading) => set({ levelsLoading: loading }),
 
-  userInfo: void 0,
+  userInfo: {
+    level: 1,
+    bind_okx_reward_coins: 1000000,
+    bind_okx_reward_coupons: 9.99,
+  },
   userInfoLoading: false,
-  setUserInfo: (user) => set({ userInfo: user }),
+  setUserInfo: (user) => set((state) => ({ userInfo: { ...state.userInfo, ...user } })),
   setUserInfoLoading: (loading) => set({ userInfoLoading: loading }),
+
+  addSpeed: 0,
+  setAddSpeed: (addSpeed) => set({ addSpeed }),
 }));
 
 export interface UserInfo {
   creat_timestamp: number;
   address: string;
   bind_source: string | 'okx_invite';
-  bind_okx_reward_coins: number,
-  bind_okx_reward_coupons: number,
+  bind_okx_reward_coins: number;
+  bind_okx_reward_coupons: number;
+  level: number;
 }
 
 export interface Equipment {

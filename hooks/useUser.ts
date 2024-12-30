@@ -1,6 +1,8 @@
 import { get } from '@/utils/http';
 import { useTelegram } from '@/hooks/useTelegram';
-import { useUserStore } from '@/stores/useUserStore';
+import { Equipment, useUserStore } from '@/stores/useUserStore';
+import Big from 'big.js';
+import { useEffect } from 'react';
 
 export function useUser() {
   const { WebApp } = useTelegram();
@@ -10,7 +12,9 @@ export function useUser() {
     equipmentListLoading,
     setEquipmentListLoading,
     userEquipmentList,
+    userEquipmentSingleList,
     setUserEquipmentList,
+    setUserEquipmentSingleList,
     userEquipmentListLoading,
     setUserEquipmentListLoading,
     levels,
@@ -21,6 +25,8 @@ export function useUser() {
     setUserInfo,
     userInfoLoading,
     setUserInfoLoading,
+    addSpeed,
+    setAddSpeed,
   } = useUserStore();
 
   const tgUserId = WebApp?.initDataUnsafe?.user?.id;
@@ -48,7 +54,20 @@ export function useUser() {
         setUserEquipmentListLoading(false);
         return;
       }
-      setUserEquipmentList(res.data || []);
+      const _list: Equipment[] = res.data || [];
+      const _userEquipmentSingleList: Equipment[] = [];
+      _list.forEach((it) => {
+        const idx = _userEquipmentSingleList.findIndex((_it) => _it.category === it.category);
+        if (idx < 0) {
+          _userEquipmentSingleList.push(it);
+          return;
+        }
+        if (Big(it.bonus_percentage).gt(_userEquipmentSingleList[idx].bonus_percentage)) {
+          _userEquipmentSingleList[idx] = it;
+        }
+      });
+      setUserEquipmentList(_list);
+      setUserEquipmentSingleList(_userEquipmentSingleList);
     } catch (err) {
       console.log(err);
     }
@@ -78,22 +97,24 @@ export function useUser() {
         setUserInfoLoading(false);
         return;
       }
-      setUserInfo({
-        ...res.data,
-        bind_okx_reward_coins: 1000000,
-        bind_okx_reward_coupons: 9.99,
-      });
+      setUserInfo(res.data);
     } catch (err) {
       console.log(err);
     }
     setUserInfoLoading(false);
   };
 
+  useEffect(() => {
+    const add = userEquipmentSingleList?.map?.((it: Equipment) => it.bonus_percentage / 100)?.reduce?.((a: number, b: number) => a + b, 0) ?? 0;
+    setAddSpeed(add);
+  }, [userEquipmentSingleList]);
+
   return {
     equipmentList,
     equipmentListLoading,
     getEquipmentList,
     userEquipmentList,
+    userEquipmentSingleList,
     userEquipmentListLoading,
     getUserEquipmentList,
     levels,
@@ -102,5 +123,6 @@ export function useUser() {
     userInfo,
     userInfoLoading,
     getUserInfo,
+    addSpeed,
   };
 }

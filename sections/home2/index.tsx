@@ -9,7 +9,7 @@ export const HomeContext = createContext<any>({});
 
 export default memo(function Home() {
   const coins = useCoins();
-  const [isInitialized, setIsInitialized] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
   const { handleLogin } = useLogin();
   const user = useUser();
 

@@ -1,10 +1,14 @@
 import Modal from "@/components/modal";
-import { memo } from "react";
+import { memo, useContext } from 'react';
 import InviteLink from '@/sections/home2/components/invite-link';
 import InviteShare from '@/sections/home2/components/invite-share';
+import { HomeContext } from '@/sections/home2';
+import { numberFormatter } from '@/utils/number-formatter';
 
 export default memo(function Congrats(props: any) {
   const { visible, onClose } = props;
+
+  const { userInfo } = useContext(HomeContext);
 
   return (
     <Modal
@@ -23,14 +27,18 @@ export default memo(function Congrats(props: any) {
             <div className="w-[32px] mx-[10px]">
               <img src="/images/beraciaga/coin.svg" alt="coin" />
             </div>
-            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">+1,000,000</span>
+            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">
+              +{numberFormatter(userInfo?.bind_okx_reward_coins, 0, true)}
+            </span>
           </div>
           <div className="mt-[18px] flex items-center justify-center w-[292px] h-[50px] rounded-[53px] border border-white bg-[rgba(255, 255, 255, 0.30)] backdrop-blur-[10px]">
             <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">Shop Coupon</span>
             <div className="w-[36px] mx-[10px]">
               <img src="/images/beraciaga/ticket.svg" alt="ticket" />
             </div>
-            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">$9.99</span>
+            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">
+              {numberFormatter(userInfo?.bind_okx_reward_coupons, 2, true, { prefix: '$', round: 0 })}
+            </span>
           </div>
           <div className="mt-[8px] mb-[20px] text-black font-montserrat text-[16px] font-medium leading-[150%]">* Can be used when Shop goes live</div>
           <button
