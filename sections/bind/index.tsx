@@ -12,6 +12,7 @@ import { useBind } from "@/hooks/useBind";
 import useLogin from "@/hooks/useLogin";
 import { usePathname } from "next/navigation";
 import useLoginStore from '@/stores/useLoginStore';
+import ComingSoon from '@components/ComingSoon';
 
 const BindView = () => {
   const router = useRouter();
@@ -59,8 +60,9 @@ const BindView = () => {
   return (
     <div className="bg-black h-screen relative w-full">
       <div className="p-[18px]">
-        <h1 className="text-white w-full mt-[56px] font-montserrat font-[900] text-[52px] leading-[52px] text-center">
-          BERACIAGA
+        <h1 className="relative flex flex-col items-center text-white w-full mt-[56px] font-montserrat font-[900] text-[52px] leading-[52px] text-center">
+          <div>BERACIAGA</div>
+          <ComingSoon className="absolute top-[-30px] z-[1]" />
         </h1>
         <img
           src="/images/box-bg.png"
