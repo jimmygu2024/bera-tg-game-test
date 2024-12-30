@@ -47,10 +47,10 @@ const useLogin = (): UseLoginResult => {
       await post('/api/login', loginData);
       setUserData(loginData);
 
-      if (inviterId && pathname === '/bind' && !hasProcessedInvite) {
-        setHasProcessedInvite(true);
-        await router.replace('/home');
-      }
+      // if (inviterId && pathname === '/bind' && !hasProcessedInvite) {
+      //   setHasProcessedInvite(true);
+      //   await router.replace('/home');
+      // }
 
       console.log('/api/login ---- Login successful', loginData);
 
