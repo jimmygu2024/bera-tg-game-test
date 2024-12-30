@@ -28,11 +28,10 @@ function Content(props: any) {
     <div className="relative flex flex-col items-center w-[20.75rem] px-[0.5625rem] pt-[4.1875rem] pb-[1.3125rem] rounded-[1.25rem] bg-[#C7FF6E] border border-[rgba(255,_255,_255,_0.20)]">
       <img src="/images/beraciaga/equipments.svg" alt="" className="absolute left-1/2 -translate-x-1/2 w-[5.3125rem] h-[4.375rem] top-[-1rem]" />
       <div className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[2rem] font-[400] leading-[100%] text-center">
-        Import Equipments
+        Import Items
       </div>
       <div className="text-[1rem] text-black font-[500] leading-[150%] mt-[0.875rem] text-center">
-        <div className="whitespace-nowrap">The equipments came from <strong>BeraCave</strong>,</div>
-        they will speed up your mining.
+        Collect items from the Beracave to boost your mining speed by an ooga-booga-worthy amount!
       </div>
       <img src="/images/beraciaga/bera-cave.svg" alt="" className="mt-[0.6875rem] w-[7.8125rem] h-[6rem]" />
       <div className="text-[1rem] font-[500] leading-[150%] text-black mt-[0.75rem] text-center">

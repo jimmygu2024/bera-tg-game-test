@@ -12,7 +12,7 @@ const DropCoins = () => {
     currentCoins,
   } = useContext(HomeContext);
 
-  const amount = numberFormatter(Big(latestCoins).minus(currentCoins).abs(), 3, true, { round: Big.roundDown });
+  const amount = numberFormatter(Big(latestCoins).minus(currentCoins).abs(), 3, true);
 
   return (
     <div className="w-full h-full absolute left-0 top-0 z-[0]">

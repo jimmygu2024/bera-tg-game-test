@@ -31,7 +31,9 @@ function Content(props: any) {
           <img src="/images/beraciaga/foot.svg" alt="foot" />
         </div>
         <div className="mb-[8px] text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[32px] leading-[100%]">Invite Frens</div>
-        <div className="text-black font-montserrat text-[16px] font-medium leading-[150%]">Invite friends to get more prize!</div>
+        <div className="text-black font-montserrat text-[16px] font-medium leading-[150%]">
+          Invite more beras won&#39;t hurt, do it now!
+        </div>
         <div className="mt-[18px] mb-[24px] flex items-center justify-center w-[292px] h-[50px] rounded-[53px] border border-white bg-[rgba(255, 255, 255, 0.30)] backdrop-blur-[10px]">
           <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">{total} Invited</span>
         </div>

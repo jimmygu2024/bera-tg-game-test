@@ -45,7 +45,8 @@ const ImportEquipments = () => {
               }
             </Swiper>
           </div>
-          <div className="text-[#F7F9EA] font-cherryBomb text-stroke-1 text-[14px] leading-[100%]">Import<br /> Equipments
+          <div className="text-[#F7F9EA] font-cherryBomb text-stroke-1 text-[14px] leading-[100%] text-left">
+            Import<br /> Boost Items
           </div>
         </div>
       </button>

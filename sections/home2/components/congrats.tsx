@@ -15,7 +15,9 @@ export default memo(function Congrats(props: any) {
 
         <div className="flex flex-col items-center w-full h-[360px] rounded-[20px] bg-[#FF79A4] bg-[url('/images/beraciaga/congrats_bg.svg')] bg-center bg-no-repeat border border-black">
           <div className="mt-[26px] text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[32px] leading-[100%]">Congrats!</div>
-          <div className="mt-[16px] mb-[14px] text-black font-montserrat text-[16px] font-medium leading-[150%]">You’ve got extra prize via OKX Wallet</div>
+          <div className="mt-[16px] mb-[14px] text-black font-montserrat text-[16px] font-medium leading-[150%]">
+            You&#39;ve got a gift from OKX wallet!
+          </div>
           <div className="flex items-center justify-center w-[292px] h-[50px] rounded-[53px] border border-white bg-[rgba(255, 255, 255, 0.30)] backdrop-blur-[10px]">
             <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">Points</span>
             <div className="w-[32px] mx-[10px]">
