@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTelegram } from '@/hooks/useTelegram';
 import { post } from '@/utils/http';
-import { useRouter, usePathname } from 'next/navigation';
 import useLoginStore from '@/stores/useLoginStore';
 
 export interface UserData {
@@ -23,9 +22,6 @@ const useLogin = (): UseLoginResult => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [hasProcessedInvite, setHasProcessedInvite] = useState<boolean>(false);
-  const router = useRouter();
-  const pathname = usePathname();
   const setLoginData = useLoginStore(state => state.setLoginData);
 
   const handleLogin = async (invite_source = '') => {
@@ -45,18 +41,14 @@ const useLogin = (): UseLoginResult => {
         ...(invite_source && { invite_source: 'okx_invite' }), // only for okx invite
         ...(inviterId && Number(inviterId) !== Number(tgUser.id)  &&  { inviter_tg_user_id: inviterId })
       };
-      
-      await post('/api/login', loginData);
-      setUserData(loginData);
-      setLoginData(loginData); // 更新store
-
-      // if (inviterId && pathname === '/bind' && !hasProcessedInvite) {
-      //   setHasProcessedInvite(true);
-      //   await router.replace('/home');
-      // }
-
-      console.log('/api/login ---- Login successful', loginData);
-
+      const response = await post('/api/login', loginData);
+      if (response.code === 200) {
+        setLoginData(loginData);
+        setUserData(loginData);
+        console.log('/api/login ---- Login successful', loginData);
+      } else {
+        console.error('/api/login ---- Login failed:', response);
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
       setError(errorMessage);

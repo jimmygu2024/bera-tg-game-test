@@ -23,7 +23,6 @@ const BindView = () => {
     connected: okxConnected,
     onConnect: onOKXConnect,
     onDisconnect: onOKXDisconnect,
-    session: okxSession,
   } = useOkxUniversal();
 
   const getAccount = (account: string) => `${account.split(':')[2]}`
