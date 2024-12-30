@@ -43,7 +43,7 @@ export default function RootLayout({
             <SkeletonTheme baseColor='#96D6FF' highlightColor='#FFF5A9'>
               <OkxTonProvider isTelegram>
                 <BitgetProvider>
-                  <TabBarWrapper showTabBar={!['/bind', '/imported-equipments'].includes(path)}>
+                  <TabBarWrapper showTabBar={!['/', '/imported-equipments'].includes(path)}>
                     {children}
                   </TabBarWrapper>
                 </BitgetProvider>

@@ -40,16 +40,16 @@ const useLogin = (): UseLoginResult => {
         tg_username: tgUser.username,
         tg_avatar: tgUser.photo_url,
         init_data: WebApp.initData,
-        ...(invite_source && { invite_source }),
+        ...(invite_source && { invite_source: 'okx_invite' }), // only for okx invite
         ...(inviterId && Number(inviterId) !== Number(tgUser.id)  &&  { inviter_tg_user_id: inviterId })
       };
       
       await post('/api/login', loginData);
       setUserData(loginData);
 
-      if (inviterId && pathname === '/' && !hasProcessedInvite) {
+      if (inviterId && pathname === '/bind' && !hasProcessedInvite) {
         setHasProcessedInvite(true);
-        await router.replace('/bind');
+        await router.replace('/home');
       }
 
       console.log('/api/login ---- Login successful', loginData);
