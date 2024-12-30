@@ -20,21 +20,19 @@ const ImportedEquipmentsView = () => {
     const { setCongratsModalVisible }= useLayoutStore()
     
     const tgUser = WebApp?.initDataUnsafe?.user as any;
-
+    
     const fetchGameData = async () => {
         try {
             const response = await get(`/api/game/items?tg_user_id=${tgUser?.id}`);
             const groupedItems = groupBy(response.data, 'category');
             
-            // 确保所有分类都存在
-            const categories = ['weapon', 'helmet', 'armor', 'shoes'];
+            const categories = ['cars', 'hats', 'jackets', 'necklaces'];
             const processedItems = categories.map(category => {
                 const categoryItems = groupedItems[category] || [];
                 const pcItems = filter(categoryItems, { pc_item: true });
                 if (pcItems.length > 0) {
                     return maxBy(pcItems, 'level');
                 }
-                // 返回空占位项
                 return {
                     category,
                     name: category,
@@ -80,7 +78,7 @@ const ImportedEquipmentsView = () => {
                     <img src={tgUser?.photo_url ? tgUser?.photo_url : '/images/beraciaga/avator.svg'} className="w-8 h-8 rounded-full" alt="" />
                     <div className="font-montserrat text-[20px] font-bold text-white">{formatLongText(bindAddress, 4, 4)}</div>
                 </div>
-                <div className="flex-shrink-0 mt-4 font-montserrat italic text-[#6376FF] text-[36px] bg-[url(/images/bg-im.png)] bg-contain bg-no-repeat w-[82px] h-[82px] rounded-full flex items-center justify-center">
+                <div className="flex-shrink-0 mt-4 font-montserrat italic text-[#6376FF] text-[24px] bg-[url(/images/bg-im.png)] bg-contain bg-no-repeat w-[82px] h-[82px] rounded-full flex items-center justify-center">
                     {totalBonus}X
                 </div>
 
