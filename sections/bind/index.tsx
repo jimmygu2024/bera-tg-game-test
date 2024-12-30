@@ -30,8 +30,9 @@ const BindView = () => {
   useEffect(() => {
     console.log('bindAddress-isLoggedIn-hasCheckedBind', bindAddress, isLoggedIn, hasCheckedBind)
     const checkBind = async () => {
-      if (!isLoggedIn || hasCheckedBind) return;
+      if (!isLoggedIn) return;
       const address = await fetchBindStatus();
+      console.log('address', address)
       setHasCheckedBind(true);
       if (address) {
         router.replace('/imported-equipments');
@@ -45,6 +46,7 @@ const BindView = () => {
       const session = await onOKXConnect?.();
       if (session?.namespaces?.eip155?.accounts[0]) {
         const bindStatus = await bind(getAccount(session?.namespaces?.eip155?.accounts[0]));
+        console.log('bindStatus', bindStatus)
         if (bindStatus) {
             router.push('/imported-equipments');
         }
