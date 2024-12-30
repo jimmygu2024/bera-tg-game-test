@@ -16,7 +16,7 @@ const BindView = () => {
   const router = useRouter();
   const [hasCheckedBind, setHasCheckedBind] = useState(false);
   const { loading, fetchBindStatus, bind, bindAddress } = useBind();
-  const { handleLogin } = useLogin();
+  const { isLoading: isLoginLoading } = useLogin();
   const {
     connected: okxConnected,
     onConnect: onOKXConnect,
@@ -28,7 +28,8 @@ const BindView = () => {
   
   useEffect(() => {
     const checkBind = async () => {
-      if (hasCheckedBind) return;
+      if (isLoginLoading || hasCheckedBind) return;
+      
       const address = await fetchBindStatus();
       setHasCheckedBind(true);
       if (address) {
@@ -36,15 +37,13 @@ const BindView = () => {
       }
     };
     checkBind();
-  }, []);
+  }, [isLoginLoading, hasCheckedBind, router, fetchBindStatus]);
 
   const handleConnect = async () => {
     try {
       const session = await onOKXConnect?.();
       if (session?.namespaces?.eip155?.accounts[0]) {
         const bindStatus = await bind(getAccount(session?.namespaces?.eip155?.accounts[0]));
-        handleLogin('okx_invite');
-        console.log('bindStatus', bindStatus);
         if (bindStatus) {
             router.push('/imported-equipments');
         }

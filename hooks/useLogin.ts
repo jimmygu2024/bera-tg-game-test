@@ -64,7 +64,10 @@ const useLogin = (): UseLoginResult => {
   };
 
   useEffect(() => {
-    if (!isInitialized || !WebApp) return;
+    if (!isInitialized || !WebApp) {
+      setIsLoading(true);
+      return;
+    }
     handleLogin();
   }, [WebApp, isInitialized]);
 
