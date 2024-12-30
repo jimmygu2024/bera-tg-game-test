@@ -22,7 +22,9 @@ const useLogin = (): UseLoginResult => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [hasProcessedInvite, setHasProcessedInvite] = useState<boolean>(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogin = async (invite_source = '') => {
     try {
@@ -42,13 +44,14 @@ const useLogin = (): UseLoginResult => {
         ...(inviterId && { inviter_tg_user_id: inviterId })
       };
       
-      if (inviterId) {
-        await router.replace('/bind');
-      } else {
-        await post('/api/login', loginData);
-      }
-
+      await post('/api/login', loginData);
       setUserData(loginData);
+
+      // 只有在首页且没处理过邀请时才跳转到 bind 页面
+      if (inviterId && pathname === '/' && !hasProcessedInvite) {
+        setHasProcessedInvite(true);
+        await router.replace('/bind');
+      }
 
       console.log('/api/login ---- Login successful');
 

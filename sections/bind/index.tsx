@@ -14,11 +14,13 @@ import { usePathname } from "next/navigation";
 
 const BindView = () => {
   const router = useRouter();
+  const [hasCheckedBind, setHasCheckedBind] = useState(false);
   const { loading, fetchBindStatus, bind, bindAddress } = useBind();
   const { handleLogin } = useLogin();
   const {
     connected: okxConnected,
     onConnect: onOKXConnect,
+    onDisconnect: onOKXDisconnect,
     session: okxSession,
   } = useOkxUniversal();
 
@@ -26,9 +28,11 @@ const BindView = () => {
   
   useEffect(() => {
     const checkBind = async () => {
+      if (hasCheckedBind) return;
       const address = await fetchBindStatus();
+      setHasCheckedBind(true);
       if (address) {
-        router.push('/');
+        router.replace('/');
       }
     };
     checkBind();
@@ -72,6 +76,7 @@ const BindView = () => {
                 <Skeleton width={156} height={52} />
             </div>) : (
                 <div className="w-full flex justify-between items-center p-[18px]">
+                  <button onClick={onOKXDisconnect}>onOKXDisconnect</button>
                 <button
                   onClick={() => router.push("/")}
                   className="bg-[#FFD335] w-[146px] h-[52px] text-center leading-[52px] rounded-[16px] font-montserrat font-bold text-black"
