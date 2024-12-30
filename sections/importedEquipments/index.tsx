@@ -115,7 +115,7 @@ const ImportedEquipmentsView = () => {
                 <div className="w-full px-5 mt-6 bg-black pb-6">
                     <button className="w-full flex-shrink-0 bg-[#FFD335] rounded-2xl h-[52px] leading-[52px] text-black text-center font-montserrat font-[700]" onClick={() => {
                         setCongratsModalVisible(true);
-                        router.push('/');
+                        router.push('/home');
                     }}>Beraciaga Now</button>
                 </div>
             </div>
