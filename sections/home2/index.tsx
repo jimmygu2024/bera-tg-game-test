@@ -10,7 +10,7 @@ export default memo(function Home() {
 
   return (
     <HomeContext.Provider value={{ ...coins }}>
-      <div className="h-full flex flex-col items-stretch bg-[#FFD335] rounded-[10px] rounded-b-[0]">
+      <div className="relative h-full flex flex-col items-stretch bg-[#FFD335] rounded-[10px] rounded-b-[0]">
         <Header />
         <Content />
       </div>

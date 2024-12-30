@@ -1,6 +1,7 @@
 import DropCoins from '@/sections/home2/components/drop-coins';
 import Reward from '@/sections/home2/components/reward';
 import Speed from '@/sections/home2/components/speed';
+import ComingSoon from '@components/ComingSoon';
 
 const Content = () => {
 
@@ -11,6 +12,7 @@ const Content = () => {
       </div>
       <div className="relative -top-[17px] w-full px-[0.75rem] h-[34.3125rem] mx-auto bg-[url('/images/beraciaga/luck_box_bg.svg')] bg-no-repeat bg-center bg-[length:22.6875rem_34.3125rem]">
         <DropCoins />
+        <ComingSoon className="absolute z-[2] left-1/2 -translate-x-1/2 top-[20rem]" />
         <div className="relative z-[1]">
           <div className="pt-[42px] text-center text-white font-montserrat text-[48px] font-bold tracking-[2.4px]">BERACIAGA</div>
           <div className="relative mt-[72px] mx-auto w-[245px] h-[245px] justify-center">
