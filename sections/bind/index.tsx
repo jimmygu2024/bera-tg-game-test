@@ -34,22 +34,23 @@ const BindView = () => {
     checkBind();
   }, []);
 
-  useEffect(() => {
-    const handleBindStatus = async () => {
-      if (okxConnected && okxSession?.namespaces?.eip155?.accounts[0]) {
-        handleLogin('okx_invite');
-        const bindStatus = await bind(getAccount(okxSession?.namespaces?.eip155?.accounts[0]));
-        console.log('bindStatus', bindStatus);
-        if (bindStatus) {
-            router.push('/imported-equipments');
-        }
-      }
-    };
-    handleBindStatus();
-  }, [okxConnected]);
+  // useEffect(() => {
+  //   const handleBindStatus = async () => {
+  //     if (okxConnected && okxSession?.namespaces?.eip155?.accounts[0]) {
+  //       handleLogin('okx_invite');
+  //       const bindStatus = await bind(getAccount(okxSession?.namespaces?.eip155?.accounts[0]));
+  //       console.log('bindStatus', bindStatus);
+  //       if (bindStatus) {
+  //           router.push('/imported-equipments');
+  //       }
+  //     }
+  //   };
+  //   handleBindStatus();
+  // }, [okxConnected]);
 
-  const handleConnect = () => {
-    onOKXConnect?.();
+  const handleConnect = async () => {
+    const sesseion = await onOKXConnect?.();
+    console.log(sesseion, '<====')
   };
 
   return (
