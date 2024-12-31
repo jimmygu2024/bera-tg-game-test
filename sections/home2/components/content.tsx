@@ -2,6 +2,7 @@ import DropCoins from '@/sections/home2/components/drop-coins';
 import Reward from '@/sections/home2/components/reward';
 import Speed from '@/sections/home2/components/speed';
 import ComingSoon from '@components/ComingSoon';
+import RingButton from '@components/Ring';
 
 const Content = () => {
 
@@ -11,6 +12,7 @@ const Content = () => {
         Lucky Box
       </div>
       <div className="relative -top-[17px] w-full px-[0.75rem] h-[34.3125rem] mx-auto bg-[url('/images/beraciaga/luck_box_bg.svg')] bg-no-repeat bg-center bg-[length:22.6875rem_34.3125rem]">
+        <RingButton className="absolute right-[15px] top-[15px] z-[2]" />
         <DropCoins />
         <ComingSoon className="absolute z-[2] left-1/2 -translate-x-1/2 top-[20rem]" />
         <div className="relative z-[1]">

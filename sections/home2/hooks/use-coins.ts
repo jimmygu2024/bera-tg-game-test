@@ -3,6 +3,7 @@ import { useAudio } from '@/hooks/useAudio';
 import Big from 'big.js';
 import { Equipment, useUserStore } from '@/stores/useUserStore';
 import { getRandomNumber } from '@/utils/utils';
+import { useRingStore } from '@/stores/useRingStore';
 
 // seconds
 const coins_duration = 2;
@@ -82,6 +83,7 @@ export function useCoins() {
     levelsLoading,
     userEquipmentSingleList,
   } = useUserStore();
+  const ringStore = useRingStore();
 
   const [coins, setCoins] = useState<any[]>([]);
   const [collectedCoins, setCollectedCoins] = useState(0);
@@ -97,7 +99,9 @@ export function useCoins() {
   const handleCollected = (id: number) => {
     setCoins((prevCoins) => prevCoins.filter((coin) => coin.id !== id));
     setCollectedCoins(prev => prev + 1);
-    playSound();
+    if (ringStore.open) {
+      playSound();
+    }
     const curr = coins.find((it: any) => it.id === id);
     curr && setCurrentCoins(() => curr.latestAmount);
   };
