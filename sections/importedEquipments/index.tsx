@@ -5,12 +5,13 @@ import { formatLongText } from "@/utils/utils";
 import { useState, useEffect } from "react";
 import { groupBy, map, filter, maxBy } from 'lodash-es';
 import { get } from "@/utils/http";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useLayoutStore } from "@/stores/useLayoutStore";
 
 const ImportedEquipmentsView = () => {
 
     const router = useRouter();
+    const search = useSearchParams();
 
     const [items, setItems] = useState<any[]>([]);
     const { bindAddress } = useBindStore();
@@ -121,7 +122,9 @@ const ImportedEquipmentsView = () => {
                 </div>
                 <div className="w-full px-5 pt-6 bg-black pb-6">
                     <button className="w-full flex-shrink-0 bg-[#FFD335] rounded-2xl h-[52px] leading-[52px] text-black text-center font-montserrat font-[700]" onClick={() => {
-                        setCongratsModalVisible(true);
+                        if (search.get('from') !== 'home') {
+                            setCongratsModalVisible(true);
+                        }
                         router.push('/home');
                     }}>Beraciaga Now</button>
                 </div>

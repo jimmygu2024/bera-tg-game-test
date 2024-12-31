@@ -3,7 +3,9 @@ import { Autoplay } from 'swiper/modules';
 
 import 'swiper/css/autoplay';
 import EquipmentsModal from '@/sections/home2/components/equipments-modal';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { HomeContext } from '@/sections/home2';
+import { useRouter } from 'next/navigation';
 
 const Equipments = [
   { key: 1, icon: '/images/beraciaga/equipments.svg' },
@@ -12,6 +14,9 @@ const Equipments = [
 ];
 
 const ImportEquipments = () => {
+  const { userInfo } = useContext(HomeContext);
+  const router = useRouter();
+
   const [visible, setVisible] = useState(false);
 
   return (
@@ -20,6 +25,10 @@ const ImportEquipments = () => {
         type="button"
         className="w-[150px] h-[40px] rounded-[10px] border border-[#709D27] bg-[#7DB425] backdrop-blur-[5px]"
         onClick={() => {
+          if (userInfo?.address) {
+            router.push('/imported-equipments?from=home');
+            return;
+          }
           setVisible(true);
         }}
       >
@@ -46,7 +55,7 @@ const ImportEquipments = () => {
             </Swiper>
           </div>
           <div className="text-[#F7F9EA] font-cherryBomb text-stroke-1 text-[14px] leading-[100%] text-left">
-            Import<br /> Boost Items
+            {!userInfo?.address ? <>Import<br /></> : ''} Boost Items
           </div>
         </div>
       </button>
