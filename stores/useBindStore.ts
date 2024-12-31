@@ -10,7 +10,7 @@ interface BindStore {
 
 const useBindStore = create<BindStore>()(
     persist(
-        (set: (partial: Partial<BindStore>) => void) => ({
+        (set: any) => ({
             bindAddress: '',
             hasBound: false,
             setBind: (bindAddress: string) => set({ bindAddress }),
