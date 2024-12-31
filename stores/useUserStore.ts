@@ -89,6 +89,7 @@ export interface Equipment {
   level: number;
   tg_item: boolean;
   pc_item: boolean;
+  obtained_at: number;
 }
 
 export interface Level {

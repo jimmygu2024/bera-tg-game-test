@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAudio } from '@/hooks/useAudio';
 import Big from 'big.js';
-import { useUserStore } from '@/stores/useUserStore';
+import { Equipment, useUserStore } from '@/stores/useUserStore';
 import { getRandomNumber } from '@/utils/utils';
 
 // seconds
@@ -17,26 +17,58 @@ const createNewCoin = (latestAmount: Big.Big, coinsPerSecond: Big.Big) => {
   };
 };
 
-const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: number; add_speed?: number; }) => {
-  const { coins_per_hour, creat_timestamp,  add_speed } = props;
-
-  const coinsPerHour = Big(coins_per_hour).times(Big(1).plus(add_speed || 0));
+const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: number; userEquipmentSingleList?: Equipment[]; }) => {
+  const { coins_per_hour, creat_timestamp, userEquipmentSingleList } = props;
 
   const currentTimestamp = new Date().getTime();
-  const coinCountPerSecond = Big(coinsPerHour).div(Big(60).times(60));
-  const diffHours = Big(Big(currentTimestamp).minus(creat_timestamp)).div(Big(1000).times(60).times(60)).toFixed(0, Big.roundDown);
-  const lastSeconds = Big(Big(currentTimestamp).minus(creat_timestamp)).mod(Big(1000).times(60).times(60)).div(1000).toFixed(0, Big.roundDown);
-  const lastCoins = Big(lastSeconds).times(coinCountPerSecond);
+  const currentCoinsPerHour = Big(coins_per_hour);
 
-  // console.log('-----> diffHours: %o', diffHours);
-  // console.log('-----> lastSeconds: %o', lastSeconds);
-  // console.log('-----> coinCountPerDuration: %o', coinCountPerDuration.toString());
-  // console.log('-----> lastCoins: %o', lastCoins.toString());
+  const calc = (perH: Big.Big, start: Big.Big | number, end: Big.Big | number) => {
+    const coinCountPerSecond = Big(perH).div(Big(60).times(60));
+    const diffHours = Big(Big(end).minus(start)).div(Big(1000).times(60).times(60)).toFixed(0, Big.roundDown);
+    const lastSeconds = Big(Big(end).minus(start)).mod(Big(1000).times(60).times(60)).div(1000).toFixed(0, Big.roundDown);
+    const lastCoins = Big(lastSeconds).times(coinCountPerSecond);
 
-  return {
-    value: Big(lastCoins).plus(Big(diffHours).times(coinsPerHour)),
-    coinsPerSecond: coinCountPerSecond,
+    // console.log('-----> diffHours: %o', diffHours);
+    // console.log('-----> lastSeconds: %o', lastSeconds);
+    // console.log('-----> lastCoins: %o', lastCoins.toString());
+
+    return {
+      value: Big(lastCoins).plus(Big(diffHours).times(perH)),
+      coinsPerSecond: coinCountPerSecond,
+    };
   };
+
+  if (userEquipmentSingleList?.length) {
+    const results: any = [];
+    let addSpeed = Big(0);
+    for (let i = 0; i < userEquipmentSingleList.length; i++) {
+      const equipment = userEquipmentSingleList[i];
+      addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
+      if (i === 0) {
+        results.push(calc(currentCoinsPerHour, creat_timestamp, equipment.obtained_at));
+        continue;
+      }
+      const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
+      results.push(calc(_currPerHour, userEquipmentSingleList[i - 1].obtained_at, equipment.obtained_at));
+    }
+    if (Big(currentTimestamp).gt(userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at)) {
+      const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
+      results.push(calc(_currPerHour, userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at, currentTimestamp));
+    }
+
+    let totalValue = Big(0);
+    results.forEach((it: any) => {
+      totalValue = Big(totalValue).plus(it.value);
+    });
+
+    return {
+      value: totalValue,
+      coinsPerSecond: results[results.length - 1].coinsPerSecond,
+    };
+  }
+
+  return calc(currentCoinsPerHour, creat_timestamp, currentTimestamp);
 };
 
 export function useCoins() {
@@ -48,6 +80,7 @@ export function useCoins() {
     userEquipmentListLoading,
     userInfoLoading,
     levelsLoading,
+    userEquipmentSingleList,
   } = useUserStore();
 
   const [coins, setCoins] = useState<any[]>([]);
@@ -85,6 +118,7 @@ export function useCoins() {
     const { value: _latestCoins } = calcLatestCoins({
       coins_per_hour: coinsPerHour,
       creat_timestamp: creatTimestamp,
+      userEquipmentSingleList,
     });
     setLatestCoins(_latestCoins);
     setCurrentCoins(_latestCoins);
@@ -93,6 +127,7 @@ export function useCoins() {
       const { value: _latestCoins, coinsPerSecond } = calcLatestCoins({
         coins_per_hour: coinsPerHour,
         creat_timestamp: creatTimestamp,
+        userEquipmentSingleList,
       });
       setLatestCoins(() => _latestCoins);
       setCoins((prevCoins: any) => [
@@ -116,7 +151,7 @@ export function useCoins() {
       clearInterval(coinTimer.current);
       document.removeEventListener('visibilitychange', visibilityEvent);
     };
-  }, [userInfo, addSpeed, userEquipmentListLoading, userInfoLoading, levelsLoading]);
+  }, [userInfo, userEquipmentListLoading, userInfoLoading, levelsLoading, userEquipmentSingleList]);
 
   return {
     coins,

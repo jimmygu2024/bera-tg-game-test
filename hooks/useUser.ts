@@ -3,6 +3,7 @@ import { useTelegram } from '@/hooks/useTelegram';
 import { Equipment, Level, useUserStore } from '@/stores/useUserStore';
 import Big from 'big.js';
 import { useEffect } from 'react';
+import { orderBy } from 'lodash-es';
 
 export function useUser() {
   const { WebApp } = useTelegram();
@@ -57,6 +58,7 @@ export function useUser() {
       const _list: Equipment[] = res.data || [];
       const _userEquipmentSingleList: Equipment[] = [];
       _list.forEach((it) => {
+        it.obtained_at = it.obtained_at * 1000;
         const idx = _userEquipmentSingleList.findIndex((_it) => _it.category === it.category);
         if (idx < 0) {
           _userEquipmentSingleList.push(it);
@@ -67,7 +69,7 @@ export function useUser() {
         }
       });
       setUserEquipmentList(_list);
-      setUserEquipmentSingleList(_userEquipmentSingleList);
+      setUserEquipmentSingleList(orderBy(_userEquipmentSingleList, ['obtained_at']));
     } catch (err) {
       console.log(err);
     }
@@ -98,7 +100,10 @@ export function useUser() {
         setUserInfoLoading(false);
         return;
       }
-      setUserInfo(res.data);
+      setUserInfo({
+        ...res.data,
+        creat_timestamp: res.data.creat_timestamp * 1000,
+      });
     } catch (err) {
       console.log(err);
     }
