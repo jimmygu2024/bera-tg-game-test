@@ -2,13 +2,13 @@ import Modal from "@/components/modal";
 import { memo, useContext } from 'react';
 import InviteLink from '@/sections/home2/components/invite-link';
 import InviteShare from '@/sections/home2/components/invite-share';
-import { HomeContext } from '@/sections/home2';
 import { numberFormatter } from '@/utils/number-formatter';
+import { useUserStore } from '@/stores/useUserStore';
 
 export default memo(function Congrats(props: any) {
   const { visible, onClose } = props;
 
-  const { userInfo } = useContext(HomeContext);
+  const { userInfo } = useUserStore();
 
   return (
     <Modal
