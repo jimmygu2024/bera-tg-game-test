@@ -92,7 +92,7 @@ const ImportedEquipmentsView = () => {
                     <div className="font-montserrat text-[20px] font-bold text-white">{formatLongText(bindAddress, 4, 4)}</div>
                 </div>
                 <div className="flex-shrink-0 mt-4 font-montserrat italic text-[#6376FF] text-[24px] bg-[url(/images/bg-im.png)] bg-contain bg-no-repeat w-[82px] h-[82px] rounded-full flex items-center justify-center">
-                    {Number(totalBonus) > 0 ? totalBonus : '?'}X
+                    {Number(totalBonus) > 0 ? Number(totalBonus) + 1 : '?'}X
                 </div>
 
                 <div className="flex-shrink-0 mt-6 mb-5 font-montserrat w-full text-center leading-5 px-5 font-[500] text-white">
