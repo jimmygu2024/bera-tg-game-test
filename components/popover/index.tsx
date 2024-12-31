@@ -22,14 +22,19 @@ const Popover = (props: Props) => {
     contentClassName,
     triggerContainerStyle,
     triggerContainerClassName,
+    show = false
     } = props;
 
   const triggerRef = useRef<any>();
-
-  const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(show);
   const [realVisible, setRealVisible] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { run: closeDelay, cancel: closeCancel } = useDebounceFn(() => {
     setVisible(false);
@@ -59,7 +64,7 @@ const Popover = (props: Props) => {
         {children}
       </div>
       {
-        visible && createPortal(
+        mounted && visible && createPortal(
           <Card
             x={x}
             y={y}
@@ -196,6 +201,7 @@ interface Props {
   triggerContainerStyle?: React.CSSProperties;
   triggerContainerClassName?: string;
   elRef?: HTMLElement;
+  show?: boolean
 }
 
 const Card = (props: CardProps) => {

@@ -25,7 +25,7 @@ const ImportedEquipmentsView = () => {
     const fetchGameData = async () => {
         try {
             const response = await get(`/api/game/items?tg_user_id=${tgUser?.id}`);
-            const groupedItems = groupBy(response.data, 'category');
+            const groupedItems = groupBy(response?.data || [], 'category');
             
             const categories = ['cars', 'hats', 'jackets', 'necklaces'];
             const processedItems = categories.map(category => {
@@ -41,10 +41,17 @@ const ImportedEquipmentsView = () => {
                     name: category.charAt(0).toUpperCase() + category.slice(1)
                 };
             });
-
             setItems(processedItems);
         } catch (error) {
             console.error('Failed to fetch game data:', error);
+            const categories = ['cars', 'hats', 'jackets', 'necklaces'];
+            const defaultItems = categories.map(category => ({
+                category,
+                bonus_percentage: 0,
+                pc_item: false,
+                name: category.charAt(0).toUpperCase() + category.slice(1)
+            }));
+            setItems(defaultItems);
         }
     };
 
@@ -54,6 +61,7 @@ const ImportedEquipmentsView = () => {
         }
     }, [tgUser]);
 
+    console.log(items, '<===')
 
     const calculateTotalBonus = (items: any[]) => {
         let totalPercent = items.reduce((acc, item) => acc + item?.bonus_percentage, 0);
@@ -84,11 +92,13 @@ const ImportedEquipmentsView = () => {
                     <div className="font-montserrat text-[20px] font-bold text-white">{formatLongText(bindAddress, 4, 4)}</div>
                 </div>
                 <div className="flex-shrink-0 mt-4 font-montserrat italic text-[#6376FF] text-[24px] bg-[url(/images/bg-im.png)] bg-contain bg-no-repeat w-[82px] h-[82px] rounded-full flex items-center justify-center">
-                    {totalBonus}X
+                    {Number(totalBonus) > 0 ? totalBonus : '?'}X
                 </div>
 
                 <div className="flex-shrink-0 mt-6 mb-5 font-montserrat w-full text-center leading-5 px-5 font-[500] text-white">
-                    You’ve imported boost items
+                    {
+                        Number(totalBonus) > 0 ? 'You’ve imported boost items.' : 'This account  has no boost items.'
+                    }
                     (The highest level in the each category) 
                     from BeraCave.
                 </div>

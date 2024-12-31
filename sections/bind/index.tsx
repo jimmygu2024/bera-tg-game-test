@@ -111,6 +111,7 @@ const BindView = () => {
                   <span className="font-montserrat font-bold flex-1 leading-[1] text-left">Sign in with OKX wallet</span>
                   <div onClick={e => e.stopPropagation()} className="absolute top-[-24px] left-1/2 -translate-x-1/2 border border-[#000000] bg-[#FF79A4] w-[94%] flex gap-2 items-center justify-center rounded-[55px]">
                     <Popover
+                      show={true}
                       placement={PopoverPlacement.Top}
                       contentClassName={`w-[200px] backdrop-blur-[10px]`}
                       content={
