@@ -45,17 +45,20 @@ const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: numbe
     let addSpeed = Big(0);
     for (let i = 0; i < userEquipmentSingleList.length; i++) {
       const equipment = userEquipmentSingleList[i];
-      addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
-      if (Big(equipment.obtained_at).lte(currentTimestamp)) {
+      if (Big(equipment.obtained_at).lte(creat_timestamp)) {
+        addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
         continue;
       }
       if (i === 0) {
         results.push(calc(currentCoinsPerHour, creat_timestamp, equipment.obtained_at));
+        addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
         continue;
       }
       const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
       results.push(calc(_currPerHour, userEquipmentSingleList[i - 1].obtained_at, equipment.obtained_at));
+      addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
     }
+
     if (Big(creat_timestamp).gt(userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at)) {
       if (Big(currentTimestamp).gt(creat_timestamp)) {
         const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
