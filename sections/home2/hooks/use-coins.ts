@@ -18,10 +18,11 @@ const createNewCoin = (latestAmount: Big.Big, coinsPerSecond: Big.Big) => {
   };
 };
 
-const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: number; userEquipmentSingleList?: Equipment[]; }) => {
-  const { coins_per_hour, creat_timestamp, userEquipmentSingleList } = props;
+const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: number; userEquipmentCategoryList?: Record<string, Equipment[]>; addSpeed: number; }) => {
+  const { coins_per_hour, creat_timestamp, userEquipmentCategoryList, addSpeed } = props;
 
   const currentTimestamp = new Date().getTime();
+  // const currentTimestamp = 1735650107000;
   const currentCoinsPerHour = Big(coins_per_hour);
 
   const calc = (perH: Big.Big, start: Big.Big | number, end: Big.Big | number) => {
@@ -30,59 +31,50 @@ const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: numbe
     const lastSeconds = Big(Big(end).minus(start)).mod(Big(1000).times(60).times(60)).div(1000).toFixed(0, Big.roundDown);
     const lastCoins = Big(lastSeconds).times(coinCountPerSecond);
 
-    // console.log('-----> diffHours: %o', diffHours);
-    // console.log('-----> lastSeconds: %o', lastSeconds);
-    // console.log('-----> lastCoins: %o', lastCoins.toString());
-
     return {
       value: Big(lastCoins).plus(Big(diffHours).times(perH)),
-      coinsPerSecond: coinCountPerSecond,
     };
   };
 
-  if (userEquipmentSingleList?.length) {
-    const results: any = [];
-    let addSpeed = Big(0);
-    for (let i = 0; i < userEquipmentSingleList.length; i++) {
-      const equipment = userEquipmentSingleList[i];
-      if (Big(equipment.obtained_at).lte(creat_timestamp)) {
-        addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
-        continue;
-      }
-      if (i === 0) {
-        results.push(calc(currentCoinsPerHour, creat_timestamp, equipment.obtained_at));
-        addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
-        continue;
-      }
-      const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
-      results.push(calc(_currPerHour, userEquipmentSingleList[i - 1].obtained_at, equipment.obtained_at));
-      addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
-    }
+  const baseResult = calc(currentCoinsPerHour, creat_timestamp, currentTimestamp);
 
-    if (Big(creat_timestamp).gt(userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at)) {
-      if (Big(currentTimestamp).gt(creat_timestamp)) {
-        const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
-        results.push(calc(_currPerHour, creat_timestamp, currentTimestamp));
-      }
+  const results: any = [];
+  Object.values(userEquipmentCategoryList ?? {}).forEach((equipments, index) => {
+    let validEquipments = equipments.filter((equipment) => Big(equipment.obtained_at).gt(creat_timestamp));
+    if (!validEquipments.length) {
+      validEquipments = [equipments[equipments.length - 1]];
     } else {
-      if (Big(currentTimestamp).gt(userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at)) {
-        const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
-        results.push(calc(_currPerHour, userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at, currentTimestamp));
+      if (validEquipments.length !== equipments.length) {
+        validEquipments = [equipments[equipments.length - 1 - validEquipments.length], ...validEquipments];
       }
     }
 
-    let totalValue = Big(0);
-    results.forEach((it: any) => {
-      totalValue = Big(totalValue).plus(it.value);
+    validEquipments.forEach((equipment, idx) => {
+      const nextEquipment = validEquipments[idx + 1];
+      const currPer = Big(currentCoinsPerHour).times(Big(equipment.bonus_percentage).div(100));
+      let startTime = equipment.obtained_at;
+      if (Big(equipment.obtained_at).lte(creat_timestamp)) {
+        startTime = creat_timestamp;
+      }
+
+      let res: any;
+      if (nextEquipment) {
+        res = calc(currPer, startTime, nextEquipment.obtained_at);
+      } else {
+        res = calc(currPer, startTime, currentTimestamp);
+      }
+
+      results.push(res);
     });
 
-    return {
-      value: totalValue,
-      coinsPerSecond: results[results.length - 1].coinsPerSecond,
-    };
-  }
+  });
 
-  return calc(currentCoinsPerHour, creat_timestamp, currentTimestamp);
+  const total = [baseResult, ...results].map((it: any) => it.value).reduce((a, b) => Big(a).plus(b), Big(0));
+
+  return {
+    value: total,
+    coinsPerSecond: Big(currentCoinsPerHour).div(Big(60).times(60)).times(Big(1).plus(addSpeed)),
+  };
 };
 
 export function useCoins() {
@@ -94,7 +86,7 @@ export function useCoins() {
     userEquipmentListLoading,
     userInfoLoading,
     levelsLoading,
-    userEquipmentSingleList,
+    userEquipmentCategoryList,
   } = useUserStore();
   const ringStore = useRingStore();
 
@@ -135,7 +127,8 @@ export function useCoins() {
     const { value: _latestCoins } = calcLatestCoins({
       coins_per_hour: coinsPerHour,
       creat_timestamp: creatTimestamp,
-      userEquipmentSingleList,
+      userEquipmentCategoryList,
+      addSpeed,
     });
     setLatestCoins(_latestCoins);
     setCurrentCoins(_latestCoins);
@@ -144,7 +137,8 @@ export function useCoins() {
       const { value: _latestCoins, coinsPerSecond } = calcLatestCoins({
         coins_per_hour: coinsPerHour,
         creat_timestamp: creatTimestamp,
-        userEquipmentSingleList,
+        userEquipmentCategoryList,
+        addSpeed,
       });
       setLatestCoins(() => _latestCoins);
       setCoins((prevCoins: any) => [
@@ -168,7 +162,7 @@ export function useCoins() {
       clearInterval(coinTimer.current);
       document.removeEventListener('visibilitychange', visibilityEvent);
     };
-  }, [userInfo, userEquipmentListLoading, userInfoLoading, levelsLoading, userEquipmentSingleList]);
+  }, [userInfo, userEquipmentListLoading, userInfoLoading, levelsLoading, userEquipmentCategoryList]);
 
   return {
     coins,

@@ -9,9 +9,11 @@ type UserState = {
   userEquipmentList: Equipment[];
   userEquipmentSingleList: Equipment[];
   userEquipmentListLoading: boolean;
+  userEquipmentCategoryList: Record<string, Equipment[]>;
   setUserEquipmentList: (list: Equipment[]) => void;
   setUserEquipmentSingleList: (list: Equipment[]) => void;
   setUserEquipmentListLoading: (loading: boolean) => void;
+  setUserEquipmentCategoryList: (list: Record<string, Equipment[]>) => void;
 
   levels: Level[];
   levelsLoading: boolean;
@@ -36,9 +38,11 @@ export const useUserStore = create<UserState>((set) => ({
   userEquipmentList: [],
   userEquipmentSingleList: [],
   userEquipmentListLoading: false,
+  userEquipmentCategoryList: {},
   setUserEquipmentList: (list) => set({ userEquipmentList: list }),
   setUserEquipmentSingleList: (list) => set({ userEquipmentSingleList: list }),
   setUserEquipmentListLoading: (loading) => set({ userEquipmentListLoading: loading }),
+  setUserEquipmentCategoryList: (list) => set({ userEquipmentCategoryList: list }),
 
   levels: [],
   levelsLoading: false,

@@ -14,10 +14,12 @@ export function useUser() {
     setEquipmentListLoading,
     userEquipmentList,
     userEquipmentSingleList,
+    userEquipmentCategoryList,
     setUserEquipmentList,
     setUserEquipmentSingleList,
     userEquipmentListLoading,
     setUserEquipmentListLoading,
+    setUserEquipmentCategoryList,
     levels,
     setLevels,
     levelsLoading,
@@ -57,8 +59,17 @@ export function useUser() {
       }
       const _list: Equipment[] = res.data || [];
       const _userEquipmentSingleList: Equipment[] = [];
+      const _userEquipmentCategoryList: Record<string, Equipment[]> = {};
       _list.forEach((it) => {
         it.obtained_at = it.obtained_at * 1000;
+
+        if (_userEquipmentCategoryList[it.category]) {
+          _userEquipmentCategoryList[it.category].push(it);
+          _userEquipmentCategoryList[it.category] = orderBy(_userEquipmentCategoryList[it.category], ['obtained_at']);
+        } else {
+          _userEquipmentCategoryList[it.category] = [it];
+        }
+
         const idx = _userEquipmentSingleList.findIndex((_it) => _it.category === it.category);
         if (idx < 0) {
           _userEquipmentSingleList.push(it);
@@ -68,8 +79,9 @@ export function useUser() {
           _userEquipmentSingleList[idx] = it;
         }
       });
-      setUserEquipmentList(_list);
+      setUserEquipmentList(orderBy(_list, ['obtained_at']));
       setUserEquipmentSingleList(orderBy(_userEquipmentSingleList, ['obtained_at']));
+      setUserEquipmentCategoryList(_userEquipmentCategoryList);
     } catch (err) {
       console.log(err);
     }
@@ -121,6 +133,7 @@ export function useUser() {
     getEquipmentList,
     userEquipmentList,
     userEquipmentSingleList,
+    userEquipmentCategoryList,
     userEquipmentListLoading,
     getUserEquipmentList,
     levels,
