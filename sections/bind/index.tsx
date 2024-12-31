@@ -19,6 +19,8 @@ const BindView = () => {
   const [hasCheckedBind, setHasCheckedBind] = useState(false);
   const { loading, fetchBindStatus, bind, bindAddress } = useBind();
   const isLoggedIn = useLoginStore(state => state.isLoggedIn);
+  const hasBound = useBindStore(state => state.hasBound);
+  const setHasBound = useBindStore(state => state.setHasBound);
   const {
     connected: okxConnected,
     onConnect: onOKXConnect,
@@ -28,13 +30,21 @@ const BindView = () => {
   const getAccount = (account: string) => `${account.split(':')[2]}`
   
   useEffect(() => {
-    console.log('bindAddress-isLoggedIn-hasCheckedBind', bindAddress, isLoggedIn, hasCheckedBind)
+    console.log('bindAddress-isLoggedIn-hasCheckedBind', bindAddress, isLoggedIn, hasCheckedBind);
     const checkBind = async () => {
       if (!isLoggedIn) return;
+      
+      if (hasBound) {
+        router.replace('/home');
+        return;
+      }
+
       const address = await fetchBindStatus();
-      console.log('address', address)
+      console.log('address', address);
       setHasCheckedBind(true);
+      
       if (address) {
+        setHasBound(true);
         router.replace('/imported-equipments');
       }
     };
@@ -46,9 +56,10 @@ const BindView = () => {
       const session = await onOKXConnect?.();
       if (session?.namespaces?.eip155?.accounts[0]) {
         const bindStatus = await bind(getAccount(session?.namespaces?.eip155?.accounts[0]));
-        console.log('bindStatus', bindStatus)
+        console.log('bindStatus', bindStatus);
         if (bindStatus) {
-            router.push('/imported-equipments');
+          setHasBound(true);
+          router.push('/imported-equipments');
         }
       }
     } catch (error) {
