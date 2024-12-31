@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useAudio } from '@/hooks/useAudio';
 import Big from 'big.js';
 import { Equipment, useUserStore } from '@/stores/useUserStore';
@@ -7,6 +7,9 @@ import { useRingStore } from '@/stores/useRingStore';
 
 // seconds
 const coins_duration = 2;
+
+// 限制最大同时显示的金币数量
+const MAX_COINS = 5;
 
 const createNewCoin = (latestAmount: Big.Big, coinsPerSecond: Big.Big) => {
   return {
@@ -101,7 +104,7 @@ export function useCoins() {
     volume: 0.5
   });
 
-  const handleCollected = (id: number) => {
+  const handleCollected = useCallback((id: number) => {
     setCoins((prevCoins) => prevCoins.filter((coin) => coin.id !== id));
     setCollectedCoins(prev => prev + 1);
     if (ringStore.open) {
@@ -109,7 +112,7 @@ export function useCoins() {
     }
     const curr = coins.find((it: any) => it.id === id);
     curr && setCurrentCoins(() => curr.latestAmount);
-  };
+  }, [coins, ringStore.open, playSound]);
 
   const progress = (collectedCoins / TARGET_COINS) * 100;
 
@@ -134,35 +137,51 @@ export function useCoins() {
     setCurrentCoins(_latestCoins);
 
     const createInterval = () => {
+      if (coins.length >= MAX_COINS) return;
+
       const { value: _latestCoins, coinsPerSecond } = calcLatestCoins({
         coins_per_hour: coinsPerHour,
         creat_timestamp: creatTimestamp,
         userEquipmentCategoryList,
         addSpeed,
       });
-      setLatestCoins(() => _latestCoins);
-      setCoins((prevCoins: any) => [
-        ...prevCoins,
-        createNewCoin(_latestCoins, coinsPerSecond),
-      ]);
+      
+      setLatestCoins(_latestCoins);
+      setCoins((prevCoins: any) => {
+        if (prevCoins.length >= MAX_COINS) {
+          return prevCoins;
+        }
+        return [...prevCoins, createNewCoin(_latestCoins, coinsPerSecond)];
+      });
     };
+
+    if (coinTimer.current) {
+      clearInterval(coinTimer.current);
+    }
 
     coinTimer.current = setInterval(createInterval, coins_duration * 1000);
 
     const visibilityEvent = () => {
       const isHidden = document.hidden || document.visibilityState === 'hidden';
-      clearInterval(coinTimer.current);
+      if (coinTimer.current) {
+        clearInterval(coinTimer.current);
+      }
+      
       if (!isHidden) {
         coinTimer.current = setInterval(createInterval, coins_duration * 1000);
+        createInterval();
       }
     };
+    
     document.addEventListener('visibilitychange', visibilityEvent);
 
     return () => {
-      clearInterval(coinTimer.current);
+      if (coinTimer.current) {
+        clearInterval(coinTimer.current);
+      }
       document.removeEventListener('visibilitychange', visibilityEvent);
     };
-  }, [userInfo, userEquipmentListLoading, userInfoLoading, levelsLoading, userEquipmentCategoryList]);
+  }, [userInfo, userEquipmentListLoading, userInfoLoading, levelsLoading, userEquipmentCategoryList, coins.length]);
 
   return {
     coins,
