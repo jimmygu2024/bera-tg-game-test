@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { useCollisionDetection } from "@/sections/home/hooks/useCollisionDetection";
 
-const Coin = ({id, initialX, onCollected, amount, duration = 3 }: {id: any; initialX: number; onCollected: (id: number) => void; amount?: string; duration?: number; }) => {
+const Coin = memo(({id, initialX, onCollected, amount, duration = 3 }: {id: any; initialX: number; onCollected: (id: number) => void; amount?: string; duration?: number; }) => {
   const [opacity, setOpacity] = useState(1);
   const coinRef = useRef<HTMLDivElement>(null);
   // const isColliding = useCollisionDetection(coinRef);
@@ -66,6 +66,6 @@ const Coin = ({id, initialX, onCollected, amount, duration = 3 }: {id: any; init
       />
     </motion.div>
   );
-};
+});
 
 export default Coin;
