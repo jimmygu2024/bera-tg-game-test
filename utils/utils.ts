@@ -28,3 +28,7 @@ export function formatLongText(text?: string, front: number = 4, ending: number 
   }
   return `${text.slice(0, front)}...${text.slice(-ending)}`;
 }
+
+export function getRandomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

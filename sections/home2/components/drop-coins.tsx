@@ -10,7 +10,7 @@ const DropCoins = () => {
   } = useContext(HomeContext);
 
   return (
-    <div className="w-full h-full absolute left-0 top-0 z-[0]">
+    <div className="w-full h-full absolute left-0 top-0 z-[0] overflow-hidden">
       {coins.map((coin: any) => (
         <Coin
           amount={numberFormatter(coin.amount, 3, true)}

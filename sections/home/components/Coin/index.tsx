@@ -17,18 +17,22 @@ const Coin = ({id, initialX, onCollected, amount, duration = 3 }: {id: any; init
     <motion.div
       ref={coinRef}
       initial={{ x: initialX, y: 0, opacity: 1 }}
-      animate={{ y: '50dvh' }} 
+      animate={{
+        y: [0, '20rem', '23rem', '25rem'],
+        opacity: [1, 1, 0.3, 0],
+    }}
       transition={{
+        times: [0, 0.8, 0.9, 1],
         duration: duration,
         ease: "linear",
       }}
       onUpdate={(latest) => {
-        if (typeof latest.y === 'string' && latest.y.endsWith('dvh')) {
-          const currentDvh = parseFloat(latest.y);
-          if (currentDvh > 45) {
-            setOpacity(0.3);
-          }
-        }
+        // if (typeof latest.y === 'string' && latest.y.endsWith('rem')) {
+        //   const currentDvh = parseFloat(latest.y);
+        //   if (currentDvh > 23) {
+        //     setOpacity(0.3);
+        //   }
+        // }
       }}
       onAnimationComplete={() => {
         console.log('Coin animation completed!');
@@ -37,7 +41,7 @@ const Coin = ({id, initialX, onCollected, amount, duration = 3 }: {id: any; init
       className="flex flex-col items-center justify-center"
       style={{
         position: "absolute",
-        width: "53px",
+        width: "82px",
         textAlign: "center",
       }}
     >

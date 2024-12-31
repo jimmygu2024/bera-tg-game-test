@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAudio } from '@/hooks/useAudio';
 import Big from 'big.js';
 import { useUserStore } from '@/stores/useUserStore';
+import { getRandomNumber } from '@/utils/utils';
 
 // seconds
 const coins_duration = 2;
@@ -11,7 +12,7 @@ const createNewCoin = (latestAmount: Big.Big, coinsPerSecond: Big.Big) => {
     id: Math.random(),
     latestAmount,
     amount: Big(coinsPerSecond).times(coins_duration),
-    x: Math.random() * 300,
+    x: getRandomNumber(15, 295),
     y: 0,
   };
 };
