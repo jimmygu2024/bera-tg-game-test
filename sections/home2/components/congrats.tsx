@@ -23,20 +23,20 @@ export default memo(function Congrats(props: any) {
             You&#39;ve got a gift from OKX wallet!
           </div>
           <div className="flex items-center justify-center w-[292px] h-[50px] rounded-[53px] border border-white bg-[rgba(255, 255, 255, 0.30)] backdrop-blur-[10px]">
-            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">Points</span>
+            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]"></span>
             <div className="w-[32px] mx-[10px]">
               <img src="/images/beraciaga/coin.svg" alt="coin" />
             </div>
-            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">
+            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%] text-center">
               +{numberFormatter(userInfo?.bind_okx_reward_coins, 0, true)}
             </span>
           </div>
           <div className="mt-[18px] flex items-center justify-center w-[292px] h-[50px] rounded-[53px] border border-white bg-[rgba(255, 255, 255, 0.30)] backdrop-blur-[10px]">
-            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">Shop Coupon</span>
+            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">Coupon</span>
             <div className="w-[36px] mx-[10px]">
               <img src="/images/beraciaga/ticket.svg" alt="ticket" />
             </div>
-            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%]">
+            <span className="text-[#F7F9EA] text-stroke-1 font-cherryBomb text-[20px] leading-[100%] text-center">
               {numberFormatter(userInfo?.bind_okx_reward_coupons, 2, true, { prefix: '$', round: 0 })}
             </span>
           </div>
