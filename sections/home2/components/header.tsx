@@ -10,7 +10,7 @@ const Header = () => {
     <div className="px-[8px] pt-[8px] flex items-center justify-between shrink-0">
       <User />
       {
-        !!userInfo?.address && (
+        !userInfo?.address && (
           <ImportEquipments />
         )
       }
