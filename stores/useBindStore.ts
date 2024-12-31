@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface BindStore {
     bindAddress: string;
@@ -17,8 +17,10 @@ const useBindStore = create<BindStore>()(
             setHasBound: (hasBound: boolean) => set({ hasBound }),
         }),
         {
-            name: 'bind-storage',
-        }
+            name: '_useBindStore',
+            version: 0.1,
+            storage: createJSONStorage(() => localStorage),
+          },
     )
 );
 
