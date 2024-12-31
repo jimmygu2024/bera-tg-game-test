@@ -8,8 +8,7 @@ interface BindStore {
     setHasBound: (hasBound: boolean) => void;
 }
 
-const useBindStore = create<BindStore>()(
-    persist(
+const useBindStore = create(persist<BindStore>(
         (set: any) => ({
             bindAddress: '',
             hasBound: false,
