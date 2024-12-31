@@ -47,7 +47,7 @@ export const useUserStore = create<UserState>((set) => ({
 
   userInfo: {
     level: 1,
-    bind_okx_reward_coins: 1000000,
+    bind_okx_reward_coins: 100000000,
     bind_okx_reward_coupons: 9.99,
   },
   userInfoLoading: false,
