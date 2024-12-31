@@ -24,47 +24,37 @@ const ImportedEquipmentsView = () => {
     
     const fetchGameData = async () => {
         try {
-            const response = await get(`/api/game/items?tg_user_id=${tgUser?.id}`);
+            const response = await get(`/api/game/items?tg_user_id=${tgUser?.id || ''}`);
             const groupedItems = groupBy(response?.data || [], 'category');
             
             const categories = ['cars', 'hats', 'jackets', 'necklaces'];
             const processedItems = categories.map(category => {
                 const categoryItems = groupedItems[category] || [];
-                const pcItems = filter(categoryItems, { pc_item: true });
-                if (pcItems.length > 0) {
-                    return maxBy(pcItems, 'level');
-                }
-                return {
-                    category,
-                    bonus_percentage: 0,
-                    pc_item: false,
-                    name: category.charAt(0).toUpperCase() + category.slice(1)
-                };
+                return maxBy(categoryItems, 'level');
+                // return {
+                //     category,
+                //     bonus_percentage: 0,
+                //     pc_item: false,
+                //     name: category.charAt(0).toUpperCase() + category.slice(1)
+                // };
             });
             setItems(processedItems);
         } catch (error) {
             console.error('Failed to fetch game data:', error);
-            const categories = ['cars', 'hats', 'jackets', 'necklaces'];
-            const defaultItems = categories.map(category => ({
-                category,
-                bonus_percentage: 0,
-                pc_item: false,
-                name: category.charAt(0).toUpperCase() + category.slice(1)
-            }));
-            setItems(defaultItems);
         }
     };
 
     useEffect(() => {
-        if (tgUser?.id) {
-            fetchGameData();
-        }
-    }, [tgUser]);
-
-    console.log(items, '<===')
+        fetchGameData();
+    }, []);
 
     const calculateTotalBonus = (items: any[]) => {
-        let totalPercent = items.reduce((acc, item) => acc + item?.bonus_percentage, 0);
+        let totalPercent = items.reduce((acc, item) => {
+            if (item?.pc_item) {
+                return acc + (item?.bonus_percentage || 0);
+            }
+            return acc;
+        }, 0);
 
         if (totalPercent === 0) {
             return 0;
@@ -74,10 +64,12 @@ const ImportedEquipmentsView = () => {
             totalPercent += 10;
         }
 
-        return (totalPercent /  100).toFixed(2);
+        return (totalPercent / 100).toFixed(2);
     };
 
     const totalBonus = calculateTotalBonus(items);
+
+     
 
     return (
         <div className="bg-black min-h-screen w-full flex flex-col items-center">
@@ -122,7 +114,7 @@ const ImportedEquipmentsView = () => {
                                 <div className={`px-[6px] py-[5px] border-[3px] border-[#709D27] bg-[#C7FF6E] rounded-3xl flex items-center gap-[2px] ${!item.pc_item ? 'opacity-50' : ''}`}>
                                     <IconFlash />
                                     <span className="font-montserrat font-[700] text-[12px] text-center leading-[12px] text-black">
-                                        {!item.pc_item ? 'up to +300%' : `+${item.bonus_percentage}%`}
+                                        {!item.pc_item ? `up to +${item.bonus_percentage}%` : `+${item.bonus_percentage}%`}
                                     </span>
                                 </div>
                             </div>
