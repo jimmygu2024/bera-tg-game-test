@@ -4,6 +4,7 @@ import Content from '@/sections/home2/components/content';
 import { useCoins } from '@/sections/home2/hooks/use-coins';
 import useLogin from '@/hooks/useLogin';
 import { useUser } from '@/hooks/useUser';
+import { useTelegram } from '@/hooks/useTelegram';
 
 export const HomeContext = createContext<any>({});
 
@@ -12,6 +13,9 @@ export default memo(function Home() {
   const [isInitialized, setIsInitialized] = useState(false);
   const { handleLogin } = useLogin();
   const user = useUser();
+  const { WebApp } = useTelegram();
+
+  const tgUserId = WebApp?.initDataUnsafe?.user?.id;
 
   const {
     getEquipmentList,
@@ -29,14 +33,16 @@ export default memo(function Home() {
 
   useEffect(() => {
     if (!isInitialized) {
-      handleLogin().then(() => {
-        init();
-      });
+      handleLogin();
       setIsInitialized(true);
       return;
     }
-    init();
   }, [isInitialized]);
+
+  useEffect(() => {
+    if (!tgUserId) return;
+    init();
+  }, [tgUserId]);
 
   return (
     <HomeContext.Provider value={{ ...coins, ...user }}>
