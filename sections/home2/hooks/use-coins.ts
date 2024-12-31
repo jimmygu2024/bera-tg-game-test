@@ -46,6 +46,9 @@ const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: numbe
     for (let i = 0; i < userEquipmentSingleList.length; i++) {
       const equipment = userEquipmentSingleList[i];
       addSpeed = Big(addSpeed).plus(Big(equipment.bonus_percentage || 0).div(100));
+      if (Big(equipment.obtained_at).lte(currentTimestamp)) {
+        continue;
+      }
       if (i === 0) {
         results.push(calc(currentCoinsPerHour, creat_timestamp, equipment.obtained_at));
         continue;
@@ -53,9 +56,16 @@ const calcLatestCoins = (props: { coins_per_hour: number; creat_timestamp: numbe
       const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
       results.push(calc(_currPerHour, userEquipmentSingleList[i - 1].obtained_at, equipment.obtained_at));
     }
-    if (Big(currentTimestamp).gt(userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at)) {
-      const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
-      results.push(calc(_currPerHour, userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at, currentTimestamp));
+    if (Big(creat_timestamp).gt(userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at)) {
+      if (Big(currentTimestamp).gt(creat_timestamp)) {
+        const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
+        results.push(calc(_currPerHour, creat_timestamp, currentTimestamp));
+      }
+    } else {
+      if (Big(currentTimestamp).gt(userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at)) {
+        const _currPerHour = Big(coins_per_hour).times(Big(1).plus(addSpeed));
+        results.push(calc(_currPerHour, userEquipmentSingleList[userEquipmentSingleList.length - 1].obtained_at, currentTimestamp));
+      }
     }
 
     let totalValue = Big(0);
