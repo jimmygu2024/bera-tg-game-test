@@ -49,9 +49,16 @@ export function useInvite() {
   };
 
   const handleCopy = () => {
+    if (!process.env.NEXT_PUBLIC_APP_LINK) {
+      console.error('APP_LINK is not set');
+      return '';
+    }
+
     toast.dismiss();
     try {
-      navigator.clipboard.writeText(shareLink);
+      const appLink = new URL(process.env.NEXT_PUBLIC_APP_LINK);
+      appLink.searchParams.set('startapp', `inviterId=${userInfo?.id}`);
+      navigator.clipboard.writeText(appLink.toString());
       toast.success({ title: 'Copied to clipboard' });
     } catch (err) {
       console.log(err);
