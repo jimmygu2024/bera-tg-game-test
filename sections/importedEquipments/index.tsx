@@ -88,7 +88,7 @@ const ImportedEquipmentsView = () => {
                 </div>
 
                 <div className="flex-shrink-0 mt-6 mb-5 font-montserrat w-full text-center leading-5 px-5 font-[500] text-white">
-                    You've imported your equipments
+                    You’ve imported boost items
                     (The highest level in the each category) 
                     from BeraCave.
                 </div>
