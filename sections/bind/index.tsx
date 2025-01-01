@@ -131,7 +131,7 @@ const BindView = () => {
                             className="w-[17.33px] h-[17.33px]"
                           />
                           <span className="text-white font-cherryBomb font-bold text-stroke-1 text-[14px]">
-                            +1,000,000
+                            +1,000,000,000
                           </span>
                         </div>
                         <div className="flex items-center gap-[2px]">
