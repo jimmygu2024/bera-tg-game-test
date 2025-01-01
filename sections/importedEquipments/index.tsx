@@ -84,7 +84,7 @@ const ImportedEquipmentsView = () => {
                     <img src={tgUser?.photo_url ? tgUser?.photo_url : '/images/beraciaga/avator.svg'} className="w-8 h-8 rounded-full" alt="" />
                     <div className="font-montserrat text-[20px] font-bold text-white">{formatLongText(bindAddress, 4, 4)}</div>
                 </div>
-                <div className="flex-shrink-0 mt-4 font-montserrat italic text-[#6376FF] text-[24px] bg-[url(/images/bg-im.png)] bg-contain bg-no-repeat w-[82px] h-[82px] rounded-full flex items-center justify-center">
+                <div className="flex-shrink-0 mt-4 font-montserrat italic text-[#6376FF] text-[25px] font-[800] bg-[url(/images/bg-im.png)] bg-contain bg-no-repeat w-[82px] h-[82px] rounded-full flex items-center justify-center">
                     {Number(totalBonus) > 0 ? Number(totalBonus) + 1 : '?'}X
                 </div>
 
