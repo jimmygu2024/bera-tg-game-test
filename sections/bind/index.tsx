@@ -117,8 +117,8 @@ const BindView = () => {
                       content={
                         <div className="relative">
                           <div className="rounded-lg bg-[#423F4C] bg-opacity-80 p-3 font-montserrat text-sm text-left text-white">
-                          Connect with OKX wallet to earn extra points and coupons! At the same time, boost your mining speed if your wallet has obtained Beratown's cave items!
-                          Meanwhile, you will get extra 1,000,000,000 points and $9.99 store coupon
+                          Connect with OKX wallet to earn extra <img src="/images/coin.png" className="w-[14px] h-[14px] inline-block" /> and coupons! At the same time, boost your mining speed if your wallet has obtained Beratown's cave items!
+                          Meanwhile, you will get extra <br /> <img src="/images/coin.png" className="w-[14px] h-[14px] inline-block" /> 100,000,000 and $9.99 store coupon
                             <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-[#423F4C] opacity-80"></div>
                           </div>
                         </div>
@@ -131,7 +131,7 @@ const BindView = () => {
                             className="w-[17.33px] h-[17.33px]"
                           />
                           <span className="text-white font-cherryBomb font-bold text-stroke-1 text-[14px]">
-                            +1,000,000,000
+                            +100,000,000
                           </span>
                         </div>
                         <div className="flex items-center gap-[2px]">
