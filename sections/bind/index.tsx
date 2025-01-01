@@ -118,7 +118,7 @@ const BindView = () => {
                         <div className="relative">
                           <div className="rounded-lg bg-[#423F4C] bg-opacity-80 p-3 font-montserrat text-sm text-left text-white">
                           Connect with OKX wallet to earn extra points and coupons! At the same time, boost your mining speed if your wallet has obtained Beratown's cave items!
-                          Meanwhile, you will get extra 1,000,000 points and $9.99 store coupon
+                          Meanwhile, you will get extra 1,000,000,000 points and $9.99 store coupon
                             <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-[#423F4C] opacity-80"></div>
                           </div>
                         </div>
