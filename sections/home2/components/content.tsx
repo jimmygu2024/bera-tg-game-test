@@ -3,15 +3,39 @@ import Reward from '@/sections/home2/components/reward';
 import Speed from '@/sections/home2/components/speed';
 import ComingSoon from '@components/ComingSoon';
 import RingButton from '@components/Ring';
+import { useEffect, useState } from 'react';
+import { useTelegram } from '@/hooks/useTelegram';
+
+const calcScale = (viewportHeight: number) => {
+  if (!viewportHeight) return 1;
+  const realHeight = viewportHeight - 58 - 94 - 21 - 10;
+  if (realHeight < 549) {
+    return realHeight / 549;
+  }
+  return 1;
+};
 
 const Content = () => {
+  const { WebApp } = useTelegram();
+
+  const [scale, setScale] = useState(calcScale(WebApp?.viewportHeight));
+
+  useEffect(() => {
+    if (!WebApp?.viewportHeight) {
+      return;
+    }
+    setScale(calcScale(WebApp.viewportHeight));
+  }, [WebApp]);
 
   return (
     <div className="overflow-y-auto h-0 flex-1">
       <div className="flex items-center justify-center w-[190px] h-[35px] mx-auto bg-[url('/images/beraciaga/luck_box.svg')] bg-no-repeat bg-center font-montserrat text-white text-[18px] font-bold italic uppercase">
         Lucky Box
       </div>
-      <div className="relative -top-[17px] w-full px-[0.75rem] h-[34.3125rem] mx-auto bg-[url('/images/beraciaga/luck_box_bg.svg')] bg-no-repeat bg-center bg-[length:22.6875rem_34.3125rem]">
+      <div
+        style={{ transform: `scale(${scale})`, transformOrigin: 'top' }}
+        className="relative -top-[17px] w-full px-[0.75rem] h-[549px] mx-auto bg-[url('/images/beraciaga/luck_box_bg.svg')] bg-no-repeat bg-center bg-[length:22.6875rem_34.3125rem]"
+      >
         <RingButton className="absolute right-[15px] top-[15px] z-[2]" />
         <DropCoins />
         <ComingSoon className="absolute z-[2] left-1/2 -translate-x-1/2 top-[20rem]" />
