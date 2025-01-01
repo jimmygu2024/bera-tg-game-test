@@ -22,13 +22,13 @@ export default function RootLayout({
   const path = usePathname();
 
   useEffect(() => {
-    async function loadPlugin() {
-      if (typeof window !== 'undefined') {
-        const VConsole = await import('vconsole');
-        new VConsole.default();
-      }
-    }
-    loadPlugin();
+    // async function loadPlugin() {
+    //   if (typeof window !== 'undefined') {
+    //     const VConsole = await import('vconsole');
+    //     new VConsole.default();
+    //   }
+    // }
+    // loadPlugin();
   }, []);
 
   return (

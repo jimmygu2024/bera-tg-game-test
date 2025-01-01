@@ -23,6 +23,7 @@ function Content(props: any) {
 
   const handleClick = () => {
     WebApp?.openLink((process.env.NEXT_PUBLIC || 'https://dev.bera.dapdap.net') + '/cave?tg_user_id=' + user?.id);
+    // WebApp?.close();
   };
 
   return (
