@@ -22,7 +22,7 @@ function Content(props: any) {
   const user = WebApp?.initDataUnsafe?.user;
 
   const handleClick = () => {
-    WebApp?.openLink((process.env.NEXT_PUBLIC || 'https://dev.bera.dapdap.net') + '/cave?tg_user_id=' + user?.id);
+    WebApp?.openLink((process.env.NEXT_PUBLIC_BERA_IMPORTED_URL || 'https://dev.bera.dapdap.net') + '/cave?tg_user_id=' + user?.id);
     // WebApp?.close();
   };
 
