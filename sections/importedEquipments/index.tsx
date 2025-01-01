@@ -30,14 +30,15 @@ const ImportedEquipmentsView = () => {
             const categories = ['cars', 'hats', 'jackets', 'necklaces'];
             const processedItems = categories.map(category => {
                 const categoryItems = groupedItems[category] || [];
-                return maxBy(categoryItems, 'level');
-                // return {
-                //     category,
-                //     bonus_percentage: 0,
-                //     pc_item: false,
-                //     name: category.charAt(0).toUpperCase() + category.slice(1)
-                // };
+                const equippedItems = filter(categoryItems, item => item.pc_item === true);
+                
+                if (equippedItems.length > 0) {
+                    return maxBy(equippedItems, 'level');
+                } else {
+                    return maxBy(categoryItems, 'level');
+                }
             });
+            
             setItems(processedItems);
         } catch (error) {
             console.error('Failed to fetch game data:', error);
