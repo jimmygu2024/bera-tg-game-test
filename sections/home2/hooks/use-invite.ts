@@ -18,13 +18,8 @@ export function useInvite() {
       return '';
     }
 
-    const appLink = new URL(process.env.NEXT_PUBLIC_APP_LINK);
-    const shareLink = new URL('https://t.me/share/url');
-    appLink.searchParams.set('startapp', `inviterId=${userInfo?.id}`);
-    shareLink.searchParams.set('url', appLink.toString());
-    shareLink.searchParams.set('text', 'Look at this, it is so amazing');
-
-    return shareLink.toString();
+    const app_link = `${process.env.NEXT_PUBLIC_APP_LINK}?inviterId=${userInfo?.id}`;
+    return `https://t.me/share/url?url=${app_link}&text=DapDap %26 Beratown team is dropping sumting new 👀 %0A Idk what it is but just sign up to the TG mini app to stack up the BGOLD first`;
   }, []);
 
   const getTotal = async () => {
