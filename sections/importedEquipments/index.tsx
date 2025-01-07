@@ -7,6 +7,7 @@ import { groupBy, map, filter, maxBy } from 'lodash-es';
 import { get } from "@/utils/http";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useLayoutStore } from "@/stores/useLayoutStore";
+import { useBind } from "@/hooks/useBind";
 
 const ImportedEquipmentsView = () => {
 
@@ -14,11 +15,14 @@ const ImportedEquipmentsView = () => {
     const search = useSearchParams();
 
     const [items, setItems] = useState<any[]>([]);
-    const { bindAddress } = useBindStore();
 
     const { WebApp } = useTelegram();
 
     const { setCongratsModalVisible }= useLayoutStore()
+
+    const { loading, fetchBindStatus } = useBind();
+    
+    const [bindAddress, setBindAddress] = useState<string>('');
     
     const tgUser = WebApp?.initDataUnsafe?.user as any;
     
@@ -45,8 +49,14 @@ const ImportedEquipmentsView = () => {
         }
     };
 
+    const fetchAddress = async () => {
+        const address = await fetchBindStatus();
+        setBindAddress(address);
+    }
+
     useEffect(() => {
         fetchGameData();
+        fetchAddress();
     }, []);
 
     const calculateTotalBonus = (items: any[]) => {
