@@ -22,13 +22,14 @@ export default function RootLayout({
   const path = usePathname();
 
   useEffect(() => {
-    // async function loadPlugin() {
-    //   if (typeof window !== 'undefined') {
-    //     const VConsole = await import('vconsole');
-    //     new VConsole.default();
-    //   }
-    // }
-    // loadPlugin();
+    async function loadPlugin() {
+      if (!process.env.NEXT_PUBLIC_APP_LINK?.includes?.('berachain_game_test_bot')) return;
+      if (typeof window !== 'undefined') {
+        const VConsole = await import('vconsole');
+        new VConsole.default();
+      }
+    }
+    loadPlugin();
   }, []);
 
   return (

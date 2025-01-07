@@ -15,11 +15,15 @@ export function useInvite() {
   const shareLink = useMemo(() => {
     if (!process.env.NEXT_PUBLIC_APP_LINK) {
       console.error('APP_LINK is not set');
-      return '';
+      return {};
     }
 
-    const app_link = `${process.env.NEXT_PUBLIC_APP_LINK}?inviterId=${userInfo?.id}`;
-    return `https://t.me/share/url?url=${app_link}&text=DapDap %26 Beratown team is dropping sumting new 👀 %0A Idk what it is but just sign up to the TG mini app to stack up the BGOLD first`;
+    const app_link = `${process.env.NEXT_PUBLIC_APP_LINK}?startapp=${encodeURIComponent('inviterId=' + (userInfo?.id || ''))}`;
+    const tg_share_link = `https://t.me/share/url?url=${app_link}&text=DapDap %26 Beratown team is dropping sumting new 👀 %0A Idk what it is but just sign up to the TG mini app to stack up the BGOLD first`;
+    return {
+      app_link,
+      tg_share_link,
+    };
   }, []);
 
   const getTotal = async () => {
@@ -36,24 +40,19 @@ export function useInvite() {
   };
 
   const handleShare = () => {
-    if (!shareLink) return;
-    WebApp?.openTelegramLink?.(shareLink);
+    if (!shareLink?.tg_share_link) return;
+    WebApp?.openTelegramLink?.(shareLink.tg_share_link);
     if (isAndroid) {
       WebApp?.close();
     }
   };
 
   const handleCopy = () => {
-    if (!process.env.NEXT_PUBLIC_APP_LINK) {
-      console.error('APP_LINK is not set');
-      return '';
-    }
+    if (!shareLink?.app_link) return;
 
     toast.dismiss();
     try {
-      const appLink = new URL(process.env.NEXT_PUBLIC_APP_LINK);
-      appLink.searchParams.set('startapp', `inviterId=${userInfo?.id}`);
-      navigator.clipboard.writeText(appLink.toString());
+      navigator.clipboard.writeText(shareLink.app_link);
       toast.success({ title: 'Copied to clipboard' });
     } catch (err) {
       console.log(err);
