@@ -51,6 +51,7 @@ export function useInvite() {
 
     toast.dismiss();
     try {
+      // link
       const appLink = new URL(process.env.NEXT_PUBLIC_APP_LINK);
       appLink.searchParams.set('startapp', `inviterId=${userInfo?.id}`);
       navigator.clipboard.writeText(appLink.toString());
