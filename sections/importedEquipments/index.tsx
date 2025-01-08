@@ -25,8 +25,7 @@ const ImportedEquipmentsView = () => {
 
   const [bindAddress, setBindAddress] = useState<string>('');
 
-  // FIXME Test Data
-  const tgUser = WebApp?.initDataUnsafe?.user as any ?? { id: 7150006688 };
+  const tgUser = WebApp?.initDataUnsafe?.user as any;
 
   const fetchGameData = async () => {
     try {
