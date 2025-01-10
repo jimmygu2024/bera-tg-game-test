@@ -19,7 +19,7 @@ const TabBar: React.FC<any> = (props) => {
   const handleTabClick = useCallback((tab: TabItem) => {
     if (tab.isLock) return;
     setActiveTab(tab.id);
-    // router.push(tab.path);
+    router.push(tab.path);
     props?.onTabClick?.(tab);
   }, [router, setActiveTab]);
 
