@@ -31,6 +31,7 @@ const Game = () => {
       },
     };
     console.log('data will be send: %o', data);
+    console.log('gameRef.current.contentWindow: %o', gameRef.current.contentWindow);
     gameRef.current.contentWindow.postMessage(JSON.stringify(data), '*');
   };
 
