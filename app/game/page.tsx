@@ -11,7 +11,7 @@ const Game = () => {
   const handleLoaded = (e?: any) => {
     if (!gameRef.current || !WebApp) return;
     gameRef.current.contentWindow.postMessage({
-      type: 'Telegram',
+      type: 'Beraciaga',
       data: {
         initData: WebApp.initData,
         initDataUnsafe: WebApp.initDataUnsafe,
@@ -37,7 +37,7 @@ const Game = () => {
       <iframe
         className="w-full h-full"
         ref={gameRef}
-        src={process.env.NEXT_PUBLIC_GAME_URL || 'https://bera-tg-game-test.vercel.app/'}
+        src={process.env.NEXT_PUBLIC_GAME_URL || 'http://localhost:3001/'}
         onLoad={handleLoaded}
       />
     </div>
