@@ -31,8 +31,11 @@ const Game = () => {
       },
     };
     console.log('data will be send: %o', data);
-    console.log('gameRef.current.contentWindow: %o', gameRef.current.contentWindow);
-    gameRef.current.contentWindow.postMessage(JSON.stringify(data), '*');
+    try {
+      gameRef.current.contentWindow.postMessage(JSON.stringify(data), '*');
+    } catch (err) {
+      console.log('post message failed: %o', err);
+    }
   };
 
   useEffect(() => {
