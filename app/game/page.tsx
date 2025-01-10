@@ -9,6 +9,10 @@ const Game = () => {
   const gameRef = useRef<any>(null);
 
   const handleLoaded = (e?: any) => {
+    console.log('handleLoaded... %o', e);
+    console.log('gameRef.current: %o', gameRef.current);
+    console.log('WebApp: %o', WebApp);
+
     if (!gameRef.current || !WebApp) return;
     gameRef.current.contentWindow.postMessage({
       type: 'Beraciaga',
@@ -30,7 +34,7 @@ const Game = () => {
 
   useEffect(() => {
     handleLoaded();
-  }, [WebApp]);
+  }, [WebApp, gameRef.current]);
 
   return (
     <div className="h-full">
