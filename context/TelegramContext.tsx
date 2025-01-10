@@ -25,8 +25,11 @@ const TelegramProvider: React.FC<{ children: React.ReactNode }> = ({
         const WebAppModule = await import("@twa-dev/sdk");
         WebAppModule.default.ready();
         WebAppModule.default.expand();
-        setWebApp(WebAppModule.default);
+        const _WebApp = WebAppModule.default;
+        setWebApp(_WebApp);
         setIsInitialized(true);
+        // @ts-ignore
+        window && (window.TelegramWebApp = _WebApp);
         console.log(WebAppModule.default, '---WebAppModule.default---')
       } catch (err) {
         setError("Failed to load Telegram WebApp SDK");
