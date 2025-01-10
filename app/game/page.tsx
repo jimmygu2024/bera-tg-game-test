@@ -24,7 +24,6 @@ const Game = () => {
         API: process.env.NEXT_PUBLIC_API,
         APP_LINK: process.env.NEXT_PUBLIC_APP_LINK,
         BERA_IMPORTED_URL: process.env.NEXT_PUBLIC_BERA_IMPORTED_URL,
-        CRYPTO_KEY: process.env.NEXT_PUBLIC_CRYPTO_KEY,
       },
     }, '*');
   };
@@ -38,7 +37,7 @@ const Game = () => {
       <iframe
         className="w-full h-full"
         ref={gameRef}
-        src="http://localhost:3001"
+        src={process.env.NEXT_PUBLIC_GAME_URL || 'https://bera-tg-game-test.vercel.app/'}
         onLoad={handleLoaded}
       />
     </div>
