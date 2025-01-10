@@ -32,7 +32,8 @@ const Game = () => {
     };
     console.log('data will be send: %o', data);
     try {
-      gameRef.current.contentWindow.postMessage(JSON.stringify(data), '*');
+      console.log('contentWindow: %o', gameRef.current.contentWindow);
+      gameRef.current.contentWindow.postMessage(data, '*');
     } catch (err) {
       console.log('post message failed: %o', err);
     }
