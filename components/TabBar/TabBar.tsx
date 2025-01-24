@@ -1,27 +1,17 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { TabItem, TABS, useLayoutStore } from '@/stores/useLayoutStore';
-import { useCallback, useEffect } from 'react';
 
 const TabBar: React.FC<any> = (props) => {
   const router = useRouter();
-  const pathname = usePathname();
   const { activeTab, setActiveTab } = useLayoutStore();
 
-  useEffect(() => {
-    const tab = TABS.find(tab => tab.path === pathname);
-    if (tab) {
-      setActiveTab(tab.id);
-    }
-  }, [pathname, setActiveTab]);
-
-  const handleTabClick = useCallback((tab: TabItem) => {
+  const handleTabClick = (tab: TabItem) => {
     if (tab.isLock) return;
     setActiveTab(tab.id);
-    router.push(tab.path);
     props?.onTabClick?.(tab);
-  }, [router, setActiveTab]);
+  };
 
   return (
     <div className="fixed left-0 bottom-0 w-full bg-[#FFD335] grid grid-cols-5">
@@ -35,7 +25,7 @@ const TabBar: React.FC<any> = (props) => {
             <div
               className="w-full h-[3rem] bg-contain bg-center bg-no-repeat relative"
               style={{
-                backgroundImage: `url("${tab.isLock ? tab.inactiveIcon : tab.icon}")`
+                backgroundImage: `url("${tab.isLock || activeTab !== tab.id ? tab.inactiveIcon : tab.icon}")`
               }}
             >
               {

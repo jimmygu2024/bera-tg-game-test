@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from 'react';
 import "./globals.css";
 import 'swiper/css';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -11,7 +11,6 @@ import TelegramProvider from '@/context/TelegramContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import OkxTonProvider from '@/context/OkxContext';
 import BitgetProvider from '@/context/BitgetContext';
-import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 
 export default function RootLayout({
@@ -19,8 +18,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const path = usePathname();
-
   useEffect(() => {
     async function loadPlugin() {
       if (!process.env.NEXT_PUBLIC_APP_LINK?.includes?.('berachain_game_test_bot')) return;
@@ -37,6 +34,12 @@ export default function RootLayout({
       <head>
         <title>Beraciaga_Test</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link
+          rel="preload"
+          as="document"
+          href={process.env.NEXT_PUBLIC_GAME_URL}
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         <TonConnectUIProvider manifestUrl='https://bera-dapdap.vercel.app/tonconnect-manifest.json'>
@@ -44,9 +47,11 @@ export default function RootLayout({
             <SkeletonTheme baseColor='#96D6FF' highlightColor='#FFF5A9'>
               <OkxTonProvider isTelegram>
                 <BitgetProvider>
-                  <TabBarWrapper showTabBar={!['/', '/imported-equipments'].includes(path)}>
-                    {children}
-                  </TabBarWrapper>
+                  <Suspense fallback={<></>}>
+                    <TabBarWrapper>
+                      {children}
+                    </TabBarWrapper>
+                  </Suspense>
                 </BitgetProvider>
               </OkxTonProvider>
             </SkeletonTheme>
